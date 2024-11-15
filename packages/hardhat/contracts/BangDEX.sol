@@ -10,9 +10,12 @@ import {IPriceOracle} from "./interfaces/IPriceOracle.sol";
 import {ILiquidator} from "./interfaces/ILiquidator.sol";
 
 /**
- * @title P2PSwapRouter
- * @notice Contract following the interface of ISwapRouter that executes single swaps from authorized contracts
- *         at configured prices, on behalf of an account
+ * @title BangDEX
+ * @notice Contract following the interface of ISwapRouter that executes the swaps with the users in the different
+ *         chains, using a linear price curve based on the utilized capacity of each token for each slot.
+ *
+ *         Colaborates with liquidators that are the ones that later (probably asynchronously and cross-chain) will
+ *         liquidate the tokens.
  */
 contract BangDEX is ISwapRouter, AccessControl {
   using SafeERC20 for IERC20Metadata;
@@ -31,6 +34,7 @@ contract BangDEX is ISwapRouter, AccessControl {
     uint256 minDiscount;    // in wad - Expressed as 1-d, so for 2% this should be 0.98 (simplifies math)
     uint256 discountDelta;  // maxDiscount = minDiscount - discountDelta
                             // Expressed as 1-d - in Wad
+    uint256 fixedCost;      // Fixed amount in USDC for each trade
     uint256 maxCapacity;
     uint256 usedCapacity;
   }
@@ -54,12 +58,12 @@ contract BangDEX is ISwapRouter, AccessControl {
     _grantRole(DEFAULT_ADMIN_ROLE, admin);
   }
 
-  function _getSlotIndex(uint256 timestamp) internal view returns (SlotIndex) {
-    return SlotIndex.wrap((timestamp / slotSize) << 128 + timestamp / slotSize);
+  function _getSlotIndex(uint256 slotSize_, uint256 slot) internal pure returns (SlotIndex) {
+    return SlotIndex.wrap(slotSize_ << 128 + slot);
   }
 
   function _getMarket(IERC20Metadata token) internal view returns (MarketState storage ret) {
-    ret = markets[token][_getSlotIndex(block.timestamp)];
+    ret = markets[token][_getSlotIndex(slotSize, block.timestamp / slotSize)];
   }
 
   function _getDiscount(MarketState storage market, uint256 amountToBuy) internal view returns (uint256 discount) {
@@ -83,12 +87,7 @@ contract BangDEX is ISwapRouter, AccessControl {
     ILiquidator liquidator = liquidators[IERC20Metadata(params.tokenIn)];
     require(address(liquidator) != address(0), "The token is not supported");
 
-    uint256 oraclePrice = priceOracle.getCurrentPrice(IERC20Metadata(params.tokenIn), payToken);
-
-    MarketState storage market = _getMarket(IERC20Metadata(params.tokenIn));
-    uint256 discount = _getDiscount(market, params.amountIn);
-
-    amountOut = params.amountIn.mulDiv(oraclePrice, WAD).mulDiv(discount, WAD);
+    amountOut = computeAmountOut(IERC20Metadata(params.tokenIn), params.amountIn);
 
     require(amountOut >= params.amountOutMinimum, "The output amount is less minimum acceptable");
 
@@ -96,6 +95,15 @@ contract BangDEX is ISwapRouter, AccessControl {
     IERC20Metadata(params.tokenIn).safeTransferFrom(msg.sender, address(liquidator), params.amountIn);
     liquidator.liquidate(params.tokenIn, params.amountIn, amountOut);
     _sendToRiskHub(IERC20Metadata(params.tokenIn), params.amountIn, amountOut);
+  }
+
+  function computeAmountOut(IERC20Metadata tokenIn, uint256 amountIn) public view returns (uint256 amountOut) {
+    uint256 oraclePrice = priceOracle.getCurrentPrice(tokenIn, payToken);
+
+    MarketState storage market = _getMarket(tokenIn);
+    uint256 discount = _getDiscount(market, amountIn);
+
+    return amountIn.mulDiv(oraclePrice, WAD).mulDiv(discount, WAD) - market.fixedCost;
   }
 
   function _sendToRiskHub(IERC20Metadata tokenIn, uint256 amountIn, uint256 amountOut) internal {
@@ -124,6 +132,18 @@ contract BangDEX is ISwapRouter, AccessControl {
 
   function setLiquidator(IERC20Metadata token, ILiquidator newLiquidator) external onlyRole(LIQUIDATOR_ADMIN_ROLE) {
     liquidators[token] = newLiquidator;
+    // TODO: emit event
+  }
+
+  function setMarketParameters(IERC20Metadata token, uint256 slotSize_, uint256 slot, uint256 minDiscount, uint256
+                               discountDelta, uint256 maxCapacity, uint256 fixedCost) external onlyRole(MARKET_ADMIN_ROLE) {
+    SlotIndex slotIndex = _getSlotIndex(slotSize_, slot);
+    MarketState storage newState = markets[token][slotIndex];
+    newState.minDiscount = minDiscount;
+    newState.discountDelta = discountDelta;
+    newState.maxCapacity = maxCapacity;
+    newState.fixedCost = fixedCost;
+    // usedCapacity remains unchanged. As zero if it's a new market, otherwise the previous value remains
     // TODO: emit event
   }
 
