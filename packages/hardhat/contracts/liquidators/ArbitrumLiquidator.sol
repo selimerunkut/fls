@@ -3,7 +3,7 @@ pragma solidity ^0.8.10;
 
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import {ILiquidator} from "./interfaces/ILiquidator.sol";
+import {ILiquidator} from "../interfaces/ILiquidator.sol";
 import {ISwapRouter} from "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
 
 /// @title ArbitrumLiquidator
