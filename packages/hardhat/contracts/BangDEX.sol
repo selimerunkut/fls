@@ -8,6 +8,9 @@ import {IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/extensions/IER
 import {Math} from "@openzeppelin/contracts/utils/math/Math.sol";
 import {IPriceOracle} from "./interfaces/IPriceOracle.sol";
 import {ILiquidator} from "./interfaces/ILiquidator.sol";
+import {IBridge} from "./interfaces/IBridge.sol";
+import {IRiskHub} from "./interfaces/IRiskHub.sol";
+import {IBangDEX} from "./interfaces/IBangDEX.sol";
 
 /**
  * @title BangDEX
@@ -17,16 +20,20 @@ import {ILiquidator} from "./interfaces/ILiquidator.sol";
  *         Colaborates with liquidators that are the ones that later (probably asynchronously and cross-chain) will
  *         liquidate the tokens.
  */
-contract BangDEX is ISwapRouter, AccessControl {
+contract BangDEX is ISwapRouter, AccessControl, IBangDEX {
   using SafeERC20 for IERC20Metadata;
   using Math for uint256;
 
   bytes32 public constant SET_SLOT_SIZE_ROLE = keccak256("SET_SLOT_SIZE_ROLE");
   bytes32 public constant MARKET_ADMIN_ROLE = keccak256("MARKET_ADMIN_ROLE");
   bytes32 public constant ORACLE_ADMIN_ROLE = keccak256("ORACLE_ADMIN_ROLE");
+  // RISK_HUB_ROLE is the role that sends the message that were sent cross-chain from the RiskHub
+  bytes32 public constant RISK_HUB_ROLE = keccak256("RISK_HUB_ROLE");
   bytes32 public constant LIQUIDATOR_ADMIN_ROLE = keccak256("LIQUIDATOR_ADMIN_ROLE");
   uint256 public constant WAD = 1e18;
 
+  address public immutable riskHub;
+  uint32 public immutable riskHubChainId;
   IERC20Metadata public immutable payToken;  // USDC or other token that will use to pay for the acquired tokens
   uint256 public slotSize;  // Duration in seconds of the time slots
 
@@ -47,11 +54,15 @@ contract BangDEX is ISwapRouter, AccessControl {
 
   mapping(IERC20Metadata => ILiquidator) public liquidators;
 
+  IBridge public bridge;
   IPriceOracle public priceOracle;
 
   error NotImplemented();
 
-  constructor(IERC20Metadata payToken_, IPriceOracle priceOracle_, uint256 slotSize_, address admin) {
+  constructor(uint32 riskHubChainId_, address riskHub_, IBridge bridge_, IERC20Metadata payToken_, IPriceOracle priceOracle_, uint256 slotSize_, address admin) {
+    riskHub = riskHub_;
+    riskHubChainId = riskHubChainId_;
+    bridge = bridge_;
     payToken = payToken_;
     priceOracle = priceOracle_;
     slotSize = slotSize_;
@@ -94,7 +105,7 @@ contract BangDEX is ISwapRouter, AccessControl {
     payToken.safeTransfer(params.recipient, amountOut);
     IERC20Metadata(params.tokenIn).safeTransferFrom(msg.sender, address(liquidator), params.amountIn);
     liquidator.liquidate(params.tokenIn, params.amountIn, amountOut);
-    _sendToRiskHub(IERC20Metadata(params.tokenIn), params.amountIn, amountOut);
+    _notifyTradeToRiskHub(IERC20Metadata(params.tokenIn), params.amountIn, amountOut);
   }
 
   function computeAmountOut(IERC20Metadata tokenIn, uint256 amountIn) public view returns (uint256 amountOut) {
@@ -106,8 +117,15 @@ contract BangDEX is ISwapRouter, AccessControl {
     return amountIn.mulDiv(oraclePrice, WAD).mulDiv(discount, WAD) - market.fixedCost;
   }
 
-  function _sendToRiskHub(IERC20Metadata tokenIn, uint256 amountIn, uint256 amountOut) internal {
-    // TODO
+  function _notifyTradeToRiskHub(IERC20Metadata tokenIn, uint256 amountIn, uint256 amountOut) internal {
+    bytes memory message = abi.encodeWithSelector(IRiskHub.tradeFromDex.selector, block.chainid, block.timestamp, tokenIn,
+                                                  amountIn, amountOut);
+    bridge.callCrossChain(riskHubChainId, riskHub, message);
+  }
+
+  function sendToRiskHub(uint256 amount) onlyRole(RISK_HUB_ROLE) external {
+    payToken.approve(address(bridge), amount);
+    bridge.transferToken(payToken, riskHubChainId, riskHub, amount);
   }
 
   /**

@@ -3,7 +3,7 @@ pragma solidity ^0.8.10;
 
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import {ILiquidator} from "./interfaces/ILiquidator.sol";
+import {ILiquidator} from "../interfaces/ILiquidator.sol";
 import {ISwapRouter} from "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
 
 /// @title ArbitrumLiquidator
@@ -40,7 +40,7 @@ contract ArbitrumLiquidator is ILiquidator {
         require(assetAmount > 0, "Asset amount must be greater than zero");
 
         // Approve the Uniswap router to spend the asset
-        IERC20(asset).safeApprove(address(swapRouter), assetAmount);
+        IERC20(asset).approve(address(swapRouter), assetAmount);
 
         // Define the swap parameters
         ISwapRouter.ExactInputSingleParams memory params = ISwapRouter.ExactInputSingleParams({

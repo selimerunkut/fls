@@ -7,14 +7,16 @@ import {ISwapRouter} from "@uniswap/v3-periphery/contracts/interfaces/ISwapRoute
 import {IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 import {Math} from "@openzeppelin/contracts/utils/math/Math.sol";
 import {IPriceOracle} from "./interfaces/IPriceOracle.sol";
-import {ILiquidator} from "./interfaces/ILiquidator.sol";
+import {IBridge} from "./interfaces/IBridge.sol";
+import {IRiskHub} from "./interfaces/IRiskHub.sol";
+import {IBangDEX} from "./interfaces/IBangDEX.sol";
 
 /**
  * @title RiskHub
  * @notice Contract that actually concentrates the risk of all the Bang protocol, receiving notification of
  *         swaps from different chains and refunding them.
  */
-contract RiskHub is AccessControl {
+contract RiskHub is AccessControl, IRiskHub {
   using SafeERC20 for IERC20Metadata;
 
   bytes32 public constant DEX_ADMIN_ROLE = keccak256("DEX_ADMIN_ROLE");
@@ -24,6 +26,7 @@ contract RiskHub is AccessControl {
   uint256 public constant WAD = 1e18;
 
   IERC20Metadata public immutable payToken;  // USDC or other token that will use to pay for the acquired tokens
+  IBridge public bridge;
 
   struct DEX {
     address bangDex;
@@ -35,8 +38,9 @@ contract RiskHub is AccessControl {
 
   error NotImplemented();
 
-  constructor(IERC20Metadata payToken_, address admin) {
+  constructor(IERC20Metadata payToken_, IBridge bridge_, address admin) {
     payToken = payToken_;
+    bridge = bridge_;
     _grantRole(DEFAULT_ADMIN_ROLE, admin);
   }
 
@@ -57,11 +61,17 @@ contract RiskHub is AccessControl {
    * Sends money to a DEX to increase its liquidity
    */
   function sendToDex(uint32 chainId, uint256 amount) external onlyRole(DEX_LIQUIDITY_ROLE) {
-    // TODO
+    address target = address(dexes[chainId].bangDex);
+    require(target != address(0), "Dex doesn't exists");
+    payToken.approve(address(bridge), amount);
+    bridge.transferToken(payToken, chainId, target, amount);
   }
 
   function withdrawFromDex(uint32 chainId, uint256 amount) external onlyRole(DEX_LIQUIDITY_ROLE) {
-    // TODO
+    address target = address(dexes[chainId].bangDex);
+    require(target != address(0), "Dex doesn't exists");
+    bytes memory message = abi.encodeWithSelector(IBangDEX.sendToRiskHub.selector, amount);
+    bridge.callCrossChain(chainId, target, message);
   }
 
   /**
