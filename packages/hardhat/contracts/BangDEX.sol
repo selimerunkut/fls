@@ -2,10 +2,10 @@
 pragma solidity ^0.8.0;
 
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
-import {SafeCast} from "@openzeppelin/contracts/utils/math/SafeCast.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {ISwapRouter} from "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
 import {IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
+import {Math} from "@openzeppelin/contracts/utils/math/Math.sol";
 import {IPriceOracle} from "./interfaces/IPriceOracle.sol";
 import {ILiquidator} from "./interfaces/ILiquidator.sol";
 
@@ -16,12 +16,13 @@ import {ILiquidator} from "./interfaces/ILiquidator.sol";
  */
 contract BangDEX is ISwapRouter, AccessControl {
   using SafeERC20 for IERC20Metadata;
-  using SafeCast for uint256;
+  using Math for uint256;
 
   bytes32 public constant SET_SLOT_SIZE_ROLE = keccak256("SET_SLOT_SIZE_ROLE");
   bytes32 public constant MARKET_ADMIN_ROLE = keccak256("MARKET_ADMIN_ROLE");
   bytes32 public constant ORACLE_ADMIN_ROLE = keccak256("ORACLE_ADMIN_ROLE");
   bytes32 public constant LIQUIDATOR_ADMIN_ROLE = keccak256("LIQUIDATOR_ADMIN_ROLE");
+  uint256 public constant WAD = 1e18;
 
   IERC20Metadata public immutable payToken;  // USDC or other token that will use to pay for the acquired tokens
   uint256 public slotSize;  // Duration in seconds of the time slots
@@ -87,7 +88,7 @@ contract BangDEX is ISwapRouter, AccessControl {
     MarketState storage market = _getMarket(IERC20Metadata(params.tokenIn));
     uint256 discount = _getDiscount(market, params.amountIn);
 
-    amountOut = params.amountIn * oraclePrice * discount;
+    amountOut = params.amountIn.mulDiv(oraclePrice, WAD).mulDiv(discount, WAD);
 
     require(amountOut >= params.amountOutMinimum, "The output amount is less minimum acceptable");
 
