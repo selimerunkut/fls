@@ -40,7 +40,7 @@ contract ArbitrumLiquidator is ILiquidator {
         require(assetAmount > 0, "Asset amount must be greater than zero");
 
         // Approve the Uniswap router to spend the asset
-        IERC20(asset).safeApprove(address(swapRouter), assetAmount);
+        IERC20(asset).approve(address(swapRouter), assetAmount);
 
         // Define the swap parameters
         ISwapRouter.ExactInputSingleParams memory params = ISwapRouter.ExactInputSingleParams({
