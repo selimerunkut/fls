@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.0;
 
-import {WadRayMath} from "./dependencies/WadRayMath.sol";
-import {IPriceOracle} from "./interfaces/IPriceOracle.sol";
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {SafeCast} from "@openzeppelin/contracts/utils/math/SafeCast.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {ISwapRouter} from "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
 import {IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
+import {IPriceOracle} from "./interfaces/IPriceOracle.sol";
+import {ILiquidator} from "./interfaces/ILiquidator.sol";
 
 /**
  * @title P2PSwapRouter
@@ -16,7 +16,6 @@ import {IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/extensions/IER
  */
 contract BangDEX is ISwapRouter, AccessControl {
   using SafeERC20 for IERC20Metadata;
-  using WadRayMath for uint256;
   using SafeCast for uint256;
 
   bytes32 public constant SET_SLOT_SIZE_ROLE = keccak256("SET_SLOT_SIZE_ROLE");
@@ -28,44 +27,43 @@ contract BangDEX is ISwapRouter, AccessControl {
   uint256 public slotSize;  // Duration in seconds of the time slots
 
   struct MarketState {
-    uint256 minDiscount;    // in wad - Expressed as 1-d, so for 2% this should be 0.98 (simplifies math)  
-    uint256 discountDelta;  // maxDiscount = minDiscount - discountDelta  
+    uint256 minDiscount;    // in wad - Expressed as 1-d, so for 2% this should be 0.98 (simplifies math)
+    uint256 discountDelta;  // maxDiscount = minDiscount - discountDelta
                             // Expressed as 1-d - in Wad
     uint256 maxCapacity;
     uint256 usedCapacity;
-  };
-
-  // Struct used to have 
-  struct SlotIndex {
-    uint128 slotSize;
-    uint128 slot;  // block.timestamp / slotSize will match this
   }
- 
+
+  // Struct used to have
+  type SlotIndex is uint256;  // slotSize << 128 + block.timestamp / slotSize
+
   // Token Address => Slot => MarketState
-  mapping(IERC20Metadata => SlotIndex => MarketState) public markets;
-  
+  mapping(IERC20Metadata => mapping (SlotIndex => MarketState)) public markets;
+
   mapping(IERC20Metadata => ILiquidator) public liquidators;
 
   IPriceOracle public priceOracle;
-  
+
   error NotImplemented();
 
-  constructor(IERC20Metadata payToken_, IPriceOracle priceOracle_, uint256 slotSize, address admin) {
+  constructor(IERC20Metadata payToken_, IPriceOracle priceOracle_, uint256 slotSize_, address admin) {
     payToken = payToken_;
     priceOracle = priceOracle_;
     slotSize = slotSize_;
     _grantRole(DEFAULT_ADMIN_ROLE, admin);
   }
 
-  function _getMarket(IERC20Metadata token) returns (MarketState storage ret) {
-    SlotIndex index = SlotIndex({slotSize: slotSize, slot: block.timestamp / slotSize});
-    ret = markets[token][index];
+  function _getSlotIndex(uint256 timestamp) internal view returns (SlotIndex) {
+    return SlotIndex.wrap((timestamp / slotSize) << 128 + timestamp / slotSize);
   }
 
-  function _getDiscount(IERC20Metadata token, uint256 amountToBuy) returns (uint256 discount) {
+  function _getMarket(IERC20Metadata token) internal view returns (MarketState storage ret) {
+    ret = markets[token][_getSlotIndex(block.timestamp)];
+  }
+
+  function _getDiscount(MarketState storage market, uint256 amountToBuy) internal view returns (uint256 discount) {
     // Already fails if market doesn't exist (zero div), but a custom error would be better
-    MarketState storage market = _getMarket(token);
-    discount = market.minDiscount - market.discountDelta * (market.usedCapacity + amountOut) / market.maxCapacity;
+    discount = market.minDiscount - market.discountDelta * (market.usedCapacity + amountToBuy) / market.maxCapacity;
   }
 
   /**
@@ -79,23 +77,28 @@ contract BangDEX is ISwapRouter, AccessControl {
     require(params.recipient != address(0), "Recipient cannot be zero address");
     require(params.deadline >= block.timestamp, "Deadline in the past");
     require(params.amountIn > 0, "amountIn cannot be zero");
-    
-    require(params.tokenOut == payToken, "We can swap only against payToken");
 
-    uint256 oraclePrice = priceOracle.getCurrentPrice(params.tokenIn, payToken);
+    require(IERC20Metadata(params.tokenOut) == payToken, "We can swap only against payToken");
+    ILiquidator liquidator = liquidators[IERC20Metadata(params.tokenIn)];
+    require(address(liquidator) != address(0), "The token is not supported");
 
-    uint256 discount = _getDiscount(params.tokenIn, params.amountIn);
+    uint256 oraclePrice = priceOracle.getCurrentPrice(IERC20Metadata(params.tokenIn), payToken);
 
-    amountOut = 0;
+    MarketState storage market = _getMarket(IERC20Metadata(params.tokenIn));
+    uint256 discount = _getDiscount(market, params.amountIn);
 
     amountOut = params.amountIn * oraclePrice * discount;
 
-    require(amountOut >= params.amountOutMinimum, "The output amount is less than the slippage");
+    require(amountOut >= params.amountOutMinimum, "The output amount is less minimum acceptable");
 
     payToken.safeTransfer(params.recipient, amountOut);
-    IERC20Metadata(params.tokenIn).safeTransferFrom(msg.sender, liquidator, params.amountIn);
+    IERC20Metadata(params.tokenIn).safeTransferFrom(msg.sender, address(liquidator), params.amountIn);
     liquidator.liquidate(params.tokenIn, params.amountIn, amountOut);
-    _sendToRiskHub(params.tokenIn, params.amountIn, amountOut);
+    _sendToRiskHub(IERC20Metadata(params.tokenIn), params.amountIn, amountOut);
+  }
+
+  function _sendToRiskHub(IERC20Metadata tokenIn, uint256 amountIn, uint256 amountOut) internal {
+    // TODO
   }
 
   /**
@@ -104,7 +107,8 @@ contract BangDEX is ISwapRouter, AccessControl {
   function exactOutputSingle(
     ExactOutputSingleParams calldata params
   ) external payable returns (uint256 amountIn) {
-    revert NotImplemented(); // TODO
+    // TODO - Can be implemented, just need a bit more of math...
+    revert NotImplemented();
   }
 
   function setPriceOracle(IPriceOracle priceOracle_) external onlyRole(ORACLE_ADMIN_ROLE) {
