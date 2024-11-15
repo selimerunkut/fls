@@ -87,12 +87,7 @@ contract BangDEX is ISwapRouter, AccessControl {
     ILiquidator liquidator = liquidators[IERC20Metadata(params.tokenIn)];
     require(address(liquidator) != address(0), "The token is not supported");
 
-    uint256 oraclePrice = priceOracle.getCurrentPrice(IERC20Metadata(params.tokenIn), payToken);
-
-    MarketState storage market = _getMarket(IERC20Metadata(params.tokenIn));
-    uint256 discount = _getDiscount(market, params.amountIn);
-
-    amountOut = params.amountIn.mulDiv(oraclePrice, WAD).mulDiv(discount, WAD) - market.fixedCost;
+    amountOut = computeAmountOut(IERC20Metadata(params.tokenIn), params.amountIn);
 
     require(amountOut >= params.amountOutMinimum, "The output amount is less minimum acceptable");
 
@@ -100,6 +95,15 @@ contract BangDEX is ISwapRouter, AccessControl {
     IERC20Metadata(params.tokenIn).safeTransferFrom(msg.sender, address(liquidator), params.amountIn);
     liquidator.liquidate(params.tokenIn, params.amountIn, amountOut);
     _sendToRiskHub(IERC20Metadata(params.tokenIn), params.amountIn, amountOut);
+  }
+
+  function computeAmountOut(IERC20Metadata tokenIn, uint256 amountIn) public view returns (uint256 amountOut) {
+    uint256 oraclePrice = priceOracle.getCurrentPrice(tokenIn, payToken);
+
+    MarketState storage market = _getMarket(tokenIn);
+    uint256 discount = _getDiscount(market, amountIn);
+
+    return amountIn.mulDiv(oraclePrice, WAD).mulDiv(discount, WAD) - market.fixedCost;
   }
 
   function _sendToRiskHub(IERC20Metadata tokenIn, uint256 amountIn, uint256 amountOut) internal {
