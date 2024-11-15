@@ -1,0 +1,35 @@
+title Cross-Chain Liquidity and Liquidation Process
+
+RiskHub [icon: server, color: purple] > DEX [icon: cloud, color: blue]: Send USDC for liquidity
+activate RiskHub
+DEX > DEXUser [icon: user, color: green]: Swap coin for USDC
+activate DEXUser
+DEXUser --> DEX: Receive USDC
+DEX > DEXUser: Send swapped coin
+deactivate DEXUser
+
+par [label: Distribute to Liquidators] {
+  DEX > Liquidator1 [icon: tool, color: orange]: Send swapped coin
+  and {
+    DEX > Liquidator2 [icon: tool, color: orange]: Send swapped coin
+  }
+  and {
+    DEX > Liquidator3 [icon: tool, color: orange]: Send swapped coin
+  }
+}
+
+loop [label: On each chain] {
+  Liquidator1 > Chain1 [icon: cloud, color: lightblue]: Sell coin for USDC
+  Liquidator1 --> RiskHub: Send USDC
+  deactivate Liquidator1
+
+  Liquidator2 > Chain2 [icon: cloud, color: lightblue]: Sell coin for USDC
+  Liquidator2 --> RiskHub: Send USDC
+  deactivate Liquidator2
+
+  Liquidator3 > Chain3 [icon: cloud, color: lightblue]: Sell coin for USDC
+  Liquidator3 --> RiskHub: Send USDC
+  deactivate Liquidator3
+}
+
+deactivate RiskHub
