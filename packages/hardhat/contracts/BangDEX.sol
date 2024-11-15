@@ -34,6 +34,7 @@ contract BangDEX is ISwapRouter, AccessControl {
     uint256 minDiscount;    // in wad - Expressed as 1-d, so for 2% this should be 0.98 (simplifies math)
     uint256 discountDelta;  // maxDiscount = minDiscount - discountDelta
                             // Expressed as 1-d - in Wad
+    uint256 fixedCost;      // Fixed amount in USDC for each trade
     uint256 maxCapacity;
     uint256 usedCapacity;
   }
@@ -91,7 +92,7 @@ contract BangDEX is ISwapRouter, AccessControl {
     MarketState storage market = _getMarket(IERC20Metadata(params.tokenIn));
     uint256 discount = _getDiscount(market, params.amountIn);
 
-    amountOut = params.amountIn.mulDiv(oraclePrice, WAD).mulDiv(discount, WAD);
+    amountOut = params.amountIn.mulDiv(oraclePrice, WAD).mulDiv(discount, WAD) - market.fixedCost;
 
     require(amountOut >= params.amountOutMinimum, "The output amount is less minimum acceptable");
 
@@ -131,12 +132,13 @@ contract BangDEX is ISwapRouter, AccessControl {
   }
 
   function setMarketParameters(IERC20Metadata token, uint256 slotSize_, uint256 slot, uint256 minDiscount, uint256
-                               discountDelta, uint256 maxCapacity) external onlyRole(MARKET_ADMIN_ROLE) {
+                               discountDelta, uint256 maxCapacity, uint256 fixedCost) external onlyRole(MARKET_ADMIN_ROLE) {
     SlotIndex slotIndex = _getSlotIndex(slotSize_, slot);
     MarketState storage newState = markets[token][slotIndex];
     newState.minDiscount = minDiscount;
     newState.discountDelta = discountDelta;
     newState.maxCapacity = maxCapacity;
+    newState.fixedCost = fixedCost;
     // usedCapacity remains unchanged. As zero if it's a new market, otherwise the previous value remains
     // TODO: emit event
   }
