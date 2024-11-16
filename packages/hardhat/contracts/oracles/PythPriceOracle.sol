@@ -42,7 +42,6 @@ contract PythPriceOracle is IPriceOracle, Ownable2Step {
       IERC20 tokenIn,
       IERC20 tokenOut
     ) external payable {
-        // TODO: Check that the priceUpdate correspond to the tokenIn and tokenOut feed
         PythPriceFeed memory feed = tokenPairPriceFeed[tokenIn][tokenOut];
         // TODO: Add custom errors
         require(feed.id == bytes32(priceUpdate[0]), "Wrong feed");
