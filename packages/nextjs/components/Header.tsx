@@ -89,7 +89,7 @@ export const Header = () => {
           </div>
           <div className="flex flex-col">
             <span className="font-bold leading-tight">Bang</span>
-            <span className="text-xs">Your cross-chain <br/> degen dex</span>
+            <span className="text-xs">Swap instantly, anywhere.</span>
           </div>
         </Link>
         <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">
