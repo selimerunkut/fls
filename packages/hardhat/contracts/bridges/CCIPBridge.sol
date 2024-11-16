@@ -23,7 +23,7 @@ contract CCIPBridge is AccessControl, ITransferBridge {
 
   bytes32 public constant CHAIN_ADMIN_ROLE = keccak256("CHAIN_ADMIN_ROLE");
 
-  // Code Adapted following docs in https://docs.chain.link/ccip/tutorials/usdc
+  // Code Adapted following docs in https://docs.chain.link/ccip/tutorials/transfer-tokens-from-contract
 
   // Used when the receiver address is 0 for a given destination chain.
   error NoReceiverOnDestinationChain(uint64 destinationChainSelector);
@@ -80,6 +80,44 @@ contract CCIPBridge is AccessControl, ITransferBridge {
     // TODO emit event
   }
 
+  /// @notice Construct a CCIP message.
+  /// @dev This function will create an EVM2AnyMessage struct with all the necessary information for tokens transfer.
+  /// @param _receiver The address of the receiver.
+  /// @param _token The token to be transferred.
+  /// @param _amount The amount of the token to be transferred.
+  /// @param _feeTokenAddress The address of the token used for fees. Set address(0) for native gas.
+  /// @return Client.EVM2AnyMessage Returns an EVM2AnyMessage struct which contains information for sending a CCIP message.
+  function _buildCCIPMessage(
+    address _receiver,
+    address _token,
+    uint256 _amount,
+    address _feeTokenAddress
+  ) private pure returns (Client.EVM2AnyMessage memory) {
+    // Set the token amounts
+    Client.EVMTokenAmount[] memory tokenAmounts = new Client.EVMTokenAmount[](1);
+    tokenAmounts[0] = Client.EVMTokenAmount({ token: _token, amount: _amount });
+
+    // Create an EVM2AnyMessage struct in memory with necessary information for sending a cross-chain message
+    return
+      Client.EVM2AnyMessage({
+        receiver: abi.encode(_receiver), // ABI-encoded receiver address
+        data: "", // No data
+        tokenAmounts: tokenAmounts, // The amount and type of token being transferred
+        extraArgs: Client._argsToBytes(
+          // Additional arguments, setting gas limit and allowing out-of-order execution.
+          // Best Practice: For simplicity, the values are hardcoded. It is advisable to use a more dynamic approach
+          // where you set the extra arguments off-chain. This allows adaptation depending on the lanes, messages,
+          // and ensures compatibility with future CCIP upgrades. Read more about it here: https://docs.chain.link/ccip/best-practices#using-extraargs
+          Client.EVMExtraArgsV2({
+            gasLimit: 0, // Gas limit for the callback on the destination chain
+            allowOutOfOrderExecution: true // Allows the message to be executed out of order relative to other messages from the same sender
+          })
+        ),
+        // Set the feeToken to a feeTokenAddress, indicating specific asset will be used for fees
+        feeToken: _feeTokenAddress
+      });
+  }
+
   function transferToken(IERC20Metadata token, uint64 chainId, address target, uint256 amount) external {
     ChainConfig storage config = chains[chainId];
 
@@ -88,30 +126,12 @@ contract CCIPBridge is AccessControl, ITransferBridge {
     if (amount == 0) revert AmountIsZero();
 
     // Create an EVM2AnyMessage struct in memory with necessary information for sending a cross-chain message
-    // address(linkToken) means fees are paid in LINK
-    Client.EVMTokenAmount[] memory tokenAmounts = new Client.EVMTokenAmount[](1);
-    tokenAmounts[0] = Client.EVMTokenAmount({ token: address(token), amount: amount });
-    // Create an EVM2AnyMessage struct in memory with necessary information for sending a cross-chain message
-    Client.EVM2AnyMessage memory evm2AnyMessage = Client.EVM2AnyMessage({
-      receiver: abi.encode(config.receiver), // ABI-encoded receiver address
-      // Encode the function selector and the arguments of the stake function
-      data: abi.encodeWithSelector(IStaker.stake.selector, target, amount),
-      tokenAmounts: tokenAmounts, // The amount and type of token being transferred
-      extraArgs: Client._argsToBytes(
-        // Additional arguments, setting gas limit and allowing out-of-order execution.
-        // Best Practice: For simplicity, the values are hardcoded. It is advisable to use a more dynamic approach
-        // where you set the extra arguments off-chain. This allows adaptation depending on the lanes, messages,
-        // and ensures compatibility with future CCIP upgrades.
-        // Read more about it here: https://docs.chain.link/ccip/best-practices#using-extraargs
-        Client.EVMExtraArgsV2({
-          gasLimit: config.gasLimit, // Gas limit for the callback on the destination chain
-          // Allows the message to be executed out of order relative to other messages from the same sender
-          allowOutOfOrderExecution: true
-        })
-      ),
-      // Set the feeToken to a feeTokenAddress, indicating specific asset will be used for fees
-      feeToken: address(linkToken)
-    });
+    Client.EVM2AnyMessage memory evm2AnyMessage = _buildCCIPMessage(
+      config.receiver,
+      address(token),
+      amount,
+      address(linkToken)
+    );
 
     // Get the fee required to send the CCIP message
     uint256 fees = ccipRouter.getFee(config.chainSelector, evm2AnyMessage);

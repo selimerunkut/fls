@@ -1,6 +1,6 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
-import { MockBridge } from "../typechain-types";
+import { CCIPBridge, MockBridge } from "../typechain-types";
 import { ethers } from "hardhat";
 import { getNetworkConfig } from "../utils/networkConfig";
 
@@ -8,25 +8,20 @@ const deployRiskHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
-  const bridgeContract = (await ethers.getContract("MockBridge")) as MockBridge;
+  const bridge = await ethers.getContract("CCIPBridge");
 
   const config = getNetworkConfig(hre);
 
-  const payTokenAddress = config.payToken; // USDC token address (IERC20Metadata)
-  console.log("USDC address:", payTokenAddress);
-
-  const adminAddress = deployer; // Admin address, defaulting to deployer
-
-  if (!payTokenAddress || !bridgeContract.target) {
-    throw new Error("Please provide valid addresses for payToken and bridge.");
+  if (!config.isHub) {
+    return;
   }
 
   // Deploy the RiskHub contract
   const deployment = await deploy("RiskHub", {
     from: deployer,
-    args: [payTokenAddress, bridgeContract.target, adminAddress], // Constructor arguments
+    args: [config.payToken, bridge.target, deployer],
     log: true,
-    autoMine: true, // Automatically mine the deployment transaction
+    autoMine: true,
   });
 
   console.log("RiskHub deployed to:", deployment.address);

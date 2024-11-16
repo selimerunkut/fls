@@ -2686,6 +2686,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pythnetwork/hermes-client@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "@pythnetwork/hermes-client@npm:1.2.0"
+  dependencies:
+    "@zodios/core": ^10.9.6
+    eventsource: ^2.0.2
+    zod: ^3.23.8
+  checksum: 50bc7af2eb8df1733779810a8671fd6e223d9968160a330aad83cf0ee83376d0f5994340e49eabd853a575114171859d40e2bca715a11df0573423c3585fef2f
+  languageName: node
+  linkType: hard
+
 "@pythnetwork/pyth-sdk-solidity@npm:^4.0.0":
   version: 4.0.0
   resolution: "@pythnetwork/pyth-sdk-solidity@npm:4.0.0"
@@ -2901,6 +2912,7 @@ __metadata:
     "@nomiclabs/hardhat-ethers": ^2.2.3
     "@nomiclabs/hardhat-solhint": ^4.0.1
     "@openzeppelin/contracts": ~5.0.2
+    "@pythnetwork/hermes-client": ^1.2.0
     "@pythnetwork/pyth-sdk-solidity": ^4.0.0
     "@typechain/ethers-v5": ~11.1.2
     "@typechain/ethers-v6": ~0.5.1
@@ -2931,6 +2943,7 @@ __metadata:
     ts-node: ~10.9.1
     typechain: ~8.3.2
     typescript: <5.6.0
+    v4-core: "https://github.com/selimerunkut/v4-core.git"
   languageName: unknown
   linkType: soft
 
@@ -2939,6 +2952,7 @@ __metadata:
   resolution: "@se-2/nextjs@workspace:packages/nextjs"
   dependencies:
     "@heroicons/react": ~2.1.5
+    "@pythnetwork/hermes-client": ^1.2.0
     "@rainbow-me/rainbowkit": 2.1.6
     "@tanstack/react-query": ~5.59.15
     "@trivago/prettier-plugin-sort-imports": ~4.3.0
@@ -2950,6 +2964,7 @@ __metadata:
     "@uniswap/v2-sdk": ~4.6.1
     abitype: 1.0.6
     autoprefixer: ~10.4.20
+    axios: ^1.7.7
     blo: ~1.2.0
     burner-connector: ~0.0.8
     daisyui: 4.12.10
@@ -4896,6 +4911,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@zodios/core@npm:^10.9.6":
+  version: 10.9.6
+  resolution: "@zodios/core@npm:10.9.6"
+  peerDependencies:
+    axios: ^0.x || ^1.0.0
+    zod: ^3.x
+  checksum: 482a80bd4da661734f9ed276a92d9275fa1b76011bef26ede4a851e4c495d9103e6c9456074b9e50e4c89ad7e83fcead6ea45ffba615e6ff54b8088433ba47fc
+  languageName: node
+  linkType: hard
+
 "JSONStream@npm:1.3.2":
   version: 1.3.2
   resolution: "JSONStream@npm:1.3.2"
@@ -5552,7 +5577,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.6.7, axios@npm:^1.7.2":
+"axios@npm:^1.6.7, axios@npm:^1.7.2, axios@npm:^1.7.7":
   version: 1.7.7
   resolution: "axios@npm:1.7.7"
   dependencies:
@@ -8479,6 +8504,13 @@ __metadata:
   version: 3.3.0
   resolution: "events@npm:3.3.0"
   checksum: f6f487ad2198aa41d878fa31452f1a3c00958f46e9019286ff4787c84aac329332ab45c9cdc8c445928fc6d7ded294b9e005a7fce9426488518017831b272780
+  languageName: node
+  linkType: hard
+
+"eventsource@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "eventsource@npm:2.0.2"
+  checksum: c0072d972753e10c705d9b2285b559184bf29d011bc208973dde9c8b6b8b7b6fdad4ef0846cecb249f7b1585e860fdf324cbd2ac854a76bc53649e797496e99a
   languageName: node
   linkType: hard
 
@@ -16029,6 +16061,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"v4-core@https://github.com/selimerunkut/v4-core.git":
+  version: 1.0.0
+  resolution: "v4-core@https://github.com/selimerunkut/v4-core.git#commit=fbebdf4b78339fb6f4c2567b5adaab1be9633587"
+  checksum: 967e3444da6045877e9e68075ab8d8423d47c4aa3c2158739f0300daac409c1a5a331e4f1edcc772394715e020dca178d798ad953301ccf1bdace5d1de1c83b4
+  languageName: node
+  linkType: hard
+
 "v8-compile-cache-lib@npm:^3.0.1":
   version: 3.0.1
   resolution: "v8-compile-cache-lib@npm:3.0.1"
@@ -16735,6 +16774,13 @@ __metadata:
   peerDependencies:
     ethers: ~5.7.0
   checksum: 52079b973bbf74eb92c3126ec9c87010eb3dbb8f079db6714c78d2606ab874b100a2c25aabc24143099a4f2d87265a8b6924ac6032b0608322213cd65751e6d2
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.23.8":
+  version: 3.23.8
+  resolution: "zod@npm:3.23.8"
+  checksum: 15949ff82118f59c893dacd9d3c766d02b6fa2e71cf474d5aa888570c469dbf5446ac5ad562bb035bf7ac9650da94f290655c194f4a6de3e766f43febd432c5c
   languageName: node
   linkType: hard
 
