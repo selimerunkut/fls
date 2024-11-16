@@ -7,9 +7,9 @@ import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { ILiquidator } from "../interfaces/ILiquidator.sol";
 import { ISwapRouter } from "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
 
-/// @title ArbitrumLiquidator
+/// @title SwapLiquidator.sol
 /// @notice Liquidates tokens into USDC using Uniswap on Arbitrum.
-contract ArbitrumLiquidator is ILiquidator, AccessControl {
+contract SwapLiquidator is ILiquidator, AccessControl {
   using SafeERC20 for IERC20;
 
   ISwapRouter public immutable swapRouter; // Uniswap V3 Router address

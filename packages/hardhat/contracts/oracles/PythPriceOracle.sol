@@ -25,12 +25,12 @@ contract PythPriceOracle is IPriceOracle, Ownable2Step {
     pyth = IPyth(pythContract);
   }
 
-  // define an event, to make a list on withdrawing 
+  // define an event, to make a list on withdrawing
   event Withdraw(address indexed to, uint256 amount);
 
   // define a event to make a list of adding price source
-  event FeedAdded(address indexed tokenIn, address indexed tokenOut, adress indexed feedId);
-  
+  event FeedAdded(address indexed tokenIn, address indexed tokenOut, bytes32 indexed feedId);
+
   function getCurrentPrice(IERC20Metadata tokenIn, IERC20Metadata tokenOut) public view returns (uint256) {
     uint256 price = uint256(tokenPairPrice[tokenIn][tokenOut]);
     if (price == 0) {
@@ -68,7 +68,7 @@ contract PythPriceOracle is IPriceOracle, Ownable2Step {
     //to acquire the balance of this address
     uint256 balance = address(this).balance;
     //false or true
-    require(balance > 0, "No balance to withdraw")
+    require(balance > 0, "No balance to withdraw");
 
     //Emit event
     emit Withdraw(owner(), balance);
@@ -77,16 +77,14 @@ contract PythPriceOracle is IPriceOracle, Ownable2Step {
     payable(owner()).transfer(address(this).balance);
   }
 
-
   function addFeed(
     PythPriceFeed calldata priceFeed,
     IERC20Metadata tokenIn,
     IERC20Metadata tokenOut
   ) external onlyOwner {
-    // confirm the validaty 
-    require(priceFeed.id != bytes32.(0), "this feed is not work")
+    // confirm the validaty
+    require(priceFeed.id != bytes32(0), "this feed is not work");
 
-    
     tokenPairPriceFeed[tokenIn][tokenOut] = PythPriceFeed({ id: priceFeed.id, age: priceFeed.age });
 
     // Emit event

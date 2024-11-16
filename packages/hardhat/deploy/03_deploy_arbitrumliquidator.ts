@@ -18,7 +18,7 @@ const deployArbitrumLiquidator: DeployFunction = async function (hre: HardhatRun
   const riskHub = riskHubContract.target;
   console.log("riskHub contract address: ", riskHub);
 
-  const deployment = await deploy("ArbitrumLiquidator", {
+  await deploy("ArbitrumLiquidator", {
     from: deployer,
     args: [swapRouter, usdcTokenAddress, riskHub],
     log: true,
@@ -28,7 +28,7 @@ const deployArbitrumLiquidator: DeployFunction = async function (hre: HardhatRun
   // Fetch the deployed contract
   const arbitrumLiquidator = await hre.ethers.getContract("ArbitrumLiquidator", deployer);
 
-  console.log("ArbitrumLiquidator deployed to:", deployment.address);
+  console.log("ArbitrumLiquidator deployed to:", arbitrumLiquidator.address);
 };
 
 export default deployArbitrumLiquidator;
