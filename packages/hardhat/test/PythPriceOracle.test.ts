@@ -7,7 +7,7 @@ import {beforeEach} from "mocha";
 const ETH_PRICE_FEED_ID = ethers.encodeBytes32String('ETH_PRICE_FEED_ID');
 const TOKEN_PRICE = 10000000;
 
-describe.only("PythPriceOracle", function () {
+describe("PythPriceOracle", function () {
   let pyth: MockPyth;
   let pythPriceOracle: PythPriceOracle;
   let owner: HardhatEthersSigner;
