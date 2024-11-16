@@ -15,15 +15,15 @@ const deployPythPriceOracle: DeployFunction = async function (hre: HardhatRuntim
     autoMine: true,
   });
 
-  const pythPriceOracle = await hre.ethers.getContract<PythPriceOracle>("PythPriceOracle", deployer);
+  // const pythPriceOracle = await hre.ethers.getContract<PythPriceOracle>("PythPriceOracle", deployer);
 
-  for (const feed of config.pyth.feeds) {
-    await pythPriceOracle.addFeed(
-      { id: feed.id, age: feed.age },
-      feed.token,
-      config.payToken
-    );
-  }
+  // for (const feed of config.pyth.feeds) {
+  //   await pythPriceOracle.addFeed(
+  //     { id: feed.id, age: feed.age },
+  //     feed.token,
+  //     config.payToken
+  //   );
+  // }
 
 
   console.log("PythPriceOracle deployed to:", deployment.address);

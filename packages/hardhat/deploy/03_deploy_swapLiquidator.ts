@@ -11,7 +11,6 @@ const deploySwapLiquidator: DeployFunction = async function (hre: HardhatRuntime
   const { deploy } = hre.deployments;
   const config = getNetworkConfig(hre);
 
-  // Don't deploy if it's not a hub chain
   if(!config.isHub) {
     return;
   }

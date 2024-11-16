@@ -8,11 +8,10 @@ const deployRiskHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
-  const bridgeContract = (await ethers.getContract("CCIPBridge")) as CCIPBridge;
+  const bridge = await ethers.getContract("CCIPBridge");
 
   const config = getNetworkConfig(hre);
 
-  // Don't deploy if it's not a hub chain
   if(!config.isHub) {
     return;
   }
@@ -20,7 +19,7 @@ const deployRiskHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
   // Deploy the RiskHub contract
   const deployment = await deploy("RiskHub", {
     from: deployer,
-    args: [config.payToken, bridgeContract.target, deployer],
+    args: [config.payToken, bridge.target, deployer],
     log: true,
     autoMine: true,
   });
