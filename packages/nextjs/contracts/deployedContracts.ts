@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     ArbitrumLiquidator: {
-      address: "0xd31d3e1F60552ba8B35aA3Bd17c949404fdd12c4",
+      address: "0x3CFDf9646dBC385E47DC07869626Ea36BE7bA3a2",
       abi: [
         {
           inputs: [
@@ -882,7 +882,7 @@ const deployedContracts = {
       },
     },
     RiskHub: {
-      address: "0x7CA40e352B402C9800b3fedBFC63b6FE79B8Fc0B",
+      address: "0x27F9aFE3B3fCb63ae1A6c662331698F2183809bF",
       abi: [
         {
           inputs: [

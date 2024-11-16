@@ -1,7 +1,8 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
-import { RiskHub } from "../typechain-types";
+import { MockBridge } from "../typechain-types";
 import { ethers } from "hardhat";
+import { getNetworkConfig } from "../utils/networkConfig";
 
 const deployRiskHub: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await hre.getNamedAccounts();
@@ -9,10 +10,10 @@ const deployRiskHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
 
   const bridgeContract = (await ethers.getContract("MockBridge")) as MockBridge;
 
+  const config = getNetworkConfig(hre);
 
-  // Replace with the actual addresses for your network
-  // Address of the USDC token https://docs.arbitrum.io/arbitrum-bridge/usdc-arbitrum-one
-  const payTokenAddress = "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8"; // USDC token address (IERC20Metadata)
+  const payTokenAddress = config.payToken;; // USDC token address (IERC20Metadata)
+  console.log("USDC address:", payTokenAddress);
   const adminAddress = deployer; // Admin address, defaulting to deployer
 
   if (!payTokenAddress || !bridgeContract.target) {
@@ -28,10 +29,6 @@ const deployRiskHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
   });
 
   console.log("RiskHub deployed to:", deployment.address);
-
-  // Optionally, verify deployment by connecting to the contract
-  const riskHub = await ethers.getContractAt("RiskHub", deployment.address);
-  console.log("RiskHub verified at:", riskHub.address);
 };
 
 export default deployRiskHub;

@@ -32,7 +32,22 @@ yarn start
 
 Visit your app on: `http://localhost:3000`. You can interact with your smart contract using the `Debug Contracts` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
 
-### repos boilerplate
+## multi chain address reference notes
+
+addresses can be added to `packages/hardhat/deploy/utils/addresses_list.json`
+
+network name should match the `packages/hardhat/hardhat.config.ts` names, example: `arbitrumSepolia`
+
+### usdc
+https://circle.com/multi-chain-usdc
+
+### pythe oracle
+https://docs.pyth.network/price-feeds/contract-addresses/evm
+
+### uniswap router
+mainnet & testnet: `0xE592427A0AEce92De3Edee1F18E0157C05861564`
+
+## used boilerplate
 
 #### 🏗 Scaffold-ETH 2
 
