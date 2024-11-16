@@ -5,7 +5,7 @@ import "../interfaces/IPriceOracle.sol";
 import "@openzeppelin/contracts/access/Ownable2Step.sol";
 import "@pythnetwork/pyth-sdk-solidity/IPyth.sol";
 import "@pythnetwork/pyth-sdk-solidity/PythStructs.sol";
-import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 
 /**
  * This contract assumes that the tokenOut is a token that
@@ -18,14 +18,14 @@ contract PythPriceOracle is IPriceOracle, Ownable2Step {
     }
 
     IPyth public pyth;
-    mapping (IERC20 tokenIn => mapping(IERC20 tokenOut => PythPriceFeed feed)) public tokenPairPriceFeed;
-    mapping (IERC20 tokenIn => mapping(IERC20 tokenOut => int256 price)) public tokenPairPrice;
+    mapping (IERC20Metadata tokenIn => mapping(IERC20Metadata tokenOut => PythPriceFeed feed)) public tokenPairPriceFeed;
+    mapping (IERC20Metadata tokenIn => mapping(IERC20Metadata tokenOut => int256 price)) public tokenPairPrice;
 
     constructor(address owner, address pythContract) Ownable(owner) {
         pyth = IPyth(pythContract);
     }
 
-    function getCurrentPrice(IERC20 tokenIn, IERC20 tokenOut) public view returns (uint256) {
+    function getCurrentPrice(IERC20Metadata tokenIn, IERC20Metadata tokenOut) public view returns (uint256) {
         uint256 price = uint256(tokenPairPrice[tokenIn][tokenOut]);
         if(price == 0) {
             // TODO: Throw error
@@ -39,8 +39,8 @@ contract PythPriceOracle is IPriceOracle, Ownable2Step {
     // TODO: Check what happens if anyone can update this function
     function updatePrice(
       bytes[] calldata priceUpdate,
-      IERC20 tokenIn,
-      IERC20 tokenOut
+      IERC20Metadata tokenIn,
+      IERC20Metadata tokenOut
     ) external payable {
         PythPriceFeed memory feed = tokenPairPriceFeed[tokenIn][tokenOut];
         // TODO: Add custom errors
@@ -68,8 +68,8 @@ contract PythPriceOracle is IPriceOracle, Ownable2Step {
 
     function addFeed(
         PythPriceFeed calldata priceFeed,
-        IERC20 tokenIn,
-        IERC20 tokenOut
+        IERC20Metadata tokenIn,
+        IERC20Metadata tokenOut
     ) external onlyOwner {
         // TODO: Emit event
         tokenPairPriceFeed[tokenIn][tokenOut] = PythPriceFeed({
