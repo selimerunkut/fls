@@ -32,7 +32,7 @@ const SwapWidget: React.FC = () => {
     useEffect(() => {
         const timer = setTimeout(() => {
             Promise.all([
-                fetchPriceFromBang(selectedToken.id, provider),
+                fetchPriceFromBang(fromAmount, provider),
                 fetchPriceFromPyth(selectedToken.id)]
             ).then(([bangPrice, pythPrice]) => {
                 if(!selectedToken || fromAmount === 0) {

@@ -65,8 +65,9 @@ contract RiskHub is AccessControl, IRiskHub {
 
   /**
    * Sends money to a DEX to increase its liquidity
+   // TODO: Add onlyRole(DEX_LIQUIDITY_ROLE)
    */
-  function sendToDex(uint64 chainId, uint256 amount) external onlyRole(DEX_LIQUIDITY_ROLE) {
+  function sendToDex(uint64 chainId, uint256 amount) external {
     address target = address(dexes[chainId].bangDex);
     require(target != address(0), "Dex doesn't exists");
     payToken.approve(address(bridge), amount);

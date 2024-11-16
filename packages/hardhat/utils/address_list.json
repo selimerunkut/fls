@@ -22,7 +22,7 @@
     },
     "hub": {
       "id": 421614,
-      "address": "0x1B8eE75836D66a68fEAdB48009BE1049227e9eC7"
+      "address": "0xC24FF1A3821b1d1C6bC91ab20C3cdf58320A2191"
     },
     "isHub": true
   },
@@ -58,7 +58,7 @@
     },
     "hub": {
       "id": 421614,
-      "address": "0xb07F038394Fc0cE3cE80A643d79a0F9fa772a2A4"
+      "address": "0xC24FF1A3821b1d1C6bC91ab20C3cdf58320A2191"
     },
     "isDex": true
   },

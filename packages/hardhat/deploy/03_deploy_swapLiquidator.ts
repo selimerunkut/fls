@@ -22,7 +22,7 @@ const deploySwapLiquidator: DeployFunction = async function (hre: HardhatRuntime
 
   await deploy("SwapLiquidator", {
     from: deployer,
-    args: [p2PSwapRouterContract.target, config.payToken, riskHubContract.target, deployer],
+    args: [p2PSwapRouterContract.target, config.payToken, riskHubContract.target],
     log: true,
     autoMine: true,
   });

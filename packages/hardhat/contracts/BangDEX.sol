@@ -87,9 +87,11 @@ contract BangDEX is ISwapRouter, AccessControl, IBangDEX {
     ret = markets[token][_getSlotIndex(slotSize, block.timestamp / slotSize)];
   }
 
-  function _getDiscount(MarketState storage market, uint256 amountToBuy) internal view returns (uint256 discount) {
+  function getDiscount(MarketState storage market, uint256 amountToBuy) internal view returns (uint256 discount) {
     // Already fails if market doesn't exist (zero div), but a custom error would be better
-    discount = market.minDiscount - (market.discountDelta * (market.usedCapacity + amountToBuy)) / market.maxCapacity;
+    discount = market.minDiscount - market.discountDelta.mulDiv(
+      (market.usedCapacity + amountToBuy).mulDiv(market.maxCapacity, WAD)
+    , WAD);
   }
 
   /**
@@ -121,7 +123,7 @@ contract BangDEX is ISwapRouter, AccessControl, IBangDEX {
     uint256 oraclePrice = priceOracle.getCurrentPrice(tokenIn, payToken);
 
     MarketState storage market = _getMarket(tokenIn);
-    uint256 discount = _getDiscount(market, amountIn);
+    uint256 discount = getDiscount(market, amountIn);
 
     return amountIn.mulDiv(oraclePrice, WAD).mulDiv(discount, WAD) - market.fixedCost;
   }

@@ -1,9 +1,9 @@
-import {TokenId} from "~~/models/Token";
 import {ethers} from "ethers";
 import {BangContractAddress} from "~~/utils/bang/index";
 import {TokenAddress} from "~~/utils/token";
 
-export async function fetchPriceFromBang(tokenId: TokenId, provider: any): Promise<string> {
+export async function fetchPriceFromBang(fromAmount: number, provider: any): Promise<number> {
+    if(fromAmount === 0) return 0;
     // Replace with the deployed contract address
     const contractAddress = BangContractAddress;
 
@@ -16,7 +16,7 @@ export async function fetchPriceFromBang(tokenId: TokenId, provider: any): Promi
     const contract = new ethers.Contract(contractAddress, contractABI, provider);
 
     // Define your token address and amount
-    const amountIn = ethers.parseUnits("10", 6); // Replace with the amount you want to test
-    const amountOut = await contract.computeAmountOut(TokenAddress, amountIn);
-    return ethers.formatUnits(amountOut, 18);
+    const amountIn = Number(ethers.parseUnits(fromAmount.toString(), 6)); // Replace with the amount you want to test
+    const amountOut = Number(await contract.computeAmountOut(TokenAddress, amountIn));
+    return amountOut / amountIn;
 }
