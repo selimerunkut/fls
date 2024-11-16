@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import { AccessControl } from "@openzeppelin/contracts/access/AccessControl.sol";
 import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import { IERC20Metadata } from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
-import { IBridge } from "../interfaces/IBridge.sol";
+import { ITransferBridge } from "../interfaces/ITransferBridge.sol";
 import { IRouterClient } from "@chainlink/contracts-ccip/src/v0.8/ccip/interfaces/IRouterClient.sol";
 import { Client } from "@chainlink/contracts-ccip/src/v0.8/ccip/libraries/Client.sol";
 
@@ -18,7 +18,7 @@ interface IStaker {
  * @title CCIPBridge
  * @notice Implementation of the bridge using CCIP Chainlink protocol.
  */
-contract CCIPBridge is AccessControl, IBridge {
+contract CCIPBridge is AccessControl, ITransferBridge {
   using SafeERC20 for IERC20Metadata;
 
   bytes32 public constant CHAIN_ADMIN_ROLE = keccak256("CHAIN_ADMIN_ROLE");
@@ -51,7 +51,8 @@ contract CCIPBridge is AccessControl, IBridge {
 
   struct ChainConfig {
     address receiver;
-    uint64 gasLimit;
+    uint64 chainSelector;
+    uint32 gasLimit;
   }
 
   mapping(uint64 => ChainConfig) public chains;
@@ -64,10 +65,16 @@ contract CCIPBridge is AccessControl, IBridge {
     _grantRole(DEFAULT_ADMIN_ROLE, admin);
   }
 
-  function setTargetChain(uint64 chainId, address receiver, uint256 gasLimit_) external onlyRole(CHAIN_ADMIN_ROLE) {
+  function setTargetChain(
+    uint64 chainId,
+    uint64 chainSelector,
+    address receiver,
+    uint256 gasLimit_
+  ) external onlyRole(CHAIN_ADMIN_ROLE) {
     chains[chainId].receiver = receiver;
+    chains[chainId].chainSelector = chainSelector;
     require(gasLimit_ != 0, NoGasLimitOnDestinationChain(chainId));
-    chains[chainId].gasLimit = uint64(gasLimit_); // TODO: safeCast
+    chains[chainId].gasLimit = uint32(gasLimit_); // TODO: safeCast
     // TODO emit event
   }
 
@@ -112,6 +119,7 @@ contract CCIPBridge is AccessControl, IBridge {
     // approve the Router to transfer LINK tokens on contract's behalf. It will spend the fees in LINK
     linkToken.approve(address(ccipRouter), fees);
 
+    token.safeTransferFrom(msg.sender, address(this), amount);
     // approve the Router to spend usdc tokens on contract's behalf. It will spend the amount of the given token
     token.approve(address(ccipRouter), amount);
 
@@ -123,10 +131,6 @@ contract CCIPBridge is AccessControl, IBridge {
   }
 
   function transferTokenAndData(IERC20Metadata, uint64, address, uint256, bytes calldata) external pure {
-    revert NotImplemented();
-  }
-
-  function callCrossChain(uint64, address, bytes calldata) external pure {
     revert NotImplemented();
   }
 }
