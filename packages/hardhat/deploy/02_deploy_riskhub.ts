@@ -14,6 +14,7 @@ const deployRiskHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
 
   const payTokenAddress = config.payToken;; // USDC token address (IERC20Metadata)
   console.log("USDC address:", payTokenAddress);
+
   const adminAddress = deployer; // Admin address, defaulting to deployer
 
   if (!payTokenAddress || !bridgeContract.target) {

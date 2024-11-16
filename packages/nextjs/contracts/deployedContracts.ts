@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     ArbitrumLiquidator: {
-      address: "0x3CFDf9646dBC385E47DC07869626Ea36BE7bA3a2",
+      address: "0x12604a5B388a1E1834693bfe94dDdF81A60B56A2",
       abi: [
         {
           inputs: [
@@ -394,16 +394,16 @@ const deployedContracts = {
       },
     },
     MockBridge: {
-      address: "0x79b3f34855c3478Fa45f65344a3f5E3c7b94405c",
+      address: "0x9A213F53334279C128C37DA962E5472eCD90554f",
       abi: [
         {
           anonymous: false,
           inputs: [
             {
               indexed: true,
-              internalType: "uint32",
+              internalType: "uint64",
               name: "chainId",
-              type: "uint32",
+              type: "uint64",
             },
             {
               indexed: true,
@@ -432,9 +432,9 @@ const deployedContracts = {
             },
             {
               indexed: true,
-              internalType: "uint32",
+              internalType: "uint64",
               name: "chainId",
-              type: "uint32",
+              type: "uint64",
             },
             {
               indexed: true,
@@ -463,9 +463,9 @@ const deployedContracts = {
             },
             {
               indexed: true,
-              internalType: "uint32",
+              internalType: "uint64",
               name: "chainId",
-              type: "uint32",
+              type: "uint64",
             },
             {
               indexed: true,
@@ -492,9 +492,9 @@ const deployedContracts = {
         {
           inputs: [
             {
-              internalType: "uint32",
+              internalType: "uint64",
               name: "chainId",
-              type: "uint32",
+              type: "uint64",
             },
             {
               internalType: "address",
@@ -520,9 +520,9 @@ const deployedContracts = {
               type: "address",
             },
             {
-              internalType: "uint32",
+              internalType: "uint64",
               name: "chainId",
-              type: "uint32",
+              type: "uint64",
             },
             {
               internalType: "address",
@@ -548,9 +548,9 @@ const deployedContracts = {
               type: "address",
             },
             {
-              internalType: "uint32",
+              internalType: "uint64",
               name: "chainId",
-              type: "uint32",
+              type: "uint64",
             },
             {
               internalType: "address",
@@ -581,7 +581,7 @@ const deployedContracts = {
       },
     },
     PythPriceOracle: {
-      address: "0xD9d684546ED4c727B136503016E137822DD9b4D7",
+      address: "0xD516492bb58F07bc91c972DCCB2DF654653d4D33",
       abi: [
         {
           inputs: [
@@ -686,12 +686,12 @@ const deployedContracts = {
               type: "tuple",
             },
             {
-              internalType: "contract IERC20",
+              internalType: "contract IERC20Metadata",
               name: "tokenIn",
               type: "address",
             },
             {
-              internalType: "contract IERC20",
+              internalType: "contract IERC20Metadata",
               name: "tokenOut",
               type: "address",
             },
@@ -704,12 +704,12 @@ const deployedContracts = {
         {
           inputs: [
             {
-              internalType: "contract IERC20",
+              internalType: "contract IERC20Metadata",
               name: "tokenIn",
               type: "address",
             },
             {
-              internalType: "contract IERC20",
+              internalType: "contract IERC20Metadata",
               name: "tokenOut",
               type: "address",
             },
@@ -774,12 +774,12 @@ const deployedContracts = {
         {
           inputs: [
             {
-              internalType: "contract IERC20",
+              internalType: "contract IERC20Metadata",
               name: "tokenIn",
               type: "address",
             },
             {
-              internalType: "contract IERC20",
+              internalType: "contract IERC20Metadata",
               name: "tokenOut",
               type: "address",
             },
@@ -798,12 +798,12 @@ const deployedContracts = {
         {
           inputs: [
             {
-              internalType: "contract IERC20",
+              internalType: "contract IERC20Metadata",
               name: "tokenIn",
               type: "address",
             },
             {
-              internalType: "contract IERC20",
+              internalType: "contract IERC20Metadata",
               name: "tokenOut",
               type: "address",
             },
@@ -845,12 +845,12 @@ const deployedContracts = {
               type: "bytes[]",
             },
             {
-              internalType: "contract IERC20",
+              internalType: "contract IERC20Metadata",
               name: "tokenIn",
               type: "address",
             },
             {
-              internalType: "contract IERC20",
+              internalType: "contract IERC20Metadata",
               name: "tokenOut",
               type: "address",
             },
@@ -882,7 +882,7 @@ const deployedContracts = {
       },
     },
     RiskHub: {
-      address: "0x27F9aFE3B3fCb63ae1A6c662331698F2183809bF",
+      address: "0xC55a98C1b3B0942883bB37df9716bea42d7d5009",
       abi: [
         {
           inputs: [
@@ -1125,9 +1125,9 @@ const deployedContracts = {
         {
           inputs: [
             {
-              internalType: "uint32",
+              internalType: "uint64",
               name: "chainId",
-              type: "uint32",
+              type: "uint64",
             },
             {
               internalType: "address",
@@ -1174,9 +1174,9 @@ const deployedContracts = {
         {
           inputs: [
             {
-              internalType: "uint32",
+              internalType: "uint64",
               name: "",
-              type: "uint32",
+              type: "uint64",
             },
           ],
           name: "dexes",
@@ -1308,9 +1308,9 @@ const deployedContracts = {
         {
           inputs: [
             {
-              internalType: "uint32",
+              internalType: "uint64",
               name: "chainId",
-              type: "uint32",
+              type: "uint64",
             },
             {
               internalType: "uint256",
@@ -1345,9 +1345,9 @@ const deployedContracts = {
         {
           inputs: [
             {
-              internalType: "uint32",
+              internalType: "uint64",
               name: "chainId",
-              type: "uint32",
+              type: "uint64",
             },
             {
               internalType: "uint40",
@@ -1396,9 +1396,9 @@ const deployedContracts = {
         {
           inputs: [
             {
-              internalType: "uint32",
+              internalType: "uint64",
               name: "chainId",
-              type: "uint32",
+              type: "uint64",
             },
             {
               internalType: "uint256",

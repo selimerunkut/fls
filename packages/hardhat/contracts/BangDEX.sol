@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.0;
 
-import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
-import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import {ISwapRouter} from "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
-import {IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
-import {Math} from "@openzeppelin/contracts/utils/math/Math.sol";
-import {IPriceOracle} from "./interfaces/IPriceOracle.sol";
-import {ILiquidator} from "./interfaces/ILiquidator.sol";
-import {IBridge} from "./interfaces/IBridge.sol";
-import {IRiskHub} from "./interfaces/IRiskHub.sol";
-import {IBangDEX} from "./interfaces/IBangDEX.sol";
+import { AccessControl } from "@openzeppelin/contracts/access/AccessControl.sol";
+import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import { ISwapRouter } from "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
+import { IERC20Metadata } from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
+import { Math } from "@openzeppelin/contracts/utils/math/Math.sol";
+import { IPriceOracle } from "./interfaces/IPriceOracle.sol";
+import { ILiquidator } from "./interfaces/ILiquidator.sol";
+import { IBridge } from "./interfaces/IBridge.sol";
+import { IRiskHub } from "./interfaces/IRiskHub.sol";
+import { IBangDEX } from "./interfaces/IBangDEX.sol";
 
 /**
  * @title BangDEX
@@ -33,24 +33,24 @@ contract BangDEX is ISwapRouter, AccessControl, IBangDEX {
   uint256 public constant WAD = 1e18;
 
   address public immutable riskHub;
-  uint32 public immutable riskHubChainId;
-  IERC20Metadata public immutable payToken;  // USDC or other token that will use to pay for the acquired tokens
-  uint256 public slotSize;  // Duration in seconds of the time slots
+  uint64 public immutable riskHubChainId;
+  IERC20Metadata public immutable payToken; // USDC or other token that will use to pay for the acquired tokens
+  uint256 public slotSize; // Duration in seconds of the time slots
 
   struct MarketState {
-    uint256 minDiscount;    // in wad - Expressed as 1-d, so for 2% this should be 0.98 (simplifies math)
-    uint256 discountDelta;  // maxDiscount = minDiscount - discountDelta
-                            // Expressed as 1-d - in Wad
-    uint256 fixedCost;      // Fixed amount in USDC for each trade
+    uint256 minDiscount; // in wad - Expressed as 1-d, so for 2% this should be 0.98 (simplifies math)
+    uint256 discountDelta; // maxDiscount = minDiscount - discountDelta
+    // Expressed as 1-d - in Wad
+    uint256 fixedCost; // Fixed amount in USDC for each trade
     uint256 maxCapacity;
     uint256 usedCapacity;
   }
 
   // Struct used to have
-  type SlotIndex is uint256;  // slotSize << 128 + block.timestamp / slotSize
+  type SlotIndex is uint256; // slotSize << 128 + block.timestamp / slotSize
 
   // Token Address => Slot => MarketState
-  mapping(IERC20Metadata => mapping (SlotIndex => MarketState)) public markets;
+  mapping(IERC20Metadata => mapping(SlotIndex => MarketState)) public markets;
 
   mapping(IERC20Metadata => ILiquidator) public liquidators;
 
@@ -59,7 +59,15 @@ contract BangDEX is ISwapRouter, AccessControl, IBangDEX {
 
   error NotImplemented();
 
-  constructor(uint32 riskHubChainId_, address riskHub_, IBridge bridge_, IERC20Metadata payToken_, IPriceOracle priceOracle_, uint256 slotSize_, address admin) {
+  constructor(
+    uint64 riskHubChainId_,
+    address riskHub_,
+    IBridge bridge_,
+    IERC20Metadata payToken_,
+    IPriceOracle priceOracle_,
+    uint256 slotSize_,
+    address admin
+  ) {
     riskHub = riskHub_;
     riskHubChainId = riskHubChainId_;
     bridge = bridge_;
@@ -70,7 +78,7 @@ contract BangDEX is ISwapRouter, AccessControl, IBangDEX {
   }
 
   function _getSlotIndex(uint256 slotSize_, uint256 slot) internal pure returns (SlotIndex) {
-    return SlotIndex.wrap(slotSize_ << 128 + slot);
+    return SlotIndex.wrap(slotSize_ << (128 + slot));
   }
 
   function _getMarket(IERC20Metadata token) internal view returns (MarketState storage ret) {
@@ -79,15 +87,13 @@ contract BangDEX is ISwapRouter, AccessControl, IBangDEX {
 
   function _getDiscount(MarketState storage market, uint256 amountToBuy) internal view returns (uint256 discount) {
     // Already fails if market doesn't exist (zero div), but a custom error would be better
-    discount = market.minDiscount - market.discountDelta * (market.usedCapacity + amountToBuy) / market.maxCapacity;
+    discount = market.minDiscount - (market.discountDelta * (market.usedCapacity + amountToBuy)) / market.maxCapacity;
   }
 
   /**
    * @inheritdoc ISwapRouter
    */
-  function exactInputSingle(
-    ExactInputSingleParams calldata params
-  ) external payable returns (uint256 amountOut) {
+  function exactInputSingle(ExactInputSingleParams calldata params) external payable returns (uint256 amountOut) {
     // TODO: change to custom error
     require(msg.value == 0, "Sorry, we don't support the native token yet");
     require(params.recipient != address(0), "Recipient cannot be zero address");
@@ -118,12 +124,18 @@ contract BangDEX is ISwapRouter, AccessControl, IBangDEX {
   }
 
   function _notifyTradeToRiskHub(IERC20Metadata tokenIn, uint256 amountIn, uint256 amountOut) internal {
-    bytes memory message = abi.encodeWithSelector(IRiskHub.tradeFromDex.selector, block.chainid, block.timestamp, tokenIn,
-                                                  amountIn, amountOut);
+    bytes memory message = abi.encodeWithSelector(
+      IRiskHub.tradeFromDex.selector,
+      block.chainid,
+      block.timestamp,
+      tokenIn,
+      amountIn,
+      amountOut
+    );
     bridge.callCrossChain(riskHubChainId, riskHub, message);
   }
 
-  function sendToRiskHub(uint256 amount) onlyRole(RISK_HUB_ROLE) external {
+  function sendToRiskHub(uint256 amount) external onlyRole(RISK_HUB_ROLE) {
     payToken.approve(address(bridge), amount);
     bridge.transferToken(payToken, riskHubChainId, riskHub, amount);
   }
@@ -131,9 +143,7 @@ contract BangDEX is ISwapRouter, AccessControl, IBangDEX {
   /**
    * @inheritdoc ISwapRouter
    */
-  function exactOutputSingle(
-    ExactOutputSingleParams calldata params
-  ) external payable returns (uint256 amountIn) {
+  function exactOutputSingle(ExactOutputSingleParams calldata params) external payable returns (uint256 amountIn) {
     // TODO - Can be implemented, just need a bit more of math...
     revert NotImplemented();
   }
@@ -153,8 +163,15 @@ contract BangDEX is ISwapRouter, AccessControl, IBangDEX {
     // TODO: emit event
   }
 
-  function setMarketParameters(IERC20Metadata token, uint256 slotSize_, uint256 slot, uint256 minDiscount, uint256
-                               discountDelta, uint256 maxCapacity, uint256 fixedCost) external onlyRole(MARKET_ADMIN_ROLE) {
+  function setMarketParameters(
+    IERC20Metadata token,
+    uint256 slotSize_,
+    uint256 slot,
+    uint256 minDiscount,
+    uint256 discountDelta,
+    uint256 maxCapacity,
+    uint256 fixedCost
+  ) external onlyRole(MARKET_ADMIN_ROLE) {
     SlotIndex slotIndex = _getSlotIndex(slotSize_, slot);
     MarketState storage newState = markets[token][slotIndex];
     newState.minDiscount = minDiscount;

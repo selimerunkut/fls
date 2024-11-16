@@ -34,7 +34,7 @@ describe("ArbitrumLiquidator", function () {
     liquidator = (await LiquidatorFactory.deploy(
       swapRouter.address,
       usdcToken.address,
-      riskHub.address
+      riskHub.address,
     )) as ArbitrumLiquidator;
     await liquidator.deployed();
   });
@@ -64,9 +64,9 @@ describe("ArbitrumLiquidator", function () {
       await assetToken.connect(user).approve(liquidator.address, assetAmount);
 
       // Call liquidate function
-      await expect(
-        liquidator.connect(user).liquidate(assetToken.address, assetAmount, usdcAmount)
-      ).to.emit(liquidator, "USDCTransferred").withArgs(riskHub.address, usdcAmount);
+      await expect(liquidator.connect(user).liquidate(assetToken.address, assetAmount, usdcAmount))
+        .to.emit(liquidator, "USDCTransferred")
+        .withArgs(riskHub.address, usdcAmount);
 
       // Check USDC balance of riskHub
       expect(await usdcToken.balanceOf(riskHub.address)).to.equal(usdcAmount);
@@ -88,7 +88,7 @@ describe("ArbitrumLiquidator", function () {
 
       // Call liquidate function and expect a revert
       await expect(
-        liquidator.connect(user).liquidate(assetToken.address, assetAmount, requiredDebtAmount)
+        liquidator.connect(user).liquidate(assetToken.address, assetAmount, requiredDebtAmount),
       ).to.be.revertedWith("Insufficient USDC received");
     });
   });
