@@ -56,19 +56,41 @@ contract PythPriceOracle is IPriceOracle, Ownable2Step {
     tokenPairPrice[tokenIn][tokenOut] = _transformPriceTo18Decimals(price.price, price.expo);
   }
 
+  // define an event, to make a list on withdrawing 
+  event Withdraw(address indexed to, uint256 amount);
+
   function withdraw() external onlyOwner {
     // Withdraw the balance of the contract
-    // TODO: Emit event
+
+    //to acquire the balance of this address
+    uint256 balance = address(this).balance;
+    //false or true
+    require(balance > 0, "No balance to withdraw")
+
+    //Emit event
+    emit Withdraw(owner(), balance);
+
+    //implement the withdraw
     payable(owner()).transfer(address(this).balance);
   }
+
+
+  // define a event to make a list of adding price source
+  event FeedAdded(address indexed tokenIn, address indexed tokenOut, adress indexed feedId);
 
   function addFeed(
     PythPriceFeed calldata priceFeed,
     IERC20Metadata tokenIn,
     IERC20Metadata tokenOut
   ) external onlyOwner {
-    // TODO: Emit event
+    // confirm the validaty 
+    require(priceFeed.id != bytes32.(0), "this feed is not work")
+
+    
     tokenPairPriceFeed[tokenIn][tokenOut] = PythPriceFeed({ id: priceFeed.id, age: priceFeed.age });
+
+    // Emit event
+    emit FeedAdded(address(tokenIn), address(tokenOut), priceFeed.id);
   }
 
   // TODO: Check
