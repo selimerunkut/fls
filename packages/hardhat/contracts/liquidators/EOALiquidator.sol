@@ -8,7 +8,12 @@ import { ILiquidator } from "../interfaces/ILiquidator.sol";
 
 /// @title EOALiquidator.sol
 /// @notice Sends the tokens to another address (an EOA) and we prey that EOA isn't corrupt and behaves well and
-//          liquidates the token sending the results to the RiskHub
+///         liquidates the token sending the results to the RiskHub.
+///         While we learn how to use CowProtocol programatic orders, the idea is sending funds to an EOA, that will
+///         be listening TokensToLiquidate and issuing CowProtocol intents. After the swap is executed, the resulting
+///         funds will be transferred to the main chain.
+///         This can also be used for Fusion+ cross-chain intents, that AFAIK can't be created from smart contracts.
+///         Cross-chain intents will be a perfect fit for our protocol, we avoid the additional bridge cost.
 contract EOALiquidator is ILiquidator, AccessControl {
   using SafeERC20 for IERC20;
 
