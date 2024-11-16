@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     ArbitrumLiquidator: {
-      address: "0x12604a5B388a1E1834693bfe94dDdF81A60B56A2",
+      address: "0xEc22b69767B5edD55b7DC6A4B6FD9ba4D0B3d320",
       abi: [
         {
           inputs: [
@@ -394,7 +394,7 @@ const deployedContracts = {
       },
     },
     MockBridge: {
-      address: "0x9A213F53334279C128C37DA962E5472eCD90554f",
+      address: "0xd23BF69104cC640E68ebeE83B9833d6Db6F220E6",
       abi: [
         {
           anonymous: false,
@@ -882,7 +882,7 @@ const deployedContracts = {
       },
     },
     RiskHub: {
-      address: "0xC55a98C1b3B0942883bB37df9716bea42d7d5009",
+      address: "0x737b13202150ad597B72f77553B0ae30bB0C69E8",
       abi: [
         {
           inputs: [
@@ -1042,6 +1042,43 @@ const deployedContracts = {
             },
           ],
           name: "RoleRevoked",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint64",
+              name: "chainId",
+              type: "uint64",
+            },
+            {
+              indexed: true,
+              internalType: "contract IERC20Metadata",
+              name: "tokenIn",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint40",
+              name: "timestamp",
+              type: "uint40",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amountIn",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amountOut",
+              type: "uint256",
+            },
+          ],
+          name: "TradeReceivedFromDex",
           type: "event",
         },
         {
