@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.10;
 
+import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {ILiquidator} from "../interfaces/ILiquidator.sol";
@@ -8,7 +9,7 @@ import {ISwapRouter} from "@uniswap/v3-periphery/contracts/interfaces/ISwapRoute
 
 /// @title ArbitrumLiquidator
 /// @notice Liquidates tokens into USDC using Uniswap on Arbitrum.
-contract ArbitrumLiquidator is ILiquidator {
+contract ArbitrumLiquidator is ILiquidator, AccessControl {
     using SafeERC20 for IERC20;
 
     ISwapRouter public immutable swapRouter; // Uniswap V3 Router address
@@ -16,6 +17,8 @@ contract ArbitrumLiquidator is ILiquidator {
     address public immutable riskHub;        // Address of RiskHub contract
 
     uint24 public constant poolFee = 3000;   // Uniswap pool fee (0.3%)
+
+    bytes32 public constant LIQUIDATOR_ADMIN_ROLE = keccak256("LIQUIDATOR_ADMIN_ROLE");
 
     /// @param _swapRouter Address of the Uniswap V3 Router
     /// @param _usdcToken Address of the USDC token on Arbitrum
@@ -35,7 +38,7 @@ contract ArbitrumLiquidator is ILiquidator {
     /// @param asset Address of the token to liquidate
     /// @param assetAmount Amount of the token to liquidate
     /// @param debtAmount Minimum USDC required to cover the debt
-    function liquidate(address asset, uint256 assetAmount, uint256 debtAmount) external override {
+    function liquidate (address asset, uint256 assetAmount, uint256 debtAmount) onlyRole(LIQUIDATOR_ADMIN_ROLE) external override {
         require(asset != address(0), "Invalid asset address");
         require(assetAmount > 0, "Asset amount must be greater than zero");
 
