@@ -40,7 +40,6 @@ contract HyperlaneRemoteCallBridge is IRemoteCallBridge {
       value: 0
     });
 
-    // TODO: Check if it's the chainId
     interchainAccountRouter.callRemote(
       chainId,
       callArray
