@@ -7,10 +7,6 @@ const deployOmfTestTokens: DeployFunction = async function (hre: HardhatRuntimeE
   const { deploy } = hre.deployments;
   const config = getNetworkConfig(hre);
 
-  if (!config.isDex) {
-    return;
-  }
-
   const deployment = await deploy("MyOFT", {
     from: deployer,
     args: ["Pepo Token", "PEPO", config.omni.endpoint, deployer],

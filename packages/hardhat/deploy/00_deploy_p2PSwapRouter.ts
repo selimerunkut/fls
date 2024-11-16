@@ -1,11 +1,17 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
+import {getNetworkConfig} from "../utils/networkConfig";
 
 const deployP2PSwapRouter: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts } = hre;
   const { deploy } = deployments;
+  const config = getNetworkConfig(hre);
 
   const { deployer } = await getNamedAccounts();
+
+  if(!config.isHub) {
+    return;
+  }
 
   // Configuration values
   const admin = deployer; // Admin address for the router
