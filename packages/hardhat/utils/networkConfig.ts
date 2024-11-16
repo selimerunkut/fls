@@ -33,8 +33,6 @@ interface NetworkConfig {
 
 export function getNetworkConfig(hre: HardhatRuntimeEnvironment): NetworkConfig {
 
-  console.log("__dirname", __dirname)
-
   // Define the absolute path to the JSON file
   const configPath = __dirname + "/address_list.json";
 
