@@ -25,6 +25,12 @@ contract PythPriceOracle is IPriceOracle, Ownable2Step {
     pyth = IPyth(pythContract);
   }
 
+  // define an event, to make a list on withdrawing 
+  event Withdraw(address indexed to, uint256 amount);
+
+  // define a event to make a list of adding price source
+  event FeedAdded(address indexed tokenIn, address indexed tokenOut, adress indexed feedId);
+  
   function getCurrentPrice(IERC20Metadata tokenIn, IERC20Metadata tokenOut) public view returns (uint256) {
     uint256 price = uint256(tokenPairPrice[tokenIn][tokenOut]);
     if (price == 0) {
@@ -56,9 +62,6 @@ contract PythPriceOracle is IPriceOracle, Ownable2Step {
     tokenPairPrice[tokenIn][tokenOut] = _transformPriceTo18Decimals(price.price, price.expo);
   }
 
-  // define an event, to make a list on withdrawing 
-  event Withdraw(address indexed to, uint256 amount);
-
   function withdraw() external onlyOwner {
     // Withdraw the balance of the contract
 
@@ -74,9 +77,6 @@ contract PythPriceOracle is IPriceOracle, Ownable2Step {
     payable(owner()).transfer(address(this).balance);
   }
 
-
-  // define a event to make a list of adding price source
-  event FeedAdded(address indexed tokenIn, address indexed tokenOut, adress indexed feedId);
 
   function addFeed(
     PythPriceFeed calldata priceFeed,
