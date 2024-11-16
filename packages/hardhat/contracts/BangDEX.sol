@@ -90,7 +90,7 @@ contract BangDEX is ISwapRouter, AccessControl, IBangDEX {
   function getDiscount(MarketState storage market, uint256 amountToBuy) internal view returns (uint256 discount) {
     // Already fails if market doesn't exist (zero div), but a custom error would be better
     discount = market.minDiscount - market.discountDelta.mulDiv(
-      (market.usedCapacity + amountToBuy).mulDiv(market.maxCapacity, WAD)
+      (market.usedCapacity + amountToBuy).mulDiv(WAD, market.maxCapacity)
     , WAD);
   }
 
