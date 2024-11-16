@@ -1,32 +1,39 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
+import { RiskHub } from "../typechain-types";
+import { ethers } from "hardhat";
 
 const deployRiskHub: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
-  // Replace with the actual USDC token address and admin address for your network
-  // Address of the USDC token https://docs.arbitrum.io/arbitrum-bridge/usdc-arbitrum-one
-  const usdcTokenAddress = "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8"; 
-  const adminAddress = deployer; // Set deployer as admin, or replace with a specific admin address
+  const bridgeContract = (await ethers.getContract("MockBridge")) as MockBridge;
 
-  if (!usdcTokenAddress) {
-    throw new Error("Please provide a valid USDC token address for deployment.");
+
+  // Replace with the actual addresses for your network
+  const payTokenAddress = "0x000000000000000000000000000000000000"; // USDC token address (IERC20Metadata)
+  const adminAddress = deployer; // Admin address, defaulting to deployer
+
+  if (!payTokenAddress || !bridgeContract.target) {
+    throw new Error("Please provide valid addresses for payToken and bridge.");
   }
 
+  // Deploy the RiskHub contract
   const deployment = await deploy("RiskHub", {
     from: deployer,
-    args: [usdcTokenAddress, adminAddress], // Constructor arguments
+    args: [payTokenAddress, bridgeContract.target, adminAddress], // Constructor arguments
     log: true,
     autoMine: true, // Automatically mine the deployment transaction
   });
 
   console.log("RiskHub deployed to:", deployment.address);
 
-  //const riskHub = await hre.ethers.getContract("RiskHub", deployer);
-  //await riskHub.grantRole(await riskHub.DEX_ADMIN_ROLE(), someDexAdminAddress);
+  // Optionally, verify deployment by connecting to the contract
+  const riskHub = await ethers.getContractAt("RiskHub", deployment.address);
+  console.log("RiskHub verified at:", riskHub.address);
 };
 
 export default deployRiskHub;
 
+// Tags are useful for running specific deployments
 deployRiskHub.tags = ["RiskHub"];
