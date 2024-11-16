@@ -112,6 +112,7 @@ contract CCIPBridge is AccessControl, IBridge {
     // approve the Router to transfer LINK tokens on contract's behalf. It will spend the fees in LINK
     linkToken.approve(address(ccipRouter), fees);
 
+    token.safeTransferFrom(msg.sender, address(this), amount);
     // approve the Router to spend usdc tokens on contract's behalf. It will spend the amount of the given token
     token.approve(address(ccipRouter), amount);
 

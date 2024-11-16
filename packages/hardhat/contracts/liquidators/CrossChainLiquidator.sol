@@ -15,13 +15,19 @@ contract CrossChainLiquidator is ILiquidator, AccessControl {
 
   bytes32 public constant LIQUIDATOR_ADMIN_ROLE = keccak256("LIQUIDATOR_ADMIN_ROLE");
 
-  constructor(ITransferBridge _transferBridge, address _hubLiquidator, uint32 _hubChainId) {
+  constructor(
+    ITransferBridge _transferBridge,
+    address _hubLiquidator,
+    uint32 _hubChainId,
+    address admin
+  ) {
     require(address(_transferBridge) != address(0), "Invalid transfer bridge address");
     require(_hubLiquidator != address(0), "Invalid hub liquidator address");
 
     transferBridge = _transferBridge;
     hubLiquidator = _hubLiquidator;
     hubChainId = _hubChainId;
+    _grantRole(DEFAULT_ADMIN_ROLE, admin);
   }
 
   function liquidate(

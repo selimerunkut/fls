@@ -21,9 +21,43 @@
     "omni": {
       "endpoint": "0x6EDCE65403992e310A62460808c4b910D972f10f"
     },
-    "hubId": 421614,
+    "hub": {
+      "id": 421614,
+      "address": "0x1B8eE75836D66a68fEAdB48009BE1049227e9eC7"
+    },
     "isHub": true
   },
+
+  "baseSepolia": {
+    "pyth": {
+      "address": "0xA2aa501b19aff244D90cc15a4Cf739D2725B5729",
+      "feeds": [
+        {
+          "age": 5,
+          "id": "0x15add95022ae13563a11992e727c91bdb6b55bc183d9d747436c80a483d8c864",
+          "token": "0x6Cb8Cc1e323357Af5da49d90FCb7160B7f09e6Cd"
+        }
+      ]
+    },
+    "_comment_swap": "https://docs.uniswap.org/contracts/v3/reference/deployments/arbitrum-deployments",
+    "swapLiquidatorRouter": "0xE592427A0AEce92De3Edee1F18E0157C05861564",
+    "_comment_payToken": "https://docs.arbitrum.io/arbitrum-bridge/usdc-arbitrum-one",
+    "payToken": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+    "ccip": {
+      "router": "0xD3b06cEbF099CE7DA4AcCf578aaebFDBd6e88a93",
+      "link": "0xE4aB69C077896252FAFBD49EFD26B5D171A32410"
+    },
+    "omni": {
+      "endpoint": "0x6EDCE65403992e310A62460808c4b910D972f10f"
+    },
+    "hub": {
+      "id": 421614,
+      "address": "0x1B8eE75836D66a68fEAdB48009BE1049227e9eC7"
+    },
+    "isDex": true
+  },
+
+
   "localhost": {
     "pyth": {
       "address": "0x4374e5a8b9C22271E9EB878A2AA31DE97DF15DAF",

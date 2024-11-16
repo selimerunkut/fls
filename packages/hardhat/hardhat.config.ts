@@ -53,6 +53,10 @@ const config: HardhatUserConfig = {
       url: `https://sepolia-rollup.arbitrum.io/rpc`,
       accounts: [deployerPrivateKey],
     },
+    baseSepolia: {
+      url: "https://sepolia.base.org",
+      accounts: [deployerPrivateKey],
+    },
   },
   // configuration for harhdat-verify plugin
   etherscan: {
