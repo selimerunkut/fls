@@ -33,7 +33,7 @@ contract BangDEX is ISwapRouter, AccessControl, IBangDEX {
   uint256 public constant WAD = 1e18;
 
   address public immutable riskHub;
-  uint32 public immutable riskHubChainId;
+  uint64 public immutable riskHubChainId;
   IERC20Metadata public immutable payToken;  // USDC or other token that will use to pay for the acquired tokens
   uint256 public slotSize;  // Duration in seconds of the time slots
 
@@ -59,7 +59,7 @@ contract BangDEX is ISwapRouter, AccessControl, IBangDEX {
 
   error NotImplemented();
 
-  constructor(uint32 riskHubChainId_, address riskHub_, IBridge bridge_, IERC20Metadata payToken_, IPriceOracle priceOracle_, uint256 slotSize_, address admin) {
+  constructor(uint64 riskHubChainId_, address riskHub_, IBridge bridge_, IERC20Metadata payToken_, IPriceOracle priceOracle_, uint256 slotSize_, address admin) {
     riskHub = riskHub_;
     riskHubChainId = riskHubChainId_;
     bridge = bridge_;

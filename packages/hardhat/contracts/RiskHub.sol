@@ -34,7 +34,7 @@ contract RiskHub is AccessControl, IRiskHub {
   }
 
   // Token chainId => DEX
-  mapping(uint32 => DEX) public dexes;
+  mapping(uint64 => DEX) public dexes;
 
   error NotImplemented();
 
@@ -44,7 +44,7 @@ contract RiskHub is AccessControl, IRiskHub {
     _grantRole(DEFAULT_ADMIN_ROLE, admin);
   }
 
-  function addDex(uint32 chainId, address bangDex, uint32 slotSize) external onlyRole(DEX_ADMIN_ROLE) {
+  function addDex(uint64 chainId, address bangDex, uint32 slotSize) external onlyRole(DEX_ADMIN_ROLE) {
     dexes[chainId].bangDex = bangDex;
     dexes[chainId].slotSize = slotSize;
   }
@@ -60,14 +60,14 @@ contract RiskHub is AccessControl, IRiskHub {
   /**
    * Sends money to a DEX to increase its liquidity
    */
-  function sendToDex(uint32 chainId, uint256 amount) external onlyRole(DEX_LIQUIDITY_ROLE) {
+  function sendToDex(uint64 chainId, uint256 amount) external onlyRole(DEX_LIQUIDITY_ROLE) {
     address target = address(dexes[chainId].bangDex);
     require(target != address(0), "Dex doesn't exists");
     payToken.approve(address(bridge), amount);
     bridge.transferToken(payToken, chainId, target, amount);
   }
 
-  function withdrawFromDex(uint32 chainId, uint256 amount) external onlyRole(DEX_LIQUIDITY_ROLE) {
+  function withdrawFromDex(uint64 chainId, uint256 amount) external onlyRole(DEX_LIQUIDITY_ROLE) {
     address target = address(dexes[chainId].bangDex);
     require(target != address(0), "Dex doesn't exists");
     bytes memory message = abi.encodeWithSelector(IBangDEX.sendToRiskHub.selector, amount);
@@ -77,7 +77,7 @@ contract RiskHub is AccessControl, IRiskHub {
   /**
    * Called from a DEX when a trade happens
    */
-  function tradeFromDex(uint32 chainId, uint40 timestamp, IERC20Metadata tokenIn, uint256 amountIn, uint256 amountOut)
+  function tradeFromDex(uint64 chainId, uint40 timestamp, IERC20Metadata tokenIn, uint256 amountIn, uint256 amountOut)
   external onlyRole(DEX_MESSENGER_ROLE) {
     // TODO
   }

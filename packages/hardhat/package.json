@@ -18,6 +18,7 @@
     "verify": "hardhat etherscan-verify"
   },
   "dependencies": {
+    "@chainlink/contracts-ccip": "1.5.0",
     "@nomiclabs/hardhat-ethers": "^2.2.3",
     "@openzeppelin/contracts": "~5.0.2",
     "@pythnetwork/pyth-sdk-solidity": "^4.0.0",
