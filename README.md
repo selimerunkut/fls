@@ -32,6 +32,17 @@ yarn start
 
 Visit your app on: `http://localhost:3000`. You can interact with your smart contract using the `Debug Contracts` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
 
+## Hyperlane warpbridging token
+
+### make config
+`hyperlane warp init`
+
+### deploy smart contracts
+`hyperlane warp deploy`
+### test
+`hyperlane warp send --verbosity debug --relay --symbol ETH --destination sepolia`
+
+
 ## multi chain address reference notes
 
 addresses can be added to `packages/hardhat/deploy/utils/addresses_list.json`

@@ -1,0 +1,18 @@
+arbitrumsepolia:
+  interchainSecurityModule:
+    modules:
+      - relayer: "0x66A113020382fbC588502b0F521310d15E6AacbA"
+        type: trustedRelayerIsm
+      - domains: {}
+        owner: "0x66A113020382fbC588502b0F521310d15E6AacbA"
+        type: defaultFallbackRoutingIsm
+    threshold: 1
+    type: staticAggregationIsm
+  isNft: false
+  mailbox: "0x598facE78a4302f11E3de0bee1894Da0b2Cb71F8"
+  owner: "0x66A113020382fbC588502b0F521310d15E6AacbA"
+  proxyAdmin:
+    owner: "0x66A113020382fbC588502b0F521310d15E6AacbA"
+  token: ""
+  type: collateral
+
