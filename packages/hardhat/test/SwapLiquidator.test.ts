@@ -3,7 +3,7 @@ import { ethers } from "hardhat";
 import { ArbitrumLiquidator, MockERC20, ISwapRouter } from "../typechain-types";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 
-// Sample test cases for ArbitrumLiquidator.sol
+// Sample test cases for SwapLiquidator.sol.sol
 
 describe("ArbitrumLiquidator", function () {
   let liquidator: ArbitrumLiquidator;
@@ -29,7 +29,7 @@ describe("ArbitrumLiquidator", function () {
     swapRouter = (await SwapRouterFactory.deploy()) as ISwapRouter;
     await swapRouter.deployed();
 
-    // Deploy ArbitrumLiquidator contract
+    // Deploy SwapLiquidator.sol contract
     const LiquidatorFactory = await ethers.getContractFactory("ArbitrumLiquidator");
     liquidator = (await LiquidatorFactory.deploy(
       swapRouter.address,
