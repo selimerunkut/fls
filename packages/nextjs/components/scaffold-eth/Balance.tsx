@@ -15,10 +15,8 @@ type BalanceProps = {
 /**
  * Display (ETH & USD) balance of an ETH address.
  */
-export const Balance = ({ address, className = "", usdMode }: BalanceProps) => {
+export const Balance = ({ address, className = "" }: BalanceProps) => {
   const { targetNetwork } = useTargetNetwork();
-  const nativeCurrencyPrice = useGlobalState(state => state.nativeCurrency.price);
-  const isNativeCurrencyPriceFetching = useGlobalState(state => state.nativeCurrency.isFetching);
 
   const {
     data: balance,
@@ -28,9 +26,7 @@ export const Balance = ({ address, className = "", usdMode }: BalanceProps) => {
     address,
   });
 
-  const { displayUsdMode, toggleDisplayUsdMode } = useDisplayUsdMode({ defaultUsdMode: usdMode });
-
-  if (!address || isLoading || balance === null || (isNativeCurrencyPriceFetching && nativeCurrencyPrice === 0)) {
+  if (!address || isLoading || balance === null) {
     return (
       <div className="animate-pulse flex space-x-4">
         <div className="rounded-md bg-slate-300 h-6 w-6"></div>
@@ -52,23 +48,11 @@ export const Balance = ({ address, className = "", usdMode }: BalanceProps) => {
   const formattedBalance = balance ? Number(formatEther(balance.value)) : 0;
 
   return (
-    <button
-      className={`btn btn-sm btn-ghost flex flex-col font-normal items-center hover:bg-transparent ${className}`}
-      onClick={toggleDisplayUsdMode}
-    >
-      <div className="w-full flex items-center justify-center">
-        {displayUsdMode ? (
+      <div className="w-full flex items-center justify-center mr-3">
           <>
-            <span className="text-[0.8em] font-bold mr-1">$</span>
-            <span>{(formattedBalance * nativeCurrencyPrice).toFixed(2)}</span>
-          </>
-        ) : (
-          <>
-            <span>{formattedBalance.toFixed(4)}</span>
+            <span>{formattedBalance.toFixed(2)}</span>
             <span className="text-[0.8em] font-bold ml-1">{targetNetwork.nativeCurrency.symbol}</span>
           </>
-        )}
       </div>
-    </button>
   );
 };
