@@ -1675,6 +1675,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nomiclabs/hardhat-ethers@npm:^2.2.3":
+  version: 2.2.3
+  resolution: "@nomiclabs/hardhat-ethers@npm:2.2.3"
+  peerDependencies:
+    ethers: ^5.0.0
+    hardhat: ^2.0.0
+  checksum: 72321317e55eb510306e04c42353c5f7ceb42d086fc76cc740120da6e1635b7ad5bbf23a8d6b02bd590754adcf646618933111624085ab249b1ff3482e773226
+  languageName: node
+  linkType: hard
+
 "@npmcli/agent@npm:^2.0.0":
   version: 2.2.2
   resolution: "@npmcli/agent@npm:2.2.2"
@@ -1880,6 +1890,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pythnetwork/pyth-sdk-solidity@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "@pythnetwork/pyth-sdk-solidity@npm:4.0.0"
+  checksum: c9fb183dc5da27ea12a712771f0f43412afd48ea348f0d9043547d77e161507605797e165d78bac0e6671f08149f66313e4c78070123cb7211b0a19121fad1b0
+  languageName: node
+  linkType: hard
+
 "@rainbow-me/rainbowkit@npm:2.1.0":
   version: 2.1.0
   resolution: "@rainbow-me/rainbowkit@npm:2.1.0"
@@ -2074,7 +2091,9 @@ __metadata:
     "@nomicfoundation/hardhat-ethers": ~3.0.8
     "@nomicfoundation/hardhat-network-helpers": ~1.0.11
     "@nomicfoundation/hardhat-verify": ~2.0.10
+    "@nomiclabs/hardhat-ethers": ^2.2.3
     "@openzeppelin/contracts": ~5.0.2
+    "@pythnetwork/pyth-sdk-solidity": ^4.0.0
     "@typechain/ethers-v5": ~11.1.2
     "@typechain/ethers-v6": ~0.5.1
     "@typechain/hardhat": ~9.1.0
@@ -2091,7 +2110,7 @@ __metadata:
     eslint: ~8.57.1
     eslint-config-prettier: ~8.10.0
     eslint-plugin-prettier: ~5.2.1
-    ethers: ~6.13.2
+    ethers: ~6.13.3
     hardhat: ~2.22.10
     hardhat-deploy: ~0.12.4
     hardhat-deploy-ethers: ~0.4.2
@@ -6998,7 +7017,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ethers@npm:~6.13.2":
+"ethers@npm:~6.13.3":
   version: 6.13.4
   resolution: "ethers@npm:6.13.4"
   dependencies:

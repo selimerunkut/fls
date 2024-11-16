@@ -5,6 +5,7 @@ import "../interfaces/IPriceOracle.sol";
 import "@openzeppelin/contracts/access/Ownable2Step.sol";
 import "@pythnetwork/pyth-sdk-solidity/IPyth.sol";
 import "@pythnetwork/pyth-sdk-solidity/PythStructs.sol";
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 /**
  * This contract assumes that the tokenOut is a token that
@@ -17,15 +18,15 @@ contract PythPriceOracle is IPriceOracle, Ownable2Step {
     }
 
     IPyth public pyth;
-    mapping (address tokenIn => mapping(address tokenOut => PythPriceFeed feed)) public tokenPairPriceFeed;
-    mapping (address tokenIn => mapping(address tokenOut => uint256 price)) public tokenPairPrice;
+    mapping (IERC20 tokenIn => mapping(IERC20 tokenOut => PythPriceFeed feed)) public tokenPairPriceFeed;
+    mapping (IERC20 tokenIn => mapping(IERC20 tokenOut => int256 price)) public tokenPairPrice;
 
     constructor(address owner, address pythContract) Ownable(owner) {
         pyth = IPyth(pythContract);
     }
 
-    function getCurrentPrice(address tokenIn, address tokenOut) external view returns (uint256) {
-        int64 price = tokenPairPrice[tokenIn][tokenOut];
+    function getCurrentPrice(IERC20 tokenIn, IERC20 tokenOut) public view returns (uint256) {
+        uint256 price = uint256(tokenPairPrice[tokenIn][tokenOut]);
         if(price == 0) {
             // TODO: Throw error
             return 0;
@@ -37,11 +38,14 @@ contract PythPriceOracle is IPriceOracle, Ownable2Step {
 
     // TODO: Check what happens if anyone can update this function
     function updatePrice(
-        bytes[] calldata priceUpdate,
-        address tokenIn,
-        address tokenOut
+      bytes[] calldata priceUpdate,
+      IERC20 tokenIn,
+      IERC20 tokenOut
     ) external payable {
+        // TODO: Check that the priceUpdate correspond to the tokenIn and tokenOut feed
         PythPriceFeed memory feed = tokenPairPriceFeed[tokenIn][tokenOut];
+        // TODO: Add custom errors
+        require(feed.id == bytes32(priceUpdate[0]), "Wrong feed");
         // Submit a priceUpdate to the Pyth contract to update the on-chain price.
         // Updating the price requires paying the fee returned by getUpdateFee.
         // WARNING: These lines are required to ensure the getPriceNoOlderThan call below succeeds.
@@ -54,7 +58,7 @@ contract PythPriceOracle is IPriceOracle, Ownable2Step {
         // The complete list of feed IDs is available at https://pyth.network/developers/price-feed-ids
         PythStructs.Price memory price = pyth.getPriceNoOlderThan(feed.id, feed.age);
         // TODO: Do we care about the other stuff?
-        tokenPairPrice[tokenIn][tokenOut] = _transformPriceTo18Decimals(price.price);
+        tokenPairPrice[tokenIn][tokenOut] = _transformPriceTo18Decimals(price.price, price.expo);
     }
 
     function withdraw() external onlyOwner {
@@ -64,9 +68,9 @@ contract PythPriceOracle is IPriceOracle, Ownable2Step {
     }
 
     function addFeed(
-        address tokenIn,
-        address tokenOut,
-        PythPriceFeed calldata priceFeed
+        PythPriceFeed calldata priceFeed,
+        IERC20 tokenIn,
+        IERC20 tokenOut
     ) external onlyOwner {
         // TODO: Emit event
         tokenPairPriceFeed[tokenIn][tokenOut] = PythPriceFeed({
@@ -76,14 +80,12 @@ contract PythPriceOracle is IPriceOracle, Ownable2Step {
     }
 
     // TODO: Check
-    function _transformPriceTo18Decimals(int64 price, int32 expo) private pure returns (uint256) {
+    function _transformPriceTo18Decimals(int64 price, int32 expo) private pure returns (int256) {
         // Convert expo + 18 to uint256 for exponentiation
-        uint256 factor = uint256(10)**uint256(int256(expo + 18));
+        int256 factor = int256(10)**uint256(int256(expo + 18));
 
         // Multiply the price by the factor, ensuring the result is in int256
-        uint256 priceWith18Decimals = uint256(price) * factor;
-
-        return priceWith18Decimals;
+        return int256(price) * factor;
     }
 
     // Receive ether to pay to the pyth oracle
