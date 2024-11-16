@@ -11,7 +11,8 @@ const deployRiskHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
 
 
   // Replace with the actual addresses for your network
-  const payTokenAddress = "0x000000000000000000000000000000000000"; // USDC token address (IERC20Metadata)
+  // Address of the USDC token https://docs.arbitrum.io/arbitrum-bridge/usdc-arbitrum-one
+  const payTokenAddress = "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8"; // USDC token address (IERC20Metadata)
   const adminAddress = deployer; // Admin address, defaulting to deployer
 
   if (!payTokenAddress || !bridgeContract.target) {

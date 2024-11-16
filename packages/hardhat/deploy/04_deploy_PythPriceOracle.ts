@@ -9,6 +9,7 @@ const deployPythPriceOracle: DeployFunction = async function (
 
   // Replace these with the appropriate addresses
   const ownerAddress = deployer; // Replace with the desired owner address
+  //https://docs.pyth.network/price-feeds/contract-addresses/evm
   const pythContractAddress = "0xff1a0f4744e8582DF1aE09D5611b887B6a12925C"; // Replace with the deployed Pyth contract address
 
   if (!pythContractAddress) {
