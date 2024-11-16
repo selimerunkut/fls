@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.0;
 
+import {IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
+
 /**
  * @title IPriceOracle interface
  * @dev Interface that returns the price of tokens
@@ -15,5 +17,5 @@ interface IPriceOracle {
    *
    * @return Returns the amount of units of tokenOut that should be received for a uint of tokenIn
    */
-  function getCurrentPrice(address tokenIn, address tokenOut) external view returns (uint256);
+  function getCurrentPrice(IERC20Metadata tokenIn, IERC20Metadata tokenOut) external view returns (uint256);
 }
