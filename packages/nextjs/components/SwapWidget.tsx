@@ -20,22 +20,23 @@ const SwapWidget: React.FC = () => {
     };
 
     useEffect(() => {
-        if(!selectedToken || fromAmount === 0) {
-            setToAmount(0);
-            setRealToAmount(0);
-            setDiscountPercentage(0);
-            return;
-        }
         const timer = setTimeout(() => {
             Promise.all([
                 fetchPriceFromBang(selectedToken.id, ''),
                 fetchPriceFromPyth(selectedToken.id)]
             ).then(([bangPrice, pythPrice]) => {
+                if(!selectedToken || fromAmount === 0) {
+                    setToAmount(0);
+                    setRealToAmount(0);
+                    setDiscountPercentage(0);
+                    return;
+                }
+
                 setToAmount(bangPrice * fromAmount);
                 setRealToAmount(pythPrice * fromAmount);
                 setDiscountPercentage(((((bangPrice * fromAmount) / (pythPrice * fromAmount))) - 1)* 100);
             });
-        }, 500);
+        }, 200);
         return () => clearTimeout(timer);
     }, [fromAmount, selectedToken]);
 
@@ -107,9 +108,9 @@ const SwapWidget: React.FC = () => {
                     disabled={true}
                     className="w-full bg-transparent text-3xl font-semibold outline-none"
                 />
-                <p className="text-gray-400 text-red-400 text-sm mt-1">
+                {fromAmount !== 0 && <p className="text-gray-400 text-red-400 text-sm mt-1">
                     {Math.round(discountPercentage)}%
-                </p>
+                </p>}
             </div>
 
             {/* Swap Button */}
