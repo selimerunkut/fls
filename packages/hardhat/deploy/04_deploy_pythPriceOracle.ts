@@ -1,25 +1,30 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
+import {getNetworkConfig} from "../utils/networkConfig";
+import {PythPriceOracle} from "../typechain-types";
 
 const deployPythPriceOracle: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
-
-  // Replace these with the appropriate addresses
-  const ownerAddress = deployer; // Replace with the desired owner address
-  //https://docs.pyth.network/price-feeds/contract-addresses/evm
-  const pythContractAddress = "0xff1a0f4744e8582DF1aE09D5611b887B6a12925C"; // Replace with the deployed Pyth contract address
-
-  if (!pythContractAddress) {
-    throw new Error("Please provide a valid Pyth contract address for deployment.");
-  }
+  const config = getNetworkConfig(hre);
 
   const deployment = await deploy("PythPriceOracle", {
     from: deployer,
-    args: [ownerAddress, pythContractAddress], // Constructor arguments
+    args: [deployer, config.pyth.address],
     log: true,
-    autoMine: true, // Automatically mine the deployment transaction
+    autoMine: true,
   });
+
+  const pythPriceOracle = await hre.ethers.getContract<PythPriceOracle>("PythPriceOracle", deployer);
+
+  for (const feed of config.pyth.feeds) {
+    await pythPriceOracle.addFeed(
+      { id: feed.id, age: feed.age },
+      feed.token,
+      config.payToken
+    );
+  }
+
 
   console.log("PythPriceOracle deployed to:", deployment.address);
 };

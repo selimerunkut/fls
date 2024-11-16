@@ -6,8 +6,28 @@ import * as path from 'path';
 
 interface NetworkConfig {
   payToken: string;
-  pythContract?: string;
-  swapRouter?: string;
+  pyth: {
+    // https://docs.pyth.network/price-feeds/contract-addresses/evm
+    address: string,
+    feeds: {age: number, id: string, token: string}[]
+  };
+  // Only available if it's a hub chain
+  swapLiquidatorRouter?: string;
+  isHub?: boolean;
+  hub: {
+    id: number,
+    address: string,
+  }
+  isDex?: boolean;
+  ccip: {
+    // https://docs.chain.link/ccip/directory/testnet
+    router: string,
+    link: string,
+  }
+  omni: {
+    // https://docs.layerzero.network/v2/developers/evm/technical-reference/deployed-contracts
+    endpoint: string,
+  }
   [key: string]: string | undefined; // Allow other dynamic fields
 }
 

@@ -46,7 +46,8 @@ contract PythPriceOracle is IPriceOracle, Ownable2Step {
   function updatePrice(bytes[] calldata priceUpdate, IERC20Metadata tokenIn, IERC20Metadata tokenOut) external payable {
     PythPriceFeed memory feed = tokenPairPriceFeed[tokenIn][tokenOut];
     // TODO: Add custom errors
-    require(feed.id == bytes32(priceUpdate[0]), "Wrong feed");
+    // TODO: Check if the price corresponds to the feed
+    //    require(feed.id == bytes32(priceUpdate[0]), "Wrong feed");
     // Submit a priceUpdate to the Pyth contract to update the on-chain price.
     // Updating the price requires paying the fee returned by getUpdateFee.
     // WARNING: These lines are required to ensure the getPriceNoOlderThan call below succeeds.

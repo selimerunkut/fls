@@ -30,19 +30,23 @@ export const Footer = () => {
                 </div>
               </div>
             )}
-            {isLocalNetwork && (
+            (
               <>
                 <Faucet />
                 <Link href="/blockexplorer" passHref className="btn btn-primary btn-sm font-normal gap-1">
                   <MagnifyingGlassIcon className="h-4 w-4" />
                   <span>Block Explorer</span>
                 </Link>
+                <Link href="/backoffice" passHref className="btn btn-primary btn-sm font-normal gap-1">
+                  <MagnifyingGlassIcon className="h-4 w-4" />
+                  <span>Backoffice</span>
+                </Link>
                 <Link href="/debug" passHref className="btn btn-primary btn-sm font-normal gap-1">
                   <MagnifyingGlassIcon className="h-4 w-4" />
                   <span>Debug</span>
                 </Link>
               </>
-            )}
+            )
           </div>
           <SwitchTheme className={`pointer-events-auto ${isLocalNetwork ? "self-end md:self-auto" : ""}`} />
         </div>

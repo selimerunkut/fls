@@ -23,7 +23,7 @@ contract SwapLiquidator is ILiquidator, AccessControl {
   /// @param _swapRouter Address of the Uniswap V3 Router
   /// @param _usdcToken Address of the USDC token on Arbitrum
   /// @param _riskHub Address of the RiskHub contract
-  constructor(address _swapRouter, address _usdcToken, address _riskHub) {
+  constructor(address _swapRouter, address _usdcToken, address _riskHub, address admin) {
     require(_swapRouter != address(0), "Invalid router address");
     require(_usdcToken != address(0), "Invalid USDC address");
     require(_riskHub != address(0), "Invalid RiskHub address");
@@ -31,6 +31,8 @@ contract SwapLiquidator is ILiquidator, AccessControl {
     swapRouter = ISwapRouter(_swapRouter);
     usdcToken = _usdcToken;
     riskHub = _riskHub;
+
+    _grantRole(DEFAULT_ADMIN_ROLE, admin);
   }
 
   /// @inheritdoc ILiquidator

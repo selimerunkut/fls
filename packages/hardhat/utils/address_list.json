@@ -1,27 +1,50 @@
 {
   "arbitrumSepolia": {
+    "pyth": {
+      "address": "0x4374e5a8b9C22271E9EB878A2AA31DE97DF15DAF",
+      "feeds": [
+        {
+          "age": 5,
+          "id": "0x15add95022ae13563a11992e727c91bdb6b55bc183d9d747436c80a483d8c864",
+          "token": "0x6Cb8Cc1e323357Af5da49d90FCb7160B7f09e6Cd"
+        }
+      ]
+    },
+    "_comment_swap": "https://docs.uniswap.org/contracts/v3/reference/deployments/arbitrum-deployments",
+    "swapLiquidatorRouter": "0xE592427A0AEce92De3Edee1F18E0157C05861564",
+    "_comment_payToken": "https://docs.arbitrum.io/arbitrum-bridge/usdc-arbitrum-one",
     "payToken": "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d",
-    "pythContract": "0x4374e5a8b9C22271E9EB878A2AA31DE97DF15DAF",
-    "swapRouter": "0xE592427A0AEce92De3Edee1F18E0157C05861564"
-  },
-  "sepolia": {
-    "payToken": "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
-    "pythContract": "0xDd24F84d36BF92C65F92307595335bdFab5Bbd21",
-    "swapRouter": "0xE592427A0AEce92De3Edee1F18E0157C05861564"
-  },
-  "arbitrum": {
-    "payToken": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
-    "pythContract": "0xff1a0f4744e8582DF1aE09D5611b887B6a12925C",
-    "swapRouter": "0xE592427A0AEce92De3Edee1F18E0157C05861564"
-  },
-  "mainnet": {
-    "payToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-    "pythContract": "0x4305FB66699C3B2702D4d05CF36551390A4c69C6",
-    "swapRouter": "0xE592427A0AEce92De3Edee1F18E0157C05861564"
+    "ccip": {
+      "router": "0x2a9C5afB0d0e4BAb2BCdaE109EC4b0c4Be15a165",
+      "link": "0xb1D4538B4571d411F07960EF2838Ce337FE1E80E"
+    },
+    "omni": {
+      "endpoint": "0x6EDCE65403992e310A62460808c4b910D972f10f"
+    },
+    "hubId": 421614,
+    "isHub": true
   },
   "localhost": {
-    "payToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-    "pythContract": "0x4305FB66699C3B2702D4d05CF36551390A4c69C6",
-    "swapRouter": "0xE592427A0AEce92De3Edee1F18E0157C05861564"
+    "pyth": {
+      "address": "0x4374e5a8b9C22271E9EB878A2AA31DE97DF15DAF",
+      "feeds": [
+        {
+          "age": 5,
+          "id": "0x15add95022ae13563a11992e727c91bdb6b55bc183d9d747436c80a483d8c864",
+          "token": "0x6Cb8Cc1e323357Af5da49d90FCb7160B7f09e6Cd"
+        }
+      ]
+    },
+    "swapLiquidatorRouter": "0xE592427A0AEce92De3Edee1F18E0157C05861564",
+    "payToken": "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d",
+    "ccip": {
+      "router": "0x2a9C5afB0d0e4BAb2BCdaE109EC4b0c4Be15a165",
+      "link": "0xb1D4538B4571d411F07960EF2838Ce337FE1E80E"
+    },
+    "omni": {
+      "endpoint": "0x6EDCE65403992e310A62460808c4b910D972f10f"
+    },
+    "hubId": 421614,
+    "isHub": true
   }
 }
