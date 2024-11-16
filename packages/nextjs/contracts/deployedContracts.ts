@@ -5,2972 +5,9 @@
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
 const deployedContracts = {
-  31337: {
-    CCIPBridge: {
-      address: "0x8B87065fdfe4A130108E50f74ae7F85cD20A5967",
-      abi: [
-        {
-          inputs: [
-            {
-              internalType: "contract IRouterClient",
-              name: "ccipRouter_",
-              type: "address",
-            },
-            {
-              internalType: "contract IERC20Metadata",
-              name: "linkToken_",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "admin",
-              type: "address",
-            },
-          ],
-          stateMutability: "nonpayable",
-          type: "constructor",
-        },
-        {
-          inputs: [],
-          name: "AccessControlBadConfirmation",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-            {
-              internalType: "bytes32",
-              name: "neededRole",
-              type: "bytes32",
-            },
-          ],
-          name: "AccessControlUnauthorizedAccount",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "target",
-              type: "address",
-            },
-          ],
-          name: "AddressEmptyCode",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-          ],
-          name: "AddressInsufficientBalance",
-          type: "error",
-        },
-        {
-          inputs: [],
-          name: "AmountIsZero",
-          type: "error",
-        },
-        {
-          inputs: [],
-          name: "FailedInnerCall",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint64",
-              name: "destinationChainSelector",
-              type: "uint64",
-            },
-          ],
-          name: "NoGasLimitOnDestinationChain",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint64",
-              name: "destinationChainSelector",
-              type: "uint64",
-            },
-          ],
-          name: "NoReceiverOnDestinationChain",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint256",
-              name: "currentBalance",
-              type: "uint256",
-            },
-            {
-              internalType: "uint256",
-              name: "calculatedFees",
-              type: "uint256",
-            },
-          ],
-          name: "NotEnoughBalance",
-          type: "error",
-        },
-        {
-          inputs: [],
-          name: "NotImplemented",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "token",
-              type: "address",
-            },
-          ],
-          name: "SafeERC20FailedOperation",
-          type: "error",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "bytes32",
-              name: "messageId",
-              type: "bytes32",
-            },
-            {
-              indexed: true,
-              internalType: "uint64",
-              name: "destinationChainSelector",
-              type: "uint64",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "receiver",
-              type: "address",
-            },
-            {
-              indexed: false,
-              internalType: "address",
-              name: "beneficiary",
-              type: "address",
-            },
-            {
-              indexed: false,
-              internalType: "address",
-              name: "token",
-              type: "address",
-            },
-            {
-              indexed: false,
-              internalType: "uint256",
-              name: "tokenAmount",
-              type: "uint256",
-            },
-            {
-              indexed: false,
-              internalType: "address",
-              name: "feeToken",
-              type: "address",
-            },
-            {
-              indexed: false,
-              internalType: "uint256",
-              name: "fees",
-              type: "uint256",
-            },
-          ],
-          name: "MessageSent",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              indexed: true,
-              internalType: "bytes32",
-              name: "previousAdminRole",
-              type: "bytes32",
-            },
-            {
-              indexed: true,
-              internalType: "bytes32",
-              name: "newAdminRole",
-              type: "bytes32",
-            },
-          ],
-          name: "RoleAdminChanged",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "sender",
-              type: "address",
-            },
-          ],
-          name: "RoleGranted",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "sender",
-              type: "address",
-            },
-          ],
-          name: "RoleRevoked",
-          type: "event",
-        },
-        {
-          inputs: [],
-          name: "CHAIN_ADMIN_ROLE",
-          outputs: [
-            {
-              internalType: "bytes32",
-              name: "",
-              type: "bytes32",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "DEFAULT_ADMIN_ROLE",
-          outputs: [
-            {
-              internalType: "bytes32",
-              name: "",
-              type: "bytes32",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint64",
-              name: "",
-              type: "uint64",
-            },
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-            {
-              internalType: "bytes",
-              name: "",
-              type: "bytes",
-            },
-          ],
-          name: "callCrossChain",
-          outputs: [],
-          stateMutability: "pure",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "ccipRouter",
-          outputs: [
-            {
-              internalType: "contract IRouterClient",
-              name: "",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint64",
-              name: "",
-              type: "uint64",
-            },
-          ],
-          name: "chains",
-          outputs: [
-            {
-              internalType: "address",
-              name: "receiver",
-              type: "address",
-            },
-            {
-              internalType: "uint64",
-              name: "gasLimit",
-              type: "uint64",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-          ],
-          name: "getRoleAdmin",
-          outputs: [
-            {
-              internalType: "bytes32",
-              name: "",
-              type: "bytes32",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-          ],
-          name: "grantRole",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-          ],
-          name: "hasRole",
-          outputs: [
-            {
-              internalType: "bool",
-              name: "",
-              type: "bool",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "linkToken",
-          outputs: [
-            {
-              internalType: "contract IERC20Metadata",
-              name: "",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              internalType: "address",
-              name: "callerConfirmation",
-              type: "address",
-            },
-          ],
-          name: "renounceRole",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-          ],
-          name: "revokeRole",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint64",
-              name: "chainId",
-              type: "uint64",
-            },
-            {
-              internalType: "address",
-              name: "receiver",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "gasLimit_",
-              type: "uint256",
-            },
-          ],
-          name: "setTargetChain",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes4",
-              name: "interfaceId",
-              type: "bytes4",
-            },
-          ],
-          name: "supportsInterface",
-          outputs: [
-            {
-              internalType: "bool",
-              name: "",
-              type: "bool",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "contract IERC20Metadata",
-              name: "token",
-              type: "address",
-            },
-            {
-              internalType: "uint64",
-              name: "chainId",
-              type: "uint64",
-            },
-            {
-              internalType: "address",
-              name: "target",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "amount",
-              type: "uint256",
-            },
-          ],
-          name: "transferToken",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "contract IERC20Metadata",
-              name: "",
-              type: "address",
-            },
-            {
-              internalType: "uint64",
-              name: "",
-              type: "uint64",
-            },
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-            {
-              internalType: "bytes",
-              name: "",
-              type: "bytes",
-            },
-          ],
-          name: "transferTokenAndData",
-          outputs: [],
-          stateMutability: "pure",
-          type: "function",
-        },
-      ],
-      inheritedFunctions: {
-        DEFAULT_ADMIN_ROLE: "@openzeppelin/contracts/access/AccessControl.sol",
-        getRoleAdmin: "@openzeppelin/contracts/access/AccessControl.sol",
-        grantRole: "@openzeppelin/contracts/access/AccessControl.sol",
-        hasRole: "@openzeppelin/contracts/access/AccessControl.sol",
-        renounceRole: "@openzeppelin/contracts/access/AccessControl.sol",
-        revokeRole: "@openzeppelin/contracts/access/AccessControl.sol",
-        supportsInterface: "@openzeppelin/contracts/access/AccessControl.sol",
-        callCrossChain: "contracts/interfaces/IBridge.sol",
-        transferToken: "contracts/interfaces/IBridge.sol",
-        transferTokenAndData: "contracts/interfaces/IBridge.sol",
-      },
-    },
-    OmniChainBridge: {
-      address: "0x30474Ce2DE03045B8D0AE76F8a30DbfC8f000cea",
-      abi: [
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "_endpoint",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "_owner",
-              type: "address",
-            },
-          ],
-          stateMutability: "nonpayable",
-          type: "constructor",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "target",
-              type: "address",
-            },
-          ],
-          name: "AddressEmptyCode",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-          ],
-          name: "AddressInsufficientBalance",
-          type: "error",
-        },
-        {
-          inputs: [],
-          name: "FailedInnerCall",
-          type: "error",
-        },
-        {
-          inputs: [],
-          name: "InvalidDelegate",
-          type: "error",
-        },
-        {
-          inputs: [],
-          name: "InvalidEndpointCall",
-          type: "error",
-        },
-        {
-          inputs: [],
-          name: "LzTokenUnavailable",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint32",
-              name: "eid",
-              type: "uint32",
-            },
-          ],
-          name: "NoPeer",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint256",
-              name: "msgValue",
-              type: "uint256",
-            },
-          ],
-          name: "NotEnoughNative",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint32",
-              name: "eid",
-              type: "uint32",
-            },
-            {
-              internalType: "bytes32",
-              name: "sender",
-              type: "bytes32",
-            },
-          ],
-          name: "OnlyPeer",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "owner",
-              type: "address",
-            },
-          ],
-          name: "OwnableInvalidOwner",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-          ],
-          name: "OwnableUnauthorizedAccount",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "token",
-              type: "address",
-            },
-          ],
-          name: "SafeERC20FailedOperation",
-          type: "error",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "address",
-              name: "previousOwner",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "newOwner",
-              type: "address",
-            },
-          ],
-          name: "OwnershipTransferred",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: false,
-              internalType: "uint32",
-              name: "eid",
-              type: "uint32",
-            },
-            {
-              indexed: false,
-              internalType: "bytes32",
-              name: "peer",
-              type: "bytes32",
-            },
-          ],
-          name: "PeerSet",
-          type: "event",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint64",
-              name: "chainId",
-              type: "uint64",
-            },
-            {
-              internalType: "address",
-              name: "target",
-              type: "address",
-            },
-            {
-              internalType: "bytes",
-              name: "data",
-              type: "bytes",
-            },
-          ],
-          name: "callCrossChain",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "endpoint",
-          outputs: [
-            {
-              internalType: "contract ILayerZeroEndpointV2",
-              name: "",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "oAppVersion",
-          outputs: [
-            {
-              internalType: "uint64",
-              name: "senderVersion",
-              type: "uint64",
-            },
-            {
-              internalType: "uint64",
-              name: "receiverVersion",
-              type: "uint64",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "owner",
-          outputs: [
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint32",
-              name: "eid",
-              type: "uint32",
-            },
-          ],
-          name: "peers",
-          outputs: [
-            {
-              internalType: "bytes32",
-              name: "peer",
-              type: "bytes32",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "renounceOwnership",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "_delegate",
-              type: "address",
-            },
-          ],
-          name: "setDelegate",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint32",
-              name: "_eid",
-              type: "uint32",
-            },
-            {
-              internalType: "bytes32",
-              name: "_peer",
-              type: "bytes32",
-            },
-          ],
-          name: "setPeer",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "newOwner",
-              type: "address",
-            },
-          ],
-          name: "transferOwnership",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "contract IERC20Metadata",
-              name: "token",
-              type: "address",
-            },
-            {
-              internalType: "uint64",
-              name: "chainId",
-              type: "uint64",
-            },
-            {
-              internalType: "address",
-              name: "target",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "amount",
-              type: "uint256",
-            },
-          ],
-          name: "transferToken",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "contract IERC20Metadata",
-              name: "token",
-              type: "address",
-            },
-            {
-              internalType: "uint64",
-              name: "chainId",
-              type: "uint64",
-            },
-            {
-              internalType: "address",
-              name: "target",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "amount",
-              type: "uint256",
-            },
-            {
-              internalType: "bytes",
-              name: "data",
-              type: "bytes",
-            },
-          ],
-          name: "transferTokenAndData",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-      ],
-      inheritedFunctions: {
-        callCrossChain: "contracts/interfaces/IBridge.sol",
-        transferToken: "contracts/interfaces/IBridge.sol",
-        transferTokenAndData: "contracts/interfaces/IBridge.sol",
-        endpoint: "@layerzerolabs/oapp-evm/contracts/oapp/OAppSender.sol",
-        oAppVersion: "@layerzerolabs/oapp-evm/contracts/oapp/OAppSender.sol",
-        owner: "@layerzerolabs/oapp-evm/contracts/oapp/OAppSender.sol",
-        peers: "@layerzerolabs/oapp-evm/contracts/oapp/OAppSender.sol",
-        renounceOwnership:
-          "@layerzerolabs/oapp-evm/contracts/oapp/OAppSender.sol",
-        setDelegate: "@layerzerolabs/oapp-evm/contracts/oapp/OAppSender.sol",
-        setPeer: "@layerzerolabs/oapp-evm/contracts/oapp/OAppSender.sol",
-        transferOwnership:
-          "@layerzerolabs/oapp-evm/contracts/oapp/OAppSender.sol",
-      },
-    },
-    P2PSwapRouter: {
-      address: "0x8156715d27e1b9bCfb0B1Ff820321b9cdF196148",
-      abi: [
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "onBehalfOf",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "admin",
-              type: "address",
-            },
-          ],
-          stateMutability: "nonpayable",
-          type: "constructor",
-        },
-        {
-          inputs: [],
-          name: "AccessControlBadConfirmation",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-            {
-              internalType: "bytes32",
-              name: "neededRole",
-              type: "bytes32",
-            },
-          ],
-          name: "AccessControlUnauthorizedAccount",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "target",
-              type: "address",
-            },
-          ],
-          name: "AddressEmptyCode",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-          ],
-          name: "AddressInsufficientBalance",
-          type: "error",
-        },
-        {
-          inputs: [],
-          name: "FailedInnerCall",
-          type: "error",
-        },
-        {
-          inputs: [],
-          name: "NotImplemented",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "token",
-              type: "address",
-            },
-          ],
-          name: "SafeERC20FailedOperation",
-          type: "error",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "address",
-              name: "onBehalfOf",
-              type: "address",
-            },
-          ],
-          name: "OnBehalfOfChanged",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: false,
-              internalType: "address",
-              name: "tokenIn",
-              type: "address",
-            },
-            {
-              indexed: false,
-              internalType: "address",
-              name: "tokenOut",
-              type: "address",
-            },
-            {
-              indexed: false,
-              internalType: "uint256",
-              name: "price",
-              type: "uint256",
-            },
-          ],
-          name: "PriceUpdated",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              indexed: true,
-              internalType: "bytes32",
-              name: "previousAdminRole",
-              type: "bytes32",
-            },
-            {
-              indexed: true,
-              internalType: "bytes32",
-              name: "newAdminRole",
-              type: "bytes32",
-            },
-          ],
-          name: "RoleAdminChanged",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "sender",
-              type: "address",
-            },
-          ],
-          name: "RoleGranted",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "sender",
-              type: "address",
-            },
-          ],
-          name: "RoleRevoked",
-          type: "event",
-        },
-        {
-          inputs: [],
-          name: "ADMIN_ROLE",
-          outputs: [
-            {
-              internalType: "bytes32",
-              name: "",
-              type: "bytes32",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "DEFAULT_ADMIN_ROLE",
-          outputs: [
-            {
-              internalType: "bytes32",
-              name: "",
-              type: "bytes32",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "PRICER_ROLE",
-          outputs: [
-            {
-              internalType: "bytes32",
-              name: "",
-              type: "bytes32",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "SWAP_ROLE",
-          outputs: [
-            {
-              internalType: "bytes32",
-              name: "",
-              type: "bytes32",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              components: [
-                {
-                  internalType: "bytes",
-                  name: "path",
-                  type: "bytes",
-                },
-                {
-                  internalType: "address",
-                  name: "recipient",
-                  type: "address",
-                },
-                {
-                  internalType: "uint256",
-                  name: "deadline",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "amountIn",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "amountOutMinimum",
-                  type: "uint256",
-                },
-              ],
-              internalType: "struct ISwapRouter.ExactInputParams",
-              name: "",
-              type: "tuple",
-            },
-          ],
-          name: "exactInput",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "payable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              components: [
-                {
-                  internalType: "address",
-                  name: "tokenIn",
-                  type: "address",
-                },
-                {
-                  internalType: "address",
-                  name: "tokenOut",
-                  type: "address",
-                },
-                {
-                  internalType: "uint24",
-                  name: "fee",
-                  type: "uint24",
-                },
-                {
-                  internalType: "address",
-                  name: "recipient",
-                  type: "address",
-                },
-                {
-                  internalType: "uint256",
-                  name: "deadline",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "amountIn",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "amountOutMinimum",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint160",
-                  name: "sqrtPriceLimitX96",
-                  type: "uint160",
-                },
-              ],
-              internalType: "struct ISwapRouter.ExactInputSingleParams",
-              name: "params",
-              type: "tuple",
-            },
-          ],
-          name: "exactInputSingle",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "amountOut",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "payable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              components: [
-                {
-                  internalType: "bytes",
-                  name: "path",
-                  type: "bytes",
-                },
-                {
-                  internalType: "address",
-                  name: "recipient",
-                  type: "address",
-                },
-                {
-                  internalType: "uint256",
-                  name: "deadline",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "amountOut",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "amountInMaximum",
-                  type: "uint256",
-                },
-              ],
-              internalType: "struct ISwapRouter.ExactOutputParams",
-              name: "",
-              type: "tuple",
-            },
-          ],
-          name: "exactOutput",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "payable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              components: [
-                {
-                  internalType: "address",
-                  name: "tokenIn",
-                  type: "address",
-                },
-                {
-                  internalType: "address",
-                  name: "tokenOut",
-                  type: "address",
-                },
-                {
-                  internalType: "uint24",
-                  name: "fee",
-                  type: "uint24",
-                },
-                {
-                  internalType: "address",
-                  name: "recipient",
-                  type: "address",
-                },
-                {
-                  internalType: "uint256",
-                  name: "deadline",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "amountOut",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "amountInMaximum",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint160",
-                  name: "sqrtPriceLimitX96",
-                  type: "uint160",
-                },
-              ],
-              internalType: "struct ISwapRouter.ExactOutputSingleParams",
-              name: "params",
-              type: "tuple",
-            },
-          ],
-          name: "exactOutputSingle",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "amountIn",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "payable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "tokenIn",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "tokenOut",
-              type: "address",
-            },
-          ],
-          name: "getCurrentPrice",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "getOnBehalfOf",
-          outputs: [
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-          ],
-          name: "getRoleAdmin",
-          outputs: [
-            {
-              internalType: "bytes32",
-              name: "",
-              type: "bytes32",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-          ],
-          name: "grantRole",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-          ],
-          name: "hasRole",
-          outputs: [
-            {
-              internalType: "bool",
-              name: "",
-              type: "bool",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              internalType: "address",
-              name: "callerConfirmation",
-              type: "address",
-            },
-          ],
-          name: "renounceRole",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-          ],
-          name: "revokeRole",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "tokenIn",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "tokenOut",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "price_",
-              type: "uint256",
-            },
-          ],
-          name: "setCurrentPrice",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "onBehalfOf",
-              type: "address",
-            },
-          ],
-          name: "setOnBehalfOf",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes4",
-              name: "interfaceId",
-              type: "bytes4",
-            },
-          ],
-          name: "supportsInterface",
-          outputs: [
-            {
-              internalType: "bool",
-              name: "",
-              type: "bool",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "int256",
-              name: "",
-              type: "int256",
-            },
-            {
-              internalType: "int256",
-              name: "",
-              type: "int256",
-            },
-            {
-              internalType: "bytes",
-              name: "",
-              type: "bytes",
-            },
-          ],
-          name: "uniswapV3SwapCallback",
-          outputs: [],
-          stateMutability: "pure",
-          type: "function",
-        },
-      ],
-      inheritedFunctions: {
-        exactInput:
-          "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol",
-        exactInputSingle:
-          "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol",
-        exactOutput:
-          "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol",
-        exactOutputSingle:
-          "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol",
-        uniswapV3SwapCallback:
-          "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol",
-        DEFAULT_ADMIN_ROLE: "@openzeppelin/contracts/access/AccessControl.sol",
-        getRoleAdmin: "@openzeppelin/contracts/access/AccessControl.sol",
-        grantRole: "@openzeppelin/contracts/access/AccessControl.sol",
-        hasRole: "@openzeppelin/contracts/access/AccessControl.sol",
-        renounceRole: "@openzeppelin/contracts/access/AccessControl.sol",
-        revokeRole: "@openzeppelin/contracts/access/AccessControl.sol",
-        supportsInterface: "@openzeppelin/contracts/access/AccessControl.sol",
-      },
-    },
-    PythPriceOracle: {
-      address: "0x969aA7de33FdFdaB7c11adE6a0288EC79F12fb19",
-      abi: [
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "owner",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "pythContract",
-              type: "address",
-            },
-          ],
-          stateMutability: "nonpayable",
-          type: "constructor",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "owner",
-              type: "address",
-            },
-          ],
-          name: "OwnableInvalidOwner",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-          ],
-          name: "OwnableUnauthorizedAccount",
-          type: "error",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "address",
-              name: "tokenIn",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "tokenOut",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "bytes32",
-              name: "feedId",
-              type: "bytes32",
-            },
-          ],
-          name: "FeedAdded",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "address",
-              name: "previousOwner",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "newOwner",
-              type: "address",
-            },
-          ],
-          name: "OwnershipTransferStarted",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "address",
-              name: "previousOwner",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "newOwner",
-              type: "address",
-            },
-          ],
-          name: "OwnershipTransferred",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "address",
-              name: "to",
-              type: "address",
-            },
-            {
-              indexed: false,
-              internalType: "uint256",
-              name: "amount",
-              type: "uint256",
-            },
-          ],
-          name: "Withdraw",
-          type: "event",
-        },
-        {
-          inputs: [],
-          name: "acceptOwnership",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              components: [
-                {
-                  internalType: "bytes32",
-                  name: "id",
-                  type: "bytes32",
-                },
-                {
-                  internalType: "uint256",
-                  name: "age",
-                  type: "uint256",
-                },
-              ],
-              internalType: "struct PythPriceOracle.PythPriceFeed",
-              name: "priceFeed",
-              type: "tuple",
-            },
-            {
-              internalType: "contract IERC20Metadata",
-              name: "tokenIn",
-              type: "address",
-            },
-            {
-              internalType: "contract IERC20Metadata",
-              name: "tokenOut",
-              type: "address",
-            },
-          ],
-          name: "addFeed",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "contract IERC20Metadata",
-              name: "tokenIn",
-              type: "address",
-            },
-            {
-              internalType: "contract IERC20Metadata",
-              name: "tokenOut",
-              type: "address",
-            },
-          ],
-          name: "getCurrentPrice",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "owner",
-          outputs: [
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "pendingOwner",
-          outputs: [
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "pyth",
-          outputs: [
-            {
-              internalType: "contract IPyth",
-              name: "",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "renounceOwnership",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "contract IERC20Metadata",
-              name: "tokenIn",
-              type: "address",
-            },
-            {
-              internalType: "contract IERC20Metadata",
-              name: "tokenOut",
-              type: "address",
-            },
-          ],
-          name: "tokenPairPrice",
-          outputs: [
-            {
-              internalType: "int256",
-              name: "price",
-              type: "int256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "contract IERC20Metadata",
-              name: "tokenIn",
-              type: "address",
-            },
-            {
-              internalType: "contract IERC20Metadata",
-              name: "tokenOut",
-              type: "address",
-            },
-          ],
-          name: "tokenPairPriceFeed",
-          outputs: [
-            {
-              internalType: "bytes32",
-              name: "id",
-              type: "bytes32",
-            },
-            {
-              internalType: "uint256",
-              name: "age",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "newOwner",
-              type: "address",
-            },
-          ],
-          name: "transferOwnership",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes[]",
-              name: "priceUpdate",
-              type: "bytes[]",
-            },
-            {
-              internalType: "contract IERC20Metadata",
-              name: "tokenIn",
-              type: "address",
-            },
-            {
-              internalType: "contract IERC20Metadata",
-              name: "tokenOut",
-              type: "address",
-            },
-          ],
-          name: "updatePrice",
-          outputs: [],
-          stateMutability: "payable",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "withdraw",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          stateMutability: "payable",
-          type: "receive",
-        },
-      ],
-      inheritedFunctions: {
-        getCurrentPrice: "contracts/interfaces/IPriceOracle.sol",
-        acceptOwnership: "@openzeppelin/contracts/access/Ownable2Step.sol",
-        owner: "@openzeppelin/contracts/access/Ownable2Step.sol",
-        pendingOwner: "@openzeppelin/contracts/access/Ownable2Step.sol",
-        renounceOwnership: "@openzeppelin/contracts/access/Ownable2Step.sol",
-        transferOwnership: "@openzeppelin/contracts/access/Ownable2Step.sol",
-      },
-    },
-    RiskHub: {
-      address: "0x366F80D92fba5049a4CEe666b9644451E9071240",
-      abi: [
-        {
-          inputs: [
-            {
-              internalType: "contract IERC20Metadata",
-              name: "payToken_",
-              type: "address",
-            },
-            {
-              internalType: "contract IBridge",
-              name: "bridge_",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "admin",
-              type: "address",
-            },
-          ],
-          stateMutability: "nonpayable",
-          type: "constructor",
-        },
-        {
-          inputs: [],
-          name: "AccessControlBadConfirmation",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-            {
-              internalType: "bytes32",
-              name: "neededRole",
-              type: "bytes32",
-            },
-          ],
-          name: "AccessControlUnauthorizedAccount",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "target",
-              type: "address",
-            },
-          ],
-          name: "AddressEmptyCode",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-          ],
-          name: "AddressInsufficientBalance",
-          type: "error",
-        },
-        {
-          inputs: [],
-          name: "FailedInnerCall",
-          type: "error",
-        },
-        {
-          inputs: [],
-          name: "NotImplemented",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "token",
-              type: "address",
-            },
-          ],
-          name: "SafeERC20FailedOperation",
-          type: "error",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              indexed: true,
-              internalType: "bytes32",
-              name: "previousAdminRole",
-              type: "bytes32",
-            },
-            {
-              indexed: true,
-              internalType: "bytes32",
-              name: "newAdminRole",
-              type: "bytes32",
-            },
-          ],
-          name: "RoleAdminChanged",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "sender",
-              type: "address",
-            },
-          ],
-          name: "RoleGranted",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "sender",
-              type: "address",
-            },
-          ],
-          name: "RoleRevoked",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "uint64",
-              name: "chainId",
-              type: "uint64",
-            },
-            {
-              indexed: true,
-              internalType: "contract IERC20Metadata",
-              name: "tokenIn",
-              type: "address",
-            },
-            {
-              indexed: false,
-              internalType: "uint40",
-              name: "timestamp",
-              type: "uint40",
-            },
-            {
-              indexed: false,
-              internalType: "uint256",
-              name: "amountIn",
-              type: "uint256",
-            },
-            {
-              indexed: false,
-              internalType: "uint256",
-              name: "amountOut",
-              type: "uint256",
-            },
-          ],
-          name: "TradeReceivedFromDex",
-          type: "event",
-        },
-        {
-          inputs: [],
-          name: "DEFAULT_ADMIN_ROLE",
-          outputs: [
-            {
-              internalType: "bytes32",
-              name: "",
-              type: "bytes32",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "DEX_ADMIN_ROLE",
-          outputs: [
-            {
-              internalType: "bytes32",
-              name: "",
-              type: "bytes32",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "DEX_LIQUIDITY_ROLE",
-          outputs: [
-            {
-              internalType: "bytes32",
-              name: "",
-              type: "bytes32",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "DEX_MESSENGER_ROLE",
-          outputs: [
-            {
-              internalType: "bytes32",
-              name: "",
-              type: "bytes32",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "WAD",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "WITHDRAW_ROLE",
-          outputs: [
-            {
-              internalType: "bytes32",
-              name: "",
-              type: "bytes32",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint64",
-              name: "chainId",
-              type: "uint64",
-            },
-            {
-              internalType: "address",
-              name: "bangDex",
-              type: "address",
-            },
-            {
-              internalType: "uint32",
-              name: "slotSize",
-              type: "uint32",
-            },
-          ],
-          name: "addDex",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "bridge",
-          outputs: [
-            {
-              internalType: "contract IBridge",
-              name: "",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint256",
-              name: "amount",
-              type: "uint256",
-            },
-          ],
-          name: "deposit",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint64",
-              name: "",
-              type: "uint64",
-            },
-          ],
-          name: "dexes",
-          outputs: [
-            {
-              internalType: "address",
-              name: "bangDex",
-              type: "address",
-            },
-            {
-              internalType: "uint32",
-              name: "slotSize",
-              type: "uint32",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-          ],
-          name: "getRoleAdmin",
-          outputs: [
-            {
-              internalType: "bytes32",
-              name: "",
-              type: "bytes32",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-          ],
-          name: "grantRole",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-          ],
-          name: "hasRole",
-          outputs: [
-            {
-              internalType: "bool",
-              name: "",
-              type: "bool",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "payToken",
-          outputs: [
-            {
-              internalType: "contract IERC20Metadata",
-              name: "",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              internalType: "address",
-              name: "callerConfirmation",
-              type: "address",
-            },
-          ],
-          name: "renounceRole",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-          ],
-          name: "revokeRole",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint64",
-              name: "chainId",
-              type: "uint64",
-            },
-            {
-              internalType: "uint256",
-              name: "amount",
-              type: "uint256",
-            },
-          ],
-          name: "sendToDex",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes4",
-              name: "interfaceId",
-              type: "bytes4",
-            },
-          ],
-          name: "supportsInterface",
-          outputs: [
-            {
-              internalType: "bool",
-              name: "",
-              type: "bool",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint64",
-              name: "chainId",
-              type: "uint64",
-            },
-            {
-              internalType: "uint40",
-              name: "timestamp",
-              type: "uint40",
-            },
-            {
-              internalType: "contract IERC20Metadata",
-              name: "tokenIn",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "amountIn",
-              type: "uint256",
-            },
-            {
-              internalType: "uint256",
-              name: "amountOut",
-              type: "uint256",
-            },
-          ],
-          name: "tradeFromDex",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint256",
-              name: "amount",
-              type: "uint256",
-            },
-            {
-              internalType: "address",
-              name: "destination",
-              type: "address",
-            },
-          ],
-          name: "withdraw",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint64",
-              name: "chainId",
-              type: "uint64",
-            },
-            {
-              internalType: "uint256",
-              name: "amount",
-              type: "uint256",
-            },
-          ],
-          name: "withdrawFromDex",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-      ],
-      inheritedFunctions: {
-        DEFAULT_ADMIN_ROLE: "@openzeppelin/contracts/access/AccessControl.sol",
-        getRoleAdmin: "@openzeppelin/contracts/access/AccessControl.sol",
-        grantRole: "@openzeppelin/contracts/access/AccessControl.sol",
-        hasRole: "@openzeppelin/contracts/access/AccessControl.sol",
-        renounceRole: "@openzeppelin/contracts/access/AccessControl.sol",
-        revokeRole: "@openzeppelin/contracts/access/AccessControl.sol",
-        supportsInterface: "@openzeppelin/contracts/access/AccessControl.sol",
-        tradeFromDex: "contracts/interfaces/IRiskHub.sol",
-      },
-    },
-    SwapLiquidator: {
-      address: "0xef2fEa1e2231c85416d09Dc74ca57eD79884C3A6",
-      abi: [
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "_swapRouter",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "_usdcToken",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "_riskHub",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "admin",
-              type: "address",
-            },
-          ],
-          stateMutability: "nonpayable",
-          type: "constructor",
-        },
-        {
-          inputs: [],
-          name: "AccessControlBadConfirmation",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-            {
-              internalType: "bytes32",
-              name: "neededRole",
-              type: "bytes32",
-            },
-          ],
-          name: "AccessControlUnauthorizedAccount",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "target",
-              type: "address",
-            },
-          ],
-          name: "AddressEmptyCode",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-          ],
-          name: "AddressInsufficientBalance",
-          type: "error",
-        },
-        {
-          inputs: [],
-          name: "FailedInnerCall",
-          type: "error",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "token",
-              type: "address",
-            },
-          ],
-          name: "SafeERC20FailedOperation",
-          type: "error",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              indexed: true,
-              internalType: "bytes32",
-              name: "previousAdminRole",
-              type: "bytes32",
-            },
-            {
-              indexed: true,
-              internalType: "bytes32",
-              name: "newAdminRole",
-              type: "bytes32",
-            },
-          ],
-          name: "RoleAdminChanged",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "sender",
-              type: "address",
-            },
-          ],
-          name: "RoleGranted",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "sender",
-              type: "address",
-            },
-          ],
-          name: "RoleRevoked",
-          type: "event",
-        },
-        {
-          inputs: [],
-          name: "DEFAULT_ADMIN_ROLE",
-          outputs: [
-            {
-              internalType: "bytes32",
-              name: "",
-              type: "bytes32",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "LIQUIDATOR_ADMIN_ROLE",
-          outputs: [
-            {
-              internalType: "bytes32",
-              name: "",
-              type: "bytes32",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-          ],
-          name: "getRoleAdmin",
-          outputs: [
-            {
-              internalType: "bytes32",
-              name: "",
-              type: "bytes32",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-          ],
-          name: "grantRole",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-          ],
-          name: "hasRole",
-          outputs: [
-            {
-              internalType: "bool",
-              name: "",
-              type: "bool",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "asset",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "assetAmount",
-              type: "uint256",
-            },
-            {
-              internalType: "uint256",
-              name: "debtAmount",
-              type: "uint256",
-            },
-          ],
-          name: "liquidate",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "poolFee",
-          outputs: [
-            {
-              internalType: "uint24",
-              name: "",
-              type: "uint24",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              internalType: "address",
-              name: "callerConfirmation",
-              type: "address",
-            },
-          ],
-          name: "renounceRole",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes32",
-              name: "role",
-              type: "bytes32",
-            },
-            {
-              internalType: "address",
-              name: "account",
-              type: "address",
-            },
-          ],
-          name: "revokeRole",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "riskHub",
-          outputs: [
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "bytes4",
-              name: "interfaceId",
-              type: "bytes4",
-            },
-          ],
-          name: "supportsInterface",
-          outputs: [
-            {
-              internalType: "bool",
-              name: "",
-              type: "bool",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "swapRouter",
-          outputs: [
-            {
-              internalType: "contract ISwapRouter",
-              name: "",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "usdcToken",
-          outputs: [
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-      ],
-      inheritedFunctions: {},
-    },
-  },
   84532: {
     BangDEX: {
-      address: "0x2cb98EEc9848ab082AD7E31B91372Ec88CA3A761",
+      address: "0x9A5589Bfa8758E96D2Cd2245094a489A5725DFDf",
       abi: [
         {
           inputs: [
@@ -3889,7 +926,7 @@ const deployedContracts = {
       },
     },
     CCIPBridge: {
-      address: "0x37726d3C2207C88Dc8CF58127914FCD9f8909f62",
+      address: "0x9Fafd87070Cc66493Bc82E9AcC26e78D406FB4e1",
       abi: [
         {
           inputs: [
@@ -3934,8 +971,35 @@ const deployedContracts = {
           type: "error",
         },
         {
+          inputs: [
+            {
+              internalType: "address",
+              name: "target",
+              type: "address",
+            },
+          ],
+          name: "AddressEmptyCode",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "AddressInsufficientBalance",
+          type: "error",
+        },
+        {
           inputs: [],
           name: "AmountIsZero",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "FailedInnerCall",
           type: "error",
         },
         {
@@ -3979,6 +1043,17 @@ const deployedContracts = {
         {
           inputs: [],
           name: "NotImplemented",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "token",
+              type: "address",
+            },
+          ],
+          name: "SafeERC20FailedOperation",
           type: "error",
         },
         {
@@ -4138,29 +1213,6 @@ const deployedContracts = {
           type: "function",
         },
         {
-          inputs: [
-            {
-              internalType: "uint64",
-              name: "",
-              type: "uint64",
-            },
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-            {
-              internalType: "bytes",
-              name: "",
-              type: "bytes",
-            },
-          ],
-          name: "callCrossChain",
-          outputs: [],
-          stateMutability: "pure",
-          type: "function",
-        },
-        {
           inputs: [],
           name: "ccipRouter",
           outputs: [
@@ -4190,8 +1242,13 @@ const deployedContracts = {
             },
             {
               internalType: "uint64",
-              name: "gasLimit",
+              name: "chainSelector",
               type: "uint64",
+            },
+            {
+              internalType: "uint32",
+              name: "gasLimit",
+              type: "uint32",
             },
           ],
           stateMutability: "view",
@@ -4315,6 +1372,11 @@ const deployedContracts = {
               type: "uint64",
             },
             {
+              internalType: "uint64",
+              name: "chainSelector",
+              type: "uint64",
+            },
+            {
               internalType: "address",
               name: "receiver",
               type: "address",
@@ -4419,13 +1481,12 @@ const deployedContracts = {
         renounceRole: "@openzeppelin/contracts/access/AccessControl.sol",
         revokeRole: "@openzeppelin/contracts/access/AccessControl.sol",
         supportsInterface: "@openzeppelin/contracts/access/AccessControl.sol",
-        callCrossChain: "contracts/interfaces/IBridge.sol",
-        transferToken: "contracts/interfaces/IBridge.sol",
-        transferTokenAndData: "contracts/interfaces/IBridge.sol",
+        transferToken: "contracts/interfaces/ITransferBridge.sol",
+        transferTokenAndData: "contracts/interfaces/ITransferBridge.sol",
       },
     },
     CrossChainLiquidator: {
-      address: "0x89A330Dcf7129ac4b27958caFc639d627592a921",
+      address: "0xaCfeB6e0d34C08B1e8C8A7828b687DcCa91B4514",
       abi: [
         {
           inputs: [
@@ -4765,8 +1826,1702 @@ const deployedContracts = {
         supportsInterface: "@openzeppelin/contracts/access/AccessControl.sol",
       },
     },
+    MyOFT: {
+      address: "0x2575cA591B299213F18D742e2E2Cc8422FE2139a",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "_name",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "_symbol",
+              type: "string",
+            },
+            {
+              internalType: "address",
+              name: "_lzEndpoint",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_delegate",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "target",
+              type: "address",
+            },
+          ],
+          name: "AddressEmptyCode",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "AddressInsufficientBalance",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "spender",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "allowance",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "needed",
+              type: "uint256",
+            },
+          ],
+          name: "ERC20InsufficientAllowance",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "sender",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "balance",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "needed",
+              type: "uint256",
+            },
+          ],
+          name: "ERC20InsufficientBalance",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "approver",
+              type: "address",
+            },
+          ],
+          name: "ERC20InvalidApprover",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "receiver",
+              type: "address",
+            },
+          ],
+          name: "ERC20InvalidReceiver",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "sender",
+              type: "address",
+            },
+          ],
+          name: "ERC20InvalidSender",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "spender",
+              type: "address",
+            },
+          ],
+          name: "ERC20InvalidSpender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "FailedInnerCall",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidDelegate",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidEndpointCall",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidLocalDecimals",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes",
+              name: "options",
+              type: "bytes",
+            },
+          ],
+          name: "InvalidOptions",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "LzTokenUnavailable",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint32",
+              name: "eid",
+              type: "uint32",
+            },
+          ],
+          name: "NoPeer",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "msgValue",
+              type: "uint256",
+            },
+          ],
+          name: "NotEnoughNative",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "addr",
+              type: "address",
+            },
+          ],
+          name: "OnlyEndpoint",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint32",
+              name: "eid",
+              type: "uint32",
+            },
+            {
+              internalType: "bytes32",
+              name: "sender",
+              type: "bytes32",
+            },
+          ],
+          name: "OnlyPeer",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "OnlySelf",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+          ],
+          name: "OwnableInvalidOwner",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "OwnableUnauthorizedAccount",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "token",
+              type: "address",
+            },
+          ],
+          name: "SafeERC20FailedOperation",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes",
+              name: "result",
+              type: "bytes",
+            },
+          ],
+          name: "SimulationResult",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "amountLD",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "minAmountLD",
+              type: "uint256",
+            },
+          ],
+          name: "SlippageExceeded",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "spender",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "Approval",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint32",
+                  name: "eid",
+                  type: "uint32",
+                },
+                {
+                  internalType: "uint16",
+                  name: "msgType",
+                  type: "uint16",
+                },
+                {
+                  internalType: "bytes",
+                  name: "options",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct EnforcedOptionParam[]",
+              name: "_enforcedOptions",
+              type: "tuple[]",
+            },
+          ],
+          name: "EnforcedOptionSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "inspector",
+              type: "address",
+            },
+          ],
+          name: "MsgInspectorSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "guid",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "uint32",
+              name: "srcEid",
+              type: "uint32",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "toAddress",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amountReceivedLD",
+              type: "uint256",
+            },
+          ],
+          name: "OFTReceived",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "guid",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "uint32",
+              name: "dstEid",
+              type: "uint32",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "fromAddress",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amountSentLD",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amountReceivedLD",
+              type: "uint256",
+            },
+          ],
+          name: "OFTSent",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint32",
+              name: "eid",
+              type: "uint32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes32",
+              name: "peer",
+              type: "bytes32",
+            },
+          ],
+          name: "PeerSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "preCrimeAddress",
+              type: "address",
+            },
+          ],
+          name: "PreCrimeSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "Transfer",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "SEND",
+          outputs: [
+            {
+              internalType: "uint16",
+              name: "",
+              type: "uint16",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "SEND_AND_CALL",
+          outputs: [
+            {
+              internalType: "uint16",
+              name: "",
+              type: "uint16",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint32",
+                  name: "srcEid",
+                  type: "uint32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "sender",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint64",
+                  name: "nonce",
+                  type: "uint64",
+                },
+              ],
+              internalType: "struct Origin",
+              name: "origin",
+              type: "tuple",
+            },
+          ],
+          name: "allowInitializePath",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "spender",
+              type: "address",
+            },
+          ],
+          name: "allowance",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "approvalRequired",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "spender",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "approve",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "balanceOf",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint32",
+              name: "_eid",
+              type: "uint32",
+            },
+            {
+              internalType: "uint16",
+              name: "_msgType",
+              type: "uint16",
+            },
+            {
+              internalType: "bytes",
+              name: "_extraOptions",
+              type: "bytes",
+            },
+          ],
+          name: "combineOptions",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "decimalConversionRate",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "decimals",
+          outputs: [
+            {
+              internalType: "uint8",
+              name: "",
+              type: "uint8",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "endpoint",
+          outputs: [
+            {
+              internalType: "contract ILayerZeroEndpointV2",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint32",
+              name: "eid",
+              type: "uint32",
+            },
+            {
+              internalType: "uint16",
+              name: "msgType",
+              type: "uint16",
+            },
+          ],
+          name: "enforcedOptions",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "enforcedOption",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint32",
+                  name: "srcEid",
+                  type: "uint32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "sender",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint64",
+                  name: "nonce",
+                  type: "uint64",
+                },
+              ],
+              internalType: "struct Origin",
+              name: "",
+              type: "tuple",
+            },
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+            {
+              internalType: "address",
+              name: "_sender",
+              type: "address",
+            },
+          ],
+          name: "isComposeMsgSender",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint32",
+              name: "_eid",
+              type: "uint32",
+            },
+            {
+              internalType: "bytes32",
+              name: "_peer",
+              type: "bytes32",
+            },
+          ],
+          name: "isPeer",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint32",
+                  name: "srcEid",
+                  type: "uint32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "sender",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint64",
+                  name: "nonce",
+                  type: "uint64",
+                },
+              ],
+              internalType: "struct Origin",
+              name: "_origin",
+              type: "tuple",
+            },
+            {
+              internalType: "bytes32",
+              name: "_guid",
+              type: "bytes32",
+            },
+            {
+              internalType: "bytes",
+              name: "_message",
+              type: "bytes",
+            },
+            {
+              internalType: "address",
+              name: "_executor",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "_extraData",
+              type: "bytes",
+            },
+          ],
+          name: "lzReceive",
+          outputs: [],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  components: [
+                    {
+                      internalType: "uint32",
+                      name: "srcEid",
+                      type: "uint32",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "sender",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "uint64",
+                      name: "nonce",
+                      type: "uint64",
+                    },
+                  ],
+                  internalType: "struct Origin",
+                  name: "origin",
+                  type: "tuple",
+                },
+                {
+                  internalType: "uint32",
+                  name: "dstEid",
+                  type: "uint32",
+                },
+                {
+                  internalType: "address",
+                  name: "receiver",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "guid",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint256",
+                  name: "value",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "executor",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "message",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes",
+                  name: "extraData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct InboundPacket[]",
+              name: "_packets",
+              type: "tuple[]",
+            },
+          ],
+          name: "lzReceiveAndRevert",
+          outputs: [],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint32",
+                  name: "srcEid",
+                  type: "uint32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "sender",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint64",
+                  name: "nonce",
+                  type: "uint64",
+                },
+              ],
+              internalType: "struct Origin",
+              name: "_origin",
+              type: "tuple",
+            },
+            {
+              internalType: "bytes32",
+              name: "_guid",
+              type: "bytes32",
+            },
+            {
+              internalType: "bytes",
+              name: "_message",
+              type: "bytes",
+            },
+            {
+              internalType: "address",
+              name: "_executor",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "_extraData",
+              type: "bytes",
+            },
+          ],
+          name: "lzReceiveSimulate",
+          outputs: [],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "recipient",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+          ],
+          name: "mint",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "msgInspector",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "name",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint32",
+              name: "",
+              type: "uint32",
+            },
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          name: "nextNonce",
+          outputs: [
+            {
+              internalType: "uint64",
+              name: "nonce",
+              type: "uint64",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "oApp",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "oAppVersion",
+          outputs: [
+            {
+              internalType: "uint64",
+              name: "senderVersion",
+              type: "uint64",
+            },
+            {
+              internalType: "uint64",
+              name: "receiverVersion",
+              type: "uint64",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "oftVersion",
+          outputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceId",
+              type: "bytes4",
+            },
+            {
+              internalType: "uint64",
+              name: "version",
+              type: "uint64",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint32",
+              name: "eid",
+              type: "uint32",
+            },
+          ],
+          name: "peers",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "peer",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "preCrime",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint32",
+                  name: "dstEid",
+                  type: "uint32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "to",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amountLD",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "minAmountLD",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bytes",
+                  name: "extraOptions",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes",
+                  name: "composeMsg",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes",
+                  name: "oftCmd",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct SendParam",
+              name: "_sendParam",
+              type: "tuple",
+            },
+          ],
+          name: "quoteOFT",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "minAmountLD",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "maxAmountLD",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct OFTLimit",
+              name: "oftLimit",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "int256",
+                  name: "feeAmountLD",
+                  type: "int256",
+                },
+                {
+                  internalType: "string",
+                  name: "description",
+                  type: "string",
+                },
+              ],
+              internalType: "struct OFTFeeDetail[]",
+              name: "oftFeeDetails",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "amountSentLD",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amountReceivedLD",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct OFTReceipt",
+              name: "oftReceipt",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint32",
+                  name: "dstEid",
+                  type: "uint32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "to",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amountLD",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "minAmountLD",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bytes",
+                  name: "extraOptions",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes",
+                  name: "composeMsg",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes",
+                  name: "oftCmd",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct SendParam",
+              name: "_sendParam",
+              type: "tuple",
+            },
+            {
+              internalType: "bool",
+              name: "_payInLzToken",
+              type: "bool",
+            },
+          ],
+          name: "quoteSend",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "nativeFee",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "lzTokenFee",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct MessagingFee",
+              name: "msgFee",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "renounceOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint32",
+                  name: "dstEid",
+                  type: "uint32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "to",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amountLD",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "minAmountLD",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bytes",
+                  name: "extraOptions",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes",
+                  name: "composeMsg",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes",
+                  name: "oftCmd",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct SendParam",
+              name: "_sendParam",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "nativeFee",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "lzTokenFee",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct MessagingFee",
+              name: "_fee",
+              type: "tuple",
+            },
+            {
+              internalType: "address",
+              name: "_refundAddress",
+              type: "address",
+            },
+          ],
+          name: "send",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "guid",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint64",
+                  name: "nonce",
+                  type: "uint64",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "uint256",
+                      name: "nativeFee",
+                      type: "uint256",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "lzTokenFee",
+                      type: "uint256",
+                    },
+                  ],
+                  internalType: "struct MessagingFee",
+                  name: "fee",
+                  type: "tuple",
+                },
+              ],
+              internalType: "struct MessagingReceipt",
+              name: "msgReceipt",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "amountSentLD",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amountReceivedLD",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct OFTReceipt",
+              name: "oftReceipt",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_delegate",
+              type: "address",
+            },
+          ],
+          name: "setDelegate",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint32",
+                  name: "eid",
+                  type: "uint32",
+                },
+                {
+                  internalType: "uint16",
+                  name: "msgType",
+                  type: "uint16",
+                },
+                {
+                  internalType: "bytes",
+                  name: "options",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct EnforcedOptionParam[]",
+              name: "_enforcedOptions",
+              type: "tuple[]",
+            },
+          ],
+          name: "setEnforcedOptions",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_msgInspector",
+              type: "address",
+            },
+          ],
+          name: "setMsgInspector",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint32",
+              name: "_eid",
+              type: "uint32",
+            },
+            {
+              internalType: "bytes32",
+              name: "_peer",
+              type: "bytes32",
+            },
+          ],
+          name: "setPeer",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_preCrime",
+              type: "address",
+            },
+          ],
+          name: "setPreCrime",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "sharedDecimals",
+          outputs: [
+            {
+              internalType: "uint8",
+              name: "",
+              type: "uint8",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "symbol",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "token",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "totalSupply",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "transfer",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "transferFrom",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        SEND: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        SEND_AND_CALL: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        allowInitializePath: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        allowance: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        approvalRequired: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        approve: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        balanceOf: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        combineOptions: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        decimalConversionRate: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        decimals: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        endpoint: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        enforcedOptions: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        isComposeMsgSender: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        isPeer: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        lzReceive: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        lzReceiveAndRevert: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        lzReceiveSimulate: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        msgInspector: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        name: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        nextNonce: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        oApp: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        oAppVersion: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        oftVersion: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        owner: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        peers: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        preCrime: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        quoteOFT: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        quoteSend: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        renounceOwnership: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        send: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        setDelegate: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        setEnforcedOptions: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        setMsgInspector: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        setPeer: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        setPreCrime: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        sharedDecimals: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        symbol: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        token: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        totalSupply: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        transfer: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        transferFrom: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        transferOwnership: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+      },
+    },
     OmniChainBridge: {
-      address: "0xA8DCB812959FDa96De6c2DE1154F8F928e3cc893",
+      address: "0x9eE50Be459Dc4325508E2144ea7f97C6c28E8727",
       abi: [
         {
           inputs: [
@@ -5150,8 +3905,703 @@ const deployedContracts = {
           "@layerzerolabs/oapp-evm/contracts/oapp/OAppSender.sol",
       },
     },
+    P2PSwapRouter: {
+      address: "0xe94eecBab9504eC58918b8AB7d14E83BBD6Eb24d",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "onBehalfOf",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "admin",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "AccessControlBadConfirmation",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              internalType: "bytes32",
+              name: "neededRole",
+              type: "bytes32",
+            },
+          ],
+          name: "AccessControlUnauthorizedAccount",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "target",
+              type: "address",
+            },
+          ],
+          name: "AddressEmptyCode",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "AddressInsufficientBalance",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "FailedInnerCall",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotImplemented",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "token",
+              type: "address",
+            },
+          ],
+          name: "SafeERC20FailedOperation",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "onBehalfOf",
+              type: "address",
+            },
+          ],
+          name: "OnBehalfOfChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "tokenIn",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "tokenOut",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "price",
+              type: "uint256",
+            },
+          ],
+          name: "PriceUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "role",
+              type: "bytes32",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "previousAdminRole",
+              type: "bytes32",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "newAdminRole",
+              type: "bytes32",
+            },
+          ],
+          name: "RoleAdminChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "role",
+              type: "bytes32",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "sender",
+              type: "address",
+            },
+          ],
+          name: "RoleGranted",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "role",
+              type: "bytes32",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "sender",
+              type: "address",
+            },
+          ],
+          name: "RoleRevoked",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "ADMIN_ROLE",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "DEFAULT_ADMIN_ROLE",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "PRICER_ROLE",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "SWAP_ROLE",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes",
+                  name: "path",
+                  type: "bytes",
+                },
+                {
+                  internalType: "address",
+                  name: "recipient",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amountIn",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amountOutMinimum",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct ISwapRouter.ExactInputParams",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          name: "exactInput",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "tokenIn",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "tokenOut",
+                  type: "address",
+                },
+                {
+                  internalType: "uint24",
+                  name: "fee",
+                  type: "uint24",
+                },
+                {
+                  internalType: "address",
+                  name: "recipient",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amountIn",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amountOutMinimum",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint160",
+                  name: "sqrtPriceLimitX96",
+                  type: "uint160",
+                },
+              ],
+              internalType: "struct ISwapRouter.ExactInputSingleParams",
+              name: "params",
+              type: "tuple",
+            },
+          ],
+          name: "exactInputSingle",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "amountOut",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes",
+                  name: "path",
+                  type: "bytes",
+                },
+                {
+                  internalType: "address",
+                  name: "recipient",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amountOut",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amountInMaximum",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct ISwapRouter.ExactOutputParams",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          name: "exactOutput",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "tokenIn",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "tokenOut",
+                  type: "address",
+                },
+                {
+                  internalType: "uint24",
+                  name: "fee",
+                  type: "uint24",
+                },
+                {
+                  internalType: "address",
+                  name: "recipient",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amountOut",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amountInMaximum",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint160",
+                  name: "sqrtPriceLimitX96",
+                  type: "uint160",
+                },
+              ],
+              internalType: "struct ISwapRouter.ExactOutputSingleParams",
+              name: "params",
+              type: "tuple",
+            },
+          ],
+          name: "exactOutputSingle",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "amountIn",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "tokenIn",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "tokenOut",
+              type: "address",
+            },
+          ],
+          name: "getCurrentPrice",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getOnBehalfOf",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "role",
+              type: "bytes32",
+            },
+          ],
+          name: "getRoleAdmin",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "role",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "grantRole",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "role",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "hasRole",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "role",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "callerConfirmation",
+              type: "address",
+            },
+          ],
+          name: "renounceRole",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "role",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "revokeRole",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "tokenIn",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "tokenOut",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "price_",
+              type: "uint256",
+            },
+          ],
+          name: "setCurrentPrice",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "onBehalfOf",
+              type: "address",
+            },
+          ],
+          name: "setOnBehalfOf",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceId",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "int256",
+              name: "",
+              type: "int256",
+            },
+            {
+              internalType: "int256",
+              name: "",
+              type: "int256",
+            },
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          name: "uniswapV3SwapCallback",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        exactInput:
+          "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol",
+        exactInputSingle:
+          "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol",
+        exactOutput:
+          "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol",
+        exactOutputSingle:
+          "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol",
+        uniswapV3SwapCallback:
+          "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol",
+        DEFAULT_ADMIN_ROLE: "@openzeppelin/contracts/access/AccessControl.sol",
+        getRoleAdmin: "@openzeppelin/contracts/access/AccessControl.sol",
+        grantRole: "@openzeppelin/contracts/access/AccessControl.sol",
+        hasRole: "@openzeppelin/contracts/access/AccessControl.sol",
+        renounceRole: "@openzeppelin/contracts/access/AccessControl.sol",
+        revokeRole: "@openzeppelin/contracts/access/AccessControl.sol",
+        supportsInterface: "@openzeppelin/contracts/access/AccessControl.sol",
+      },
+    },
     PythPriceOracle: {
-      address: "0xb6CdF3FC96BE489B60feCCb1a41A5d737f5C2906",
+      address: "0x2277898A79490697C6e1a2B5EAF6dA376ffBfF47",
       abi: [
         {
           inputs: [
@@ -5498,7 +4948,7 @@ const deployedContracts = {
   },
   421614: {
     CCIPBridge: {
-      address: "0x31e90e6D21fE135DF1a0b1A804A5bBA03c3e240b",
+      address: "0xf73BA74Fe9888498f9EAdeEE6e50e3d8d6CF181f",
       abi: [
         {
           inputs: [
@@ -5785,29 +5235,6 @@ const deployedContracts = {
           type: "function",
         },
         {
-          inputs: [
-            {
-              internalType: "uint64",
-              name: "",
-              type: "uint64",
-            },
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-            {
-              internalType: "bytes",
-              name: "",
-              type: "bytes",
-            },
-          ],
-          name: "callCrossChain",
-          outputs: [],
-          stateMutability: "pure",
-          type: "function",
-        },
-        {
           inputs: [],
           name: "ccipRouter",
           outputs: [
@@ -5837,8 +5264,13 @@ const deployedContracts = {
             },
             {
               internalType: "uint64",
-              name: "gasLimit",
+              name: "chainSelector",
               type: "uint64",
+            },
+            {
+              internalType: "uint32",
+              name: "gasLimit",
+              type: "uint32",
             },
           ],
           stateMutability: "view",
@@ -5962,6 +5394,11 @@ const deployedContracts = {
               type: "uint64",
             },
             {
+              internalType: "uint64",
+              name: "chainSelector",
+              type: "uint64",
+            },
+            {
               internalType: "address",
               name: "receiver",
               type: "address",
@@ -6066,13 +5503,1706 @@ const deployedContracts = {
         renounceRole: "@openzeppelin/contracts/access/AccessControl.sol",
         revokeRole: "@openzeppelin/contracts/access/AccessControl.sol",
         supportsInterface: "@openzeppelin/contracts/access/AccessControl.sol",
-        callCrossChain: "contracts/interfaces/IBridge.sol",
-        transferToken: "contracts/interfaces/IBridge.sol",
-        transferTokenAndData: "contracts/interfaces/IBridge.sol",
+        transferToken: "contracts/interfaces/ITransferBridge.sol",
+        transferTokenAndData: "contracts/interfaces/ITransferBridge.sol",
+      },
+    },
+    MyOFT: {
+      address: "0x86404cF78FfCb82B4B47d98324c2FdA77Deaa777",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "_name",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "_symbol",
+              type: "string",
+            },
+            {
+              internalType: "address",
+              name: "_lzEndpoint",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_delegate",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "target",
+              type: "address",
+            },
+          ],
+          name: "AddressEmptyCode",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "AddressInsufficientBalance",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "spender",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "allowance",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "needed",
+              type: "uint256",
+            },
+          ],
+          name: "ERC20InsufficientAllowance",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "sender",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "balance",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "needed",
+              type: "uint256",
+            },
+          ],
+          name: "ERC20InsufficientBalance",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "approver",
+              type: "address",
+            },
+          ],
+          name: "ERC20InvalidApprover",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "receiver",
+              type: "address",
+            },
+          ],
+          name: "ERC20InvalidReceiver",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "sender",
+              type: "address",
+            },
+          ],
+          name: "ERC20InvalidSender",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "spender",
+              type: "address",
+            },
+          ],
+          name: "ERC20InvalidSpender",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "FailedInnerCall",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidDelegate",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidEndpointCall",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidLocalDecimals",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes",
+              name: "options",
+              type: "bytes",
+            },
+          ],
+          name: "InvalidOptions",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "LzTokenUnavailable",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint32",
+              name: "eid",
+              type: "uint32",
+            },
+          ],
+          name: "NoPeer",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "msgValue",
+              type: "uint256",
+            },
+          ],
+          name: "NotEnoughNative",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "addr",
+              type: "address",
+            },
+          ],
+          name: "OnlyEndpoint",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint32",
+              name: "eid",
+              type: "uint32",
+            },
+            {
+              internalType: "bytes32",
+              name: "sender",
+              type: "bytes32",
+            },
+          ],
+          name: "OnlyPeer",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "OnlySelf",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+          ],
+          name: "OwnableInvalidOwner",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "OwnableUnauthorizedAccount",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "token",
+              type: "address",
+            },
+          ],
+          name: "SafeERC20FailedOperation",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes",
+              name: "result",
+              type: "bytes",
+            },
+          ],
+          name: "SimulationResult",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "amountLD",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "minAmountLD",
+              type: "uint256",
+            },
+          ],
+          name: "SlippageExceeded",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "spender",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "Approval",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint32",
+                  name: "eid",
+                  type: "uint32",
+                },
+                {
+                  internalType: "uint16",
+                  name: "msgType",
+                  type: "uint16",
+                },
+                {
+                  internalType: "bytes",
+                  name: "options",
+                  type: "bytes",
+                },
+              ],
+              indexed: false,
+              internalType: "struct EnforcedOptionParam[]",
+              name: "_enforcedOptions",
+              type: "tuple[]",
+            },
+          ],
+          name: "EnforcedOptionSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "inspector",
+              type: "address",
+            },
+          ],
+          name: "MsgInspectorSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "guid",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "uint32",
+              name: "srcEid",
+              type: "uint32",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "toAddress",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amountReceivedLD",
+              type: "uint256",
+            },
+          ],
+          name: "OFTReceived",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "guid",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "uint32",
+              name: "dstEid",
+              type: "uint32",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "fromAddress",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amountSentLD",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amountReceivedLD",
+              type: "uint256",
+            },
+          ],
+          name: "OFTSent",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint32",
+              name: "eid",
+              type: "uint32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes32",
+              name: "peer",
+              type: "bytes32",
+            },
+          ],
+          name: "PeerSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "preCrimeAddress",
+              type: "address",
+            },
+          ],
+          name: "PreCrimeSet",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "Transfer",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "SEND",
+          outputs: [
+            {
+              internalType: "uint16",
+              name: "",
+              type: "uint16",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "SEND_AND_CALL",
+          outputs: [
+            {
+              internalType: "uint16",
+              name: "",
+              type: "uint16",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint32",
+                  name: "srcEid",
+                  type: "uint32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "sender",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint64",
+                  name: "nonce",
+                  type: "uint64",
+                },
+              ],
+              internalType: "struct Origin",
+              name: "origin",
+              type: "tuple",
+            },
+          ],
+          name: "allowInitializePath",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "spender",
+              type: "address",
+            },
+          ],
+          name: "allowance",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "approvalRequired",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "spender",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "approve",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "balanceOf",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint32",
+              name: "_eid",
+              type: "uint32",
+            },
+            {
+              internalType: "uint16",
+              name: "_msgType",
+              type: "uint16",
+            },
+            {
+              internalType: "bytes",
+              name: "_extraOptions",
+              type: "bytes",
+            },
+          ],
+          name: "combineOptions",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "decimalConversionRate",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "decimals",
+          outputs: [
+            {
+              internalType: "uint8",
+              name: "",
+              type: "uint8",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "endpoint",
+          outputs: [
+            {
+              internalType: "contract ILayerZeroEndpointV2",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint32",
+              name: "eid",
+              type: "uint32",
+            },
+            {
+              internalType: "uint16",
+              name: "msgType",
+              type: "uint16",
+            },
+          ],
+          name: "enforcedOptions",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "enforcedOption",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint32",
+                  name: "srcEid",
+                  type: "uint32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "sender",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint64",
+                  name: "nonce",
+                  type: "uint64",
+                },
+              ],
+              internalType: "struct Origin",
+              name: "",
+              type: "tuple",
+            },
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+            {
+              internalType: "address",
+              name: "_sender",
+              type: "address",
+            },
+          ],
+          name: "isComposeMsgSender",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint32",
+              name: "_eid",
+              type: "uint32",
+            },
+            {
+              internalType: "bytes32",
+              name: "_peer",
+              type: "bytes32",
+            },
+          ],
+          name: "isPeer",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint32",
+                  name: "srcEid",
+                  type: "uint32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "sender",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint64",
+                  name: "nonce",
+                  type: "uint64",
+                },
+              ],
+              internalType: "struct Origin",
+              name: "_origin",
+              type: "tuple",
+            },
+            {
+              internalType: "bytes32",
+              name: "_guid",
+              type: "bytes32",
+            },
+            {
+              internalType: "bytes",
+              name: "_message",
+              type: "bytes",
+            },
+            {
+              internalType: "address",
+              name: "_executor",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "_extraData",
+              type: "bytes",
+            },
+          ],
+          name: "lzReceive",
+          outputs: [],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  components: [
+                    {
+                      internalType: "uint32",
+                      name: "srcEid",
+                      type: "uint32",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "sender",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "uint64",
+                      name: "nonce",
+                      type: "uint64",
+                    },
+                  ],
+                  internalType: "struct Origin",
+                  name: "origin",
+                  type: "tuple",
+                },
+                {
+                  internalType: "uint32",
+                  name: "dstEid",
+                  type: "uint32",
+                },
+                {
+                  internalType: "address",
+                  name: "receiver",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "guid",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint256",
+                  name: "value",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "executor",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "message",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes",
+                  name: "extraData",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct InboundPacket[]",
+              name: "_packets",
+              type: "tuple[]",
+            },
+          ],
+          name: "lzReceiveAndRevert",
+          outputs: [],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint32",
+                  name: "srcEid",
+                  type: "uint32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "sender",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint64",
+                  name: "nonce",
+                  type: "uint64",
+                },
+              ],
+              internalType: "struct Origin",
+              name: "_origin",
+              type: "tuple",
+            },
+            {
+              internalType: "bytes32",
+              name: "_guid",
+              type: "bytes32",
+            },
+            {
+              internalType: "bytes",
+              name: "_message",
+              type: "bytes",
+            },
+            {
+              internalType: "address",
+              name: "_executor",
+              type: "address",
+            },
+            {
+              internalType: "bytes",
+              name: "_extraData",
+              type: "bytes",
+            },
+          ],
+          name: "lzReceiveSimulate",
+          outputs: [],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "recipient",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+          ],
+          name: "mint",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "msgInspector",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "name",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint32",
+              name: "",
+              type: "uint32",
+            },
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          name: "nextNonce",
+          outputs: [
+            {
+              internalType: "uint64",
+              name: "nonce",
+              type: "uint64",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "oApp",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "oAppVersion",
+          outputs: [
+            {
+              internalType: "uint64",
+              name: "senderVersion",
+              type: "uint64",
+            },
+            {
+              internalType: "uint64",
+              name: "receiverVersion",
+              type: "uint64",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "oftVersion",
+          outputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceId",
+              type: "bytes4",
+            },
+            {
+              internalType: "uint64",
+              name: "version",
+              type: "uint64",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint32",
+              name: "eid",
+              type: "uint32",
+            },
+          ],
+          name: "peers",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "peer",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "preCrime",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint32",
+                  name: "dstEid",
+                  type: "uint32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "to",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amountLD",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "minAmountLD",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bytes",
+                  name: "extraOptions",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes",
+                  name: "composeMsg",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes",
+                  name: "oftCmd",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct SendParam",
+              name: "_sendParam",
+              type: "tuple",
+            },
+          ],
+          name: "quoteOFT",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "minAmountLD",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "maxAmountLD",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct OFTLimit",
+              name: "oftLimit",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "int256",
+                  name: "feeAmountLD",
+                  type: "int256",
+                },
+                {
+                  internalType: "string",
+                  name: "description",
+                  type: "string",
+                },
+              ],
+              internalType: "struct OFTFeeDetail[]",
+              name: "oftFeeDetails",
+              type: "tuple[]",
+            },
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "amountSentLD",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amountReceivedLD",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct OFTReceipt",
+              name: "oftReceipt",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint32",
+                  name: "dstEid",
+                  type: "uint32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "to",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amountLD",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "minAmountLD",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bytes",
+                  name: "extraOptions",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes",
+                  name: "composeMsg",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes",
+                  name: "oftCmd",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct SendParam",
+              name: "_sendParam",
+              type: "tuple",
+            },
+            {
+              internalType: "bool",
+              name: "_payInLzToken",
+              type: "bool",
+            },
+          ],
+          name: "quoteSend",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "nativeFee",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "lzTokenFee",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct MessagingFee",
+              name: "msgFee",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "renounceOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint32",
+                  name: "dstEid",
+                  type: "uint32",
+                },
+                {
+                  internalType: "bytes32",
+                  name: "to",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amountLD",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "minAmountLD",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bytes",
+                  name: "extraOptions",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes",
+                  name: "composeMsg",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bytes",
+                  name: "oftCmd",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct SendParam",
+              name: "_sendParam",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "nativeFee",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "lzTokenFee",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct MessagingFee",
+              name: "_fee",
+              type: "tuple",
+            },
+            {
+              internalType: "address",
+              name: "_refundAddress",
+              type: "address",
+            },
+          ],
+          name: "send",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes32",
+                  name: "guid",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "uint64",
+                  name: "nonce",
+                  type: "uint64",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "uint256",
+                      name: "nativeFee",
+                      type: "uint256",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "lzTokenFee",
+                      type: "uint256",
+                    },
+                  ],
+                  internalType: "struct MessagingFee",
+                  name: "fee",
+                  type: "tuple",
+                },
+              ],
+              internalType: "struct MessagingReceipt",
+              name: "msgReceipt",
+              type: "tuple",
+            },
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "amountSentLD",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amountReceivedLD",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct OFTReceipt",
+              name: "oftReceipt",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_delegate",
+              type: "address",
+            },
+          ],
+          name: "setDelegate",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "uint32",
+                  name: "eid",
+                  type: "uint32",
+                },
+                {
+                  internalType: "uint16",
+                  name: "msgType",
+                  type: "uint16",
+                },
+                {
+                  internalType: "bytes",
+                  name: "options",
+                  type: "bytes",
+                },
+              ],
+              internalType: "struct EnforcedOptionParam[]",
+              name: "_enforcedOptions",
+              type: "tuple[]",
+            },
+          ],
+          name: "setEnforcedOptions",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_msgInspector",
+              type: "address",
+            },
+          ],
+          name: "setMsgInspector",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint32",
+              name: "_eid",
+              type: "uint32",
+            },
+            {
+              internalType: "bytes32",
+              name: "_peer",
+              type: "bytes32",
+            },
+          ],
+          name: "setPeer",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_preCrime",
+              type: "address",
+            },
+          ],
+          name: "setPreCrime",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "sharedDecimals",
+          outputs: [
+            {
+              internalType: "uint8",
+              name: "",
+              type: "uint8",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "symbol",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "token",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "totalSupply",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "transfer",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "transferFrom",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {
+        SEND: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        SEND_AND_CALL: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        allowInitializePath: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        allowance: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        approvalRequired: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        approve: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        balanceOf: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        combineOptions: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        decimalConversionRate: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        decimals: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        endpoint: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        enforcedOptions: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        isComposeMsgSender: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        isPeer: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        lzReceive: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        lzReceiveAndRevert: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        lzReceiveSimulate: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        msgInspector: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        name: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        nextNonce: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        oApp: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        oAppVersion: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        oftVersion: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        owner: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        peers: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        preCrime: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        quoteOFT: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        quoteSend: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        renounceOwnership: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        send: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        setDelegate: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        setEnforcedOptions: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        setMsgInspector: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        setPeer: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        setPreCrime: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        sharedDecimals: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        symbol: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        token: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        totalSupply: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        transfer: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        transferFrom: "@layerzerolabs/oft-evm/contracts/OFT.sol",
+        transferOwnership: "@layerzerolabs/oft-evm/contracts/OFT.sol",
       },
     },
     OmniChainBridge: {
-      address: "0x3593113818E701D78adB58EB3C0e9b887dC3186e",
+      address: "0x8055f75A0a1F191f7D184C329BCE93770493208d",
       abi: [
         {
           inputs: [
@@ -6456,19 +7586,19 @@ const deployedContracts = {
           "@layerzerolabs/oapp-evm/contracts/oapp/OAppSender.sol",
       },
     },
-    PythPriceOracle: {
-      address: "0x80c23f63272e4A06d2129E64A2B2DADeEdc7d058",
+    P2PSwapRouter: {
+      address: "0xc387987617BA573e76187A825CE2a95D86015492",
       abi: [
         {
           inputs: [
             {
               internalType: "address",
-              name: "owner",
+              name: "onBehalfOf",
               type: "address",
             },
             {
               internalType: "address",
-              name: "pythContract",
+              name: "admin",
               type: "address",
             },
           ],
@@ -6476,14 +7606,35 @@ const deployedContracts = {
           type: "constructor",
         },
         {
+          inputs: [],
+          name: "AccessControlBadConfirmation",
+          type: "error",
+        },
+        {
           inputs: [
             {
               internalType: "address",
-              name: "owner",
+              name: "account",
+              type: "address",
+            },
+            {
+              internalType: "bytes32",
+              name: "neededRole",
+              type: "bytes32",
+            },
+          ],
+          name: "AccessControlUnauthorizedAccount",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "target",
               type: "address",
             },
           ],
-          name: "OwnableInvalidOwner",
+          name: "AddressEmptyCode",
           type: "error",
         },
         {
@@ -6494,7 +7645,28 @@ const deployedContracts = {
               type: "address",
             },
           ],
-          name: "OwnableUnauthorizedAccount",
+          name: "AddressInsufficientBalance",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "FailedInnerCall",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "NotImplemented",
+          type: "error",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "token",
+              type: "address",
+            },
+          ],
+          name: "SafeERC20FailedOperation",
           type: "error",
         },
         {
@@ -6503,87 +7675,163 @@ const deployedContracts = {
             {
               indexed: true,
               internalType: "address",
+              name: "onBehalfOf",
+              type: "address",
+            },
+          ],
+          name: "OnBehalfOfChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
               name: "tokenIn",
               type: "address",
             },
             {
-              indexed: true,
+              indexed: false,
               internalType: "address",
               name: "tokenOut",
               type: "address",
             },
             {
-              indexed: true,
-              internalType: "bytes32",
-              name: "feedId",
-              type: "bytes32",
-            },
-          ],
-          name: "FeedAdded",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "address",
-              name: "previousOwner",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "newOwner",
-              type: "address",
-            },
-          ],
-          name: "OwnershipTransferStarted",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "address",
-              name: "previousOwner",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "newOwner",
-              type: "address",
-            },
-          ],
-          name: "OwnershipTransferred",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "address",
-              name: "to",
-              type: "address",
-            },
-            {
               indexed: false,
               internalType: "uint256",
-              name: "amount",
+              name: "price",
               type: "uint256",
             },
           ],
-          name: "Withdraw",
+          name: "PriceUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "role",
+              type: "bytes32",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "previousAdminRole",
+              type: "bytes32",
+            },
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "newAdminRole",
+              type: "bytes32",
+            },
+          ],
+          name: "RoleAdminChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "role",
+              type: "bytes32",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "sender",
+              type: "address",
+            },
+          ],
+          name: "RoleGranted",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "bytes32",
+              name: "role",
+              type: "bytes32",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "sender",
+              type: "address",
+            },
+          ],
+          name: "RoleRevoked",
           type: "event",
         },
         {
           inputs: [],
-          name: "acceptOwnership",
-          outputs: [],
-          stateMutability: "nonpayable",
+          name: "ADMIN_ROLE",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "DEFAULT_ADMIN_ROLE",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "PRICER_ROLE",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "SWAP_ROLE",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
           type: "function",
         },
         {
@@ -6591,45 +7839,224 @@ const deployedContracts = {
             {
               components: [
                 {
-                  internalType: "bytes32",
-                  name: "id",
-                  type: "bytes32",
+                  internalType: "bytes",
+                  name: "path",
+                  type: "bytes",
+                },
+                {
+                  internalType: "address",
+                  name: "recipient",
+                  type: "address",
                 },
                 {
                   internalType: "uint256",
-                  name: "age",
+                  name: "deadline",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amountIn",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amountOutMinimum",
                   type: "uint256",
                 },
               ],
-              internalType: "struct PythPriceOracle.PythPriceFeed",
-              name: "priceFeed",
+              internalType: "struct ISwapRouter.ExactInputParams",
+              name: "",
               type: "tuple",
             },
+          ],
+          name: "exactInput",
+          outputs: [
             {
-              internalType: "contract IERC20Metadata",
-              name: "tokenIn",
-              type: "address",
-            },
-            {
-              internalType: "contract IERC20Metadata",
-              name: "tokenOut",
-              type: "address",
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
             },
           ],
-          name: "addFeed",
-          outputs: [],
-          stateMutability: "nonpayable",
+          stateMutability: "payable",
           type: "function",
         },
         {
           inputs: [
             {
-              internalType: "contract IERC20Metadata",
+              components: [
+                {
+                  internalType: "address",
+                  name: "tokenIn",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "tokenOut",
+                  type: "address",
+                },
+                {
+                  internalType: "uint24",
+                  name: "fee",
+                  type: "uint24",
+                },
+                {
+                  internalType: "address",
+                  name: "recipient",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amountIn",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amountOutMinimum",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint160",
+                  name: "sqrtPriceLimitX96",
+                  type: "uint160",
+                },
+              ],
+              internalType: "struct ISwapRouter.ExactInputSingleParams",
+              name: "params",
+              type: "tuple",
+            },
+          ],
+          name: "exactInputSingle",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "amountOut",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "bytes",
+                  name: "path",
+                  type: "bytes",
+                },
+                {
+                  internalType: "address",
+                  name: "recipient",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amountOut",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amountInMaximum",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct ISwapRouter.ExactOutputParams",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          name: "exactOutput",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "tokenIn",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "tokenOut",
+                  type: "address",
+                },
+                {
+                  internalType: "uint24",
+                  name: "fee",
+                  type: "uint24",
+                },
+                {
+                  internalType: "address",
+                  name: "recipient",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "deadline",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amountOut",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amountInMaximum",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint160",
+                  name: "sqrtPriceLimitX96",
+                  type: "uint160",
+                },
+              ],
+              internalType: "struct ISwapRouter.ExactOutputSingleParams",
+              name: "params",
+              type: "tuple",
+            },
+          ],
+          name: "exactOutputSingle",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "amountIn",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
               name: "tokenIn",
               type: "address",
             },
             {
-              internalType: "contract IERC20Metadata",
+              internalType: "address",
               name: "tokenOut",
               type: "address",
             },
@@ -6647,7 +8074,7 @@ const deployedContracts = {
         },
         {
           inputs: [],
-          name: "owner",
+          name: "getOnBehalfOf",
           outputs: [
             {
               internalType: "address",
@@ -6659,86 +8086,19 @@ const deployedContracts = {
           type: "function",
         },
         {
-          inputs: [],
-          name: "pendingOwner",
-          outputs: [
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "pyth",
-          outputs: [
-            {
-              internalType: "contract IPyth",
-              name: "",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "renounceOwnership",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
           inputs: [
             {
-              internalType: "contract IERC20Metadata",
-              name: "tokenIn",
-              type: "address",
-            },
-            {
-              internalType: "contract IERC20Metadata",
-              name: "tokenOut",
-              type: "address",
+              internalType: "bytes32",
+              name: "role",
+              type: "bytes32",
             },
           ],
-          name: "tokenPairPrice",
-          outputs: [
-            {
-              internalType: "int256",
-              name: "price",
-              type: "int256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "contract IERC20Metadata",
-              name: "tokenIn",
-              type: "address",
-            },
-            {
-              internalType: "contract IERC20Metadata",
-              name: "tokenOut",
-              type: "address",
-            },
-          ],
-          name: "tokenPairPriceFeed",
+          name: "getRoleAdmin",
           outputs: [
             {
               internalType: "bytes32",
-              name: "id",
+              name: "",
               type: "bytes32",
-            },
-            {
-              internalType: "uint256",
-              name: "age",
-              type: "uint256",
             },
           ],
           stateMutability: "view",
@@ -6747,12 +8107,17 @@ const deployedContracts = {
         {
           inputs: [
             {
+              internalType: "bytes32",
+              name: "role",
+              type: "bytes32",
+            },
+            {
               internalType: "address",
-              name: "newOwner",
+              name: "account",
               type: "address",
             },
           ],
-          name: "transferOwnership",
+          name: "grantRole",
           outputs: [],
           stateMutability: "nonpayable",
           type: "function",
@@ -6760,49 +8125,164 @@ const deployedContracts = {
         {
           inputs: [
             {
-              internalType: "bytes[]",
-              name: "priceUpdate",
-              type: "bytes[]",
+              internalType: "bytes32",
+              name: "role",
+              type: "bytes32",
             },
             {
-              internalType: "contract IERC20Metadata",
-              name: "tokenIn",
-              type: "address",
-            },
-            {
-              internalType: "contract IERC20Metadata",
-              name: "tokenOut",
+              internalType: "address",
+              name: "account",
               type: "address",
             },
           ],
-          name: "updatePrice",
-          outputs: [],
-          stateMutability: "payable",
+          name: "hasRole",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
           type: "function",
         },
         {
-          inputs: [],
-          name: "withdraw",
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "role",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "callerConfirmation",
+              type: "address",
+            },
+          ],
+          name: "renounceRole",
           outputs: [],
           stateMutability: "nonpayable",
           type: "function",
         },
         {
-          stateMutability: "payable",
-          type: "receive",
+          inputs: [
+            {
+              internalType: "bytes32",
+              name: "role",
+              type: "bytes32",
+            },
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "revokeRole",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "tokenIn",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "tokenOut",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "price_",
+              type: "uint256",
+            },
+          ],
+          name: "setCurrentPrice",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "onBehalfOf",
+              type: "address",
+            },
+          ],
+          name: "setOnBehalfOf",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceId",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "int256",
+              name: "",
+              type: "int256",
+            },
+            {
+              internalType: "int256",
+              name: "",
+              type: "int256",
+            },
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          name: "uniswapV3SwapCallback",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
         },
       ],
       inheritedFunctions: {
-        getCurrentPrice: "contracts/interfaces/IPriceOracle.sol",
-        acceptOwnership: "@openzeppelin/contracts/access/Ownable2Step.sol",
-        owner: "@openzeppelin/contracts/access/Ownable2Step.sol",
-        pendingOwner: "@openzeppelin/contracts/access/Ownable2Step.sol",
-        renounceOwnership: "@openzeppelin/contracts/access/Ownable2Step.sol",
-        transferOwnership: "@openzeppelin/contracts/access/Ownable2Step.sol",
+        exactInput:
+          "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol",
+        exactInputSingle:
+          "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol",
+        exactOutput:
+          "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol",
+        exactOutputSingle:
+          "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol",
+        uniswapV3SwapCallback:
+          "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol",
+        DEFAULT_ADMIN_ROLE: "@openzeppelin/contracts/access/AccessControl.sol",
+        getRoleAdmin: "@openzeppelin/contracts/access/AccessControl.sol",
+        grantRole: "@openzeppelin/contracts/access/AccessControl.sol",
+        hasRole: "@openzeppelin/contracts/access/AccessControl.sol",
+        renounceRole: "@openzeppelin/contracts/access/AccessControl.sol",
+        revokeRole: "@openzeppelin/contracts/access/AccessControl.sol",
+        supportsInterface: "@openzeppelin/contracts/access/AccessControl.sol",
       },
     },
     RiskHub: {
-      address: "0xc20716159B6147C08D24952e334bC457B74Cedb7",
+      address: "0xb07F038394Fc0cE3cE80A643d79a0F9fa772a2A4",
       abi: [
         {
           inputs: [
@@ -7381,7 +8861,7 @@ const deployedContracts = {
       },
     },
     SwapLiquidator: {
-      address: "0xe6a398A973B16F53034530a9E14140a275cA1AE8",
+      address: "0xca733b7C92F3d5529f996E69534c1f4E60F5C5AD",
       abi: [
         {
           inputs: [
@@ -7761,16 +9241,7 @@ const deployedContracts = {
           type: "function",
         },
       ],
-      inheritedFunctions: {
-        liquidate: "contracts/interfaces/ILiquidator.sol",
-        DEFAULT_ADMIN_ROLE: "@openzeppelin/contracts/access/AccessControl.sol",
-        getRoleAdmin: "@openzeppelin/contracts/access/AccessControl.sol",
-        grantRole: "@openzeppelin/contracts/access/AccessControl.sol",
-        hasRole: "@openzeppelin/contracts/access/AccessControl.sol",
-        renounceRole: "@openzeppelin/contracts/access/AccessControl.sol",
-        revokeRole: "@openzeppelin/contracts/access/AccessControl.sol",
-        supportsInterface: "@openzeppelin/contracts/access/AccessControl.sol",
-      },
+      inheritedFunctions: {},
     },
   },
 } as const;
