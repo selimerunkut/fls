@@ -121,13 +121,13 @@ contract CCIPBridge is AccessControl, ITransferBridge {
   function transferToken(IERC20Metadata token, uint64 chainId, address target, uint256 amount) external {
     ChainConfig storage config = chains[chainId];
 
-    require(config.receiver != address(0), NoReceiverOnDestinationChain(chainId));
+    require(config.chainSelector != 0, NoReceiverOnDestinationChain(chainId));
     // No need to check gas limit since already checked in setTargetChain
     if (amount == 0) revert AmountIsZero();
 
     // Create an EVM2AnyMessage struct in memory with necessary information for sending a cross-chain message
     Client.EVM2AnyMessage memory evm2AnyMessage = _buildCCIPMessage(
-      config.receiver,
+      target,
       address(token),
       amount,
       address(linkToken)
@@ -152,7 +152,7 @@ contract CCIPBridge is AccessControl, ITransferBridge {
     emit MessageSent(
       messageId,
       config.chainSelector,
-      config.receiver,
+      target,
       target,
       address(token),
       amount,
