@@ -19,7 +19,15 @@
       "link": "0xb1D4538B4571d411F07960EF2838Ce337FE1E80E"
     },
     "omni": {
-      "endpoint": "0x6EDCE65403992e310A62460808c4b910D972f10f"
+      "endpoint": "0x6EDCE65403992e310A62460808c4b910D972f10f",
+      "eids": {
+        "arbitrumSepolia": 40231,
+        "baseSepolia": 40245
+      },
+      "PEPO": {
+        "arbitrumSepolia": "0x00000000000000000000000086404cf78ffcb82b4b47d98324c2fda77deaa777",
+        "baseSepolia": "0x0000000000000000000000002575ca591b299213f18d742e2e2cc8422fe2139a"
+      }
     },
     "hub": {
       "id": 421614,
@@ -48,7 +56,15 @@
       "link": "0xE4aB69C077896252FAFBD49EFD26B5D171A32410"
     },
     "omni": {
-      "endpoint": "0x6EDCE65403992e310A62460808c4b910D972f10f"
+      "endpoint": "0x6EDCE65403992e310A62460808c4b910D972f10f",
+      "eids": {
+        "arbitrumSepolia": 40231,
+        "baseSepolia": 40245
+      },
+      "PEPO": {
+        "arbitrumSepolia": "0x00000000000000000000000086404cf78ffcb82b4b47d98324c2fda77deaa777",
+        "baseSepolia": "0x0000000000000000000000002575ca591b299213f18d742e2e2cc8422fe2139a"
+      }
     },
     "hub": {
       "id": 421614,

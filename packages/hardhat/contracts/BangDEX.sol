@@ -31,11 +31,13 @@ contract BangDEX is ISwapRouter, AccessControl, IBangDEX {
   bytes32 public constant RISK_HUB_ROLE = keccak256("RISK_HUB_ROLE");
   bytes32 public constant LIQUIDATOR_ADMIN_ROLE = keccak256("LIQUIDATOR_ADMIN_ROLE");
   uint256 public constant WAD = 1e18;
+  uint256 public constant DEFAULT_MARKUP = 1e18 + 2e16;  // 1.02%
 
   address public immutable riskHub;
   uint64 public immutable riskHubChainId;
   IERC20Metadata public immutable payToken; // USDC or other token that will use to pay for the acquired tokens
   uint256 public slotSize; // Duration in seconds of the time slots
+  uint256 public markup = DEFAULT_MARKUP;
 
   struct MarketState {
     uint256 minDiscount; // in wad - Expressed as 1-d, so for 2% this should be 0.98 (simplifies math)
@@ -110,7 +112,8 @@ contract BangDEX is ISwapRouter, AccessControl, IBangDEX {
 
     payToken.safeTransfer(params.recipient, amountOut);
     IERC20Metadata(params.tokenIn).safeTransferFrom(msg.sender, address(liquidator), params.amountIn);
-    liquidator.liquidate(params.tokenIn, params.amountIn, amountOut);
+    // Apply the markup in the value sent to the liquidator
+    liquidator.liquidate(params.tokenIn, params.amountIn, amountOut.mulDiv(markup, WAD));
     _notifyTradeToRiskHub(IERC20Metadata(params.tokenIn), params.amountIn, amountOut);
   }
 
@@ -143,7 +146,7 @@ contract BangDEX is ISwapRouter, AccessControl, IBangDEX {
   /**
    * @inheritdoc ISwapRouter
    */
-  function exactOutputSingle(ExactOutputSingleParams calldata) external payable returns (uint256 amountIn) {
+  function exactOutputSingle(ExactOutputSingleParams calldata) external payable returns (uint256) {
     // TODO - Can be implemented, just need a bit more of math...
     revert NotImplemented();
   }
@@ -155,6 +158,11 @@ contract BangDEX is ISwapRouter, AccessControl, IBangDEX {
 
   function setSlotSize(uint256 newSlotSize) external onlyRole(SET_SLOT_SIZE_ROLE) {
     slotSize = newSlotSize;
+    // TODO: emit event
+  }
+
+  function setMarkup(uint256 newMarkup) external onlyRole(SET_SLOT_SIZE_ROLE) {
+    markup = newMarkup;
     // TODO: emit event
   }
 
