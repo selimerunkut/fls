@@ -71,9 +71,11 @@ contract CCIPBridge is AccessControl, ITransferBridge {
     address receiver,
     uint256 gasLimit_
   ) external onlyRole(CHAIN_ADMIN_ROLE) {
+    // To disable a chain send receiver = address(0) and the other values != 0
     chains[chainId].receiver = receiver;
     chains[chainId].chainSelector = chainSelector;
     require(gasLimit_ != 0, NoGasLimitOnDestinationChain(chainId));
+    require(chainSelector != 0, NoGasLimitOnDestinationChain(chainSelector)); // TODO: correct error
     chains[chainId].gasLimit = uint32(gasLimit_); // TODO: safeCast
     // TODO emit event
   }
@@ -112,7 +114,7 @@ contract CCIPBridge is AccessControl, ITransferBridge {
     });
 
     // Get the fee required to send the CCIP message
-    uint256 fees = ccipRouter.getFee(chainId, evm2AnyMessage);
+    uint256 fees = ccipRouter.getFee(config.chainSelector, evm2AnyMessage);
 
     if (fees > linkToken.balanceOf(address(this))) revert NotEnoughBalance(linkToken.balanceOf(address(this)), fees);
 
@@ -124,10 +126,19 @@ contract CCIPBridge is AccessControl, ITransferBridge {
     token.approve(address(ccipRouter), amount);
 
     // Send the message through the router and store the returned message ID
-    bytes32 messageId = ccipRouter.ccipSend(chainId, evm2AnyMessage);
+    bytes32 messageId = ccipRouter.ccipSend(config.chainSelector, evm2AnyMessage);
 
     // Emit an event with message details
-    emit MessageSent(messageId, chainId, config.receiver, target, address(token), amount, address(linkToken), fees);
+    emit MessageSent(
+      messageId,
+      config.chainSelector,
+      config.receiver,
+      target,
+      address(token),
+      amount,
+      address(linkToken),
+      fees
+    );
   }
 
   function transferTokenAndData(IERC20Metadata, uint64, address, uint256, bytes calldata) external pure {
