@@ -37,6 +37,7 @@ describe("PythPriceOracle", function () {
     beforeEach(async() => {
       const block = (await ethers.provider.getBlock('latest'))!;
       await pythPriceOracle.addFeed({id: ETH_PRICE_FEED_ID, age: 5}, token1.address, usdToken.address);
+
       const updateData = [await pyth.createPriceFeedUpdateData(
         ETH_PRICE_FEED_ID,
         TOKEN_PRICE,
