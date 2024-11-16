@@ -1,7 +1,7 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
-import {getNetworkConfig} from "../utils/networkConfig";
-import {PythPriceOracle} from "../typechain-types";
+import { getNetworkConfig } from "../utils/networkConfig";
+import { PythPriceOracle } from "../typechain-types";
 
 const deployOmniChainBridge: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await hre.getNamedAccounts();

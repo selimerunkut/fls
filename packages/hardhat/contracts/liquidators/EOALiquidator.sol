@@ -38,11 +38,7 @@ contract EOALiquidator is ILiquidator, AccessControl {
   /// @param asset Address of the token to liquidate
   /// @param assetAmount Amount of the token to liquidate
   /// @param debtAmount Minimum USDC required to cover the debt
-  function liquidate(
-    address asset,
-    uint256 assetAmount,
-    uint256 debtAmount
-  ) external override {
+  function liquidate(address asset, uint256 assetAmount, uint256 debtAmount) external override {
     IERC20(asset).safeTransfer(eoa, assetAmount);
     emit TokensToLiquidate(eoa, asset, assetAmount, debtAmount);
   }

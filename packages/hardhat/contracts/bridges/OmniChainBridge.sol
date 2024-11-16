@@ -10,10 +10,7 @@ import { IBridge } from "../interfaces/IBridge.sol";
 import { IERC20Metadata } from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 
 contract OmniChainBridge is IBridge, OAppSender {
-  constructor(
-    address _endpoint,
-    address _owner
-  ) OAppCore(_endpoint, _owner) Ownable(_owner) {}
+  constructor(address _endpoint, address _owner) OAppCore(_endpoint, _owner) Ownable(_owner) {}
 
   function callCrossChain(uint64 chainId, address target, bytes calldata data) public {
     _lzSend(

@@ -2,16 +2,16 @@
 
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
-import {RiskHub, SwapLiquidator, P2PSwapRouter} from "../typechain-types";
+import { RiskHub, SwapLiquidator, P2PSwapRouter } from "../typechain-types";
 import { ethers } from "hardhat";
-import {getNetworkConfig} from "../utils/networkConfig";
+import { getNetworkConfig } from "../utils/networkConfig";
 
 const deploySwapLiquidator: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
   const config = getNetworkConfig(hre);
 
-  if(!config.isHub) {
+  if (!config.isHub) {
     return;
   }
 
@@ -19,7 +19,6 @@ const deploySwapLiquidator: DeployFunction = async function (hre: HardhatRuntime
 
   const riskHubContract = (await ethers.getContract("RiskHub")) as RiskHub;
   const p2PSwapRouterContract = (await ethers.getContract("P2PSwapRouter")) as P2PSwapRouter;
-
 
   await deploy("SwapLiquidator", {
     from: deployer,

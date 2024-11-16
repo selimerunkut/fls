@@ -1,6 +1,6 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
-import {CCIPBridge, MockBridge} from "../typechain-types";
+import { CCIPBridge, MockBridge } from "../typechain-types";
 import { ethers } from "hardhat";
 import { getNetworkConfig } from "../utils/networkConfig";
 
@@ -12,7 +12,7 @@ const deployRiskHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
 
   const config = getNetworkConfig(hre);
 
-  if(!config.isHub) {
+  if (!config.isHub) {
     return;
   }
 
