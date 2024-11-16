@@ -45,7 +45,10 @@ https://circle.com/multi-chain-usdc
 https://docs.pyth.network/price-feeds/contract-addresses/evm
 
 ### uniswap router
-mainnet & testnet: `0xE592427A0AEce92De3Edee1F18E0157C05861564`
+mainnet : `0xE592427A0AEce92De3Edee1F18E0157C05861564`
+
+sepolia arbitrum: `0xf0b8f48380ccd8bcdd4c953479ad0164f926ce7e`
+https://sepolia.arbiscan.io/address/0xf0b8f48380ccd8bcdd4c953479ad0164f926ce7e
 
 ## used boilerplate
 

@@ -2,7 +2,7 @@
 
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
-import {RiskHub, SwapLiquidator} from "../typechain-types";
+import {RiskHub, SwapLiquidator, P2PSwapRouter} from "../typechain-types";
 import { ethers } from "hardhat";
 import {getNetworkConfig} from "../utils/networkConfig";
 
@@ -16,15 +16,15 @@ const deploySwapLiquidator: DeployFunction = async function (hre: HardhatRuntime
     return;
   }
 
-  if(!config.swapLiquidatorRouter) {
-    throw Error("Can't deploy SwapLiquidator without a router address");
-  }
+  // We dont need `swapLiquidatorRouter` for arbitrumSepolia or even arbitrum while using p2PSwapRouter
 
   const riskHubContract = (await ethers.getContract("RiskHub")) as RiskHub;
+  const p2PSwapRouterContract = (await ethers.getContract("P2PSwapRouter")) as P2PSwapRouter;
+
 
   await deploy("SwapLiquidator", {
     from: deployer,
-    args: [config.swapLiquidatorRouter, config.payToken, riskHubContract.target, deployer],
+    args: [p2PSwapRouterContract.target, config.payToken, riskHubContract.target, deployer],
     log: true,
     autoMine: true,
   });

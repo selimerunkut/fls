@@ -11,7 +11,7 @@
       ]
     },
     "_comment_swap": "https://docs.uniswap.org/contracts/v3/reference/deployments/arbitrum-deployments",
-    "swapLiquidatorRouter": "0xE592427A0AEce92De3Edee1F18E0157C05861564",
+    "swapLiquidatorRouter": "",
     "_comment_payToken": "https://docs.arbitrum.io/arbitrum-bridge/usdc-arbitrum-one",
     "payToken": "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d",
     "ccip": {

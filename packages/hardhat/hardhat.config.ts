@@ -22,6 +22,15 @@ const config: HardhatUserConfig = {
   solidity: {
     compilers: [
       {
+        version: "0.8.20", // First compiler version
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 200,
+          },
+        },
+      },
+      {
         version: "0.8.28",
         settings: {
           optimizer: {
@@ -30,6 +39,20 @@ const config: HardhatUserConfig = {
             runs: 200,
           },
         },
+      },
+    ],
+  },
+  paths: {
+    sources: "./contracts", // Default contract directory
+    tests: "./test",
+    cache: "./cache",
+    artifacts: "./artifacts",
+  },
+  external: {
+    contracts: [
+      {
+        artifacts: "./external/v4-core/artifacts",
+        deploy: "./external/v4-core/src",
       },
     ],
   },
