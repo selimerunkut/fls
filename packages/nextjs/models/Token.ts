@@ -7,22 +7,10 @@ export interface Token {
     id: TokenId;
 }
 export const Tokens: {[key: string]: Token} = {
-    UNI: {
-        name: "Uniswap",
-        symbol: "UNI",
-        icon: "🦄",
-        id: "UNI",
-    },
-    AAVE: {
-        name: "Aave",
-        symbol: "AAVE",
-        icon: "🦉",
-        id: "AAVE",
-    },
-    LINK: {
-        name: "Chainlink",
-        symbol: "LINK",
-        icon: "🔗",
-        id: "LINK",
+    PEPO: {
+        name: "Pepo",
+        symbol: "PEPO",
+        icon: "🐸",
+        id: "PEPO",
     },
 };

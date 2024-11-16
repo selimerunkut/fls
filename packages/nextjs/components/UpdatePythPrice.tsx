@@ -24,7 +24,6 @@ const UpdatePythPrice: React.FC = () => {
                 onClick={async () => {
                     const connection = new HermesClient("https://hermes.pyth.network", {});
                     const priceUpdates = await connection.getLatestPriceUpdates(['0x15add95022ae13563a11992e727c91bdb6b55bc183d9d747436c80a483d8c864']);
-                    console.log(priceUpdates);
                     await writeYourContractAsync({
                         functionName: "updatePrice",
                         args: [
@@ -34,7 +33,6 @@ const UpdatePythPrice: React.FC = () => {
                         ],
                         value: parseEther("0.1"),
                     });
-                    console.log(priceUpdates);
                 }}
             >
                 Update Pyth Price in {"Hardhat"}

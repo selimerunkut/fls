@@ -27,7 +27,7 @@ async function main() {
   const swapAmount = "100"
 
   console.log("Minting...")
-  tx = await token.mint(deployer, swapAmount);
+  tx = await token.mint(deployer, swapAmount * 3);
   await tx.wait(1);
 
   console.log("Approving...")

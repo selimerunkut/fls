@@ -18,7 +18,6 @@ import { useOutsideClick } from "~~/hooks/scaffold-eth";
 import { getTargetNetworks } from "~~/utils/scaffold-eth";
 
 const allowedNetworks = getTargetNetworks();
-console.log(allowedNetworks);
 type AddressInfoDropdownProps = {
   address: Address;
   blockExplorerAddressLink: string | undefined;

@@ -1,17 +1,22 @@
 import {TokenId} from "~~/models/Token";
+import {ethers} from "ethers";
+import {BangContractAddress} from "~~/utils/bang/index";
+import {TokenAddress} from "~~/utils/token";
 
-const TOKEN_TO_FEED: {[key: TokenId]: string} = {
-    'UNI': '0x78d185a741d07edb3412b09008b7c5cfb9bbbd7d568bf00ba737b456ba171501',
-    'LINK': '0x8ac0c70fff57e9aefdf5edf44b51d62c2d433653cbb2cf5cc06bb115af04d221',
-    'AAVE': '0x2b9ab1e972a281585084148ba1389800799bd4be63b957507db1349314e47445'
-}
+export async function fetchPriceFromBang(tokenId: TokenId, provider: any): Promise<string> {
+    // Replace with the deployed contract address
+    const contractAddress = BangContractAddress;
 
-export async function fetchPriceFromBang(tokenId: TokenId, network: string): Promise<number> {
-    useRead
-    const url = `https://hermes.pyth.network/v2/updates/price/latest?ids%5B%5D=${TOKEN_TO_FEED[tokenId]}`;
-    const priceResponse = await fetch(url);
-    // TODO: Validate schema and response
-    const pythPriceResponse = await priceResponse.json();
-    const pythPrice = pythPriceResponse.parsed[0].price;
-    return (pythPrice.price * Math.pow(10, pythPrice.expo)) * 0.98;
+    // ABI of the contract
+    const contractABI = [
+        "function computeAmountOut(address tokenIn, uint256 amountIn) public view returns (uint256)"
+    ];
+
+    // Create a contract instance
+    const contract = new ethers.Contract(contractAddress, contractABI, provider);
+
+    // Define your token address and amount
+    const amountIn = ethers.parseUnits("10", 6); // Replace with the amount you want to test
+    const amountOut = await contract.computeAmountOut(TokenAddress, amountIn);
+    return ethers.formatUnits(amountOut, 18);
 }

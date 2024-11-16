@@ -1,8 +1,14 @@
+'use client';
 import {useEffect, useState} from 'react';
 import {AiOutlineArrowDown, AiOutlineDown} from 'react-icons/ai';
 import {Tokens, Token} from "~~/models/Token";
 import {fetchPriceFromPyth} from "~~/utils/pyth/fetchPriceFromPyth";
 import {fetchPriceFromBang} from "~~/utils/bang";
+import {useEthersProvider} from "~~/hooks/useEthersProvider";
+import {useEthersSigner} from "~~/hooks/useEthersSigner";
+import {requestApproval} from "~~/utils/token/requestApproval";
+import {useAccount} from "wagmi";
+import {bangSwap} from "~~/utils/bang/bangSwap";
 
 const SwapWidget: React.FC = () => {
     const tokenList: Token[] = Object.values(Tokens);
@@ -13,16 +19,20 @@ const SwapWidget: React.FC = () => {
     const [discountPercentage, setDiscountPercentage] = useState<number>(0);
     const [selectedToken, setSelectedToken] = useState<Token>(tokenList[0]);
     const [showTokenList, setShowTokenList] = useState<boolean>(false);
+    const provider = useEthersProvider();
+    const signer = useEthersSigner();
+    const {address} = useAccount();
 
     const handleTokenSelect = (token: Token) => {
         setSelectedToken(token);
         setShowTokenList(false);
     };
 
+
     useEffect(() => {
         const timer = setTimeout(() => {
             Promise.all([
-                fetchPriceFromBang(selectedToken.id, ''),
+                fetchPriceFromBang(selectedToken.id, provider),
                 fetchPriceFromPyth(selectedToken.id)]
             ).then(([bangPrice, pythPrice]) => {
                 if(!selectedToken || fromAmount === 0) {
@@ -114,9 +124,15 @@ const SwapWidget: React.FC = () => {
             </div>
 
             {/* Swap Button */}
-            <button className="w-full bg-purple-600 text-white py-3 rounded-lg font-bold hover:bg-purple-700 transition">
-                Get started
-            </button>
+            <div
+                disabled={toAmount === 0}
+                className={`w-full bg-purple-600 text-white
+                 py-3 rounded-lg font-bold hover:bg-purple-700 
+                 transition btn`}
+                onClick={() => requestApproval(fromAmount.toString(), address!, signer).then(() => bangSwap(fromAmount, address!, signer))}
+            >
+                {toAmount === 0 ? 'Input a number to get started' : 'Swap'}
+            </div>
         </div>
     );
 };
