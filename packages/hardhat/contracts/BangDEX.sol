@@ -128,7 +128,7 @@ contract BangDEX is ISwapRouter, AccessControl, IBangDEX {
     MarketState storage market = _getMarket(tokenIn);
     uint256 discount = getDiscount(market, amountIn);
 
-    return amountIn.mulDiv(oraclePrice, WAD).mulDiv(discount, WAD) - market.fixedCost;
+    return amountIn.mulDiv(oraclePrice, WAD).mulDiv(discount, WAD) / (10 ** (18 - payToken.decimals())) - market.fixedCost;
   }
 
   function _notifyTradeToRiskHub(IERC20Metadata tokenIn, uint256 amountIn, uint256 amountOut) internal {

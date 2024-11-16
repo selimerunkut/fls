@@ -15,7 +15,7 @@ interface IPriceOracle {
    * Requirements:
    * - The underlying oracle(s) are functional. It NEVER returns zero.
    *
-   * @return Returns the amount of units of tokenOut that should be received for a uint of tokenIn
+   * @return Returns the amount of units of tokenOut that should be received for a uint of tokenIn (in Wad)
    */
   function getCurrentPrice(IERC20Metadata tokenIn, IERC20Metadata tokenOut) external view returns (uint256);
 }
