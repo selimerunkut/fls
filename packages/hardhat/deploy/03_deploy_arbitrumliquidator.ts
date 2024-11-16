@@ -5,9 +5,7 @@ import { DeployFunction } from "hardhat-deploy/types";
 import { RiskHub } from "../typechain-types";
 import { ethers } from "hardhat";
 
-const deployArbitrumLiquidator: DeployFunction = async function (
-  hre: HardhatRuntimeEnvironment
-) {
+const deployArbitrumLiquidator: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
   const riskHubContract = (await ethers.getContract("RiskHub")) as RiskHub;
@@ -18,7 +16,7 @@ const deployArbitrumLiquidator: DeployFunction = async function (
   // Address of the USDC token https://docs.arbitrum.io/arbitrum-bridge/usdc-arbitrum-one
   const usdcTokenAddress = "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8";
   const riskHub = riskHubContract.target;
-  console.log("riskHub contract address: ",riskHub);
+  console.log("riskHub contract address: ", riskHub);
 
   await deploy("ArbitrumLiquidator", {
     from: deployer,

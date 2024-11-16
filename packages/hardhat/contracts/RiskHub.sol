@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.0;
 
-import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
-import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import {ISwapRouter} from "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
-import {IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
-import {Math} from "@openzeppelin/contracts/utils/math/Math.sol";
-import {IPriceOracle} from "./interfaces/IPriceOracle.sol";
-import {IBridge} from "./interfaces/IBridge.sol";
-import {IRiskHub} from "./interfaces/IRiskHub.sol";
-import {IBangDEX} from "./interfaces/IBangDEX.sol";
+import { AccessControl } from "@openzeppelin/contracts/access/AccessControl.sol";
+import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import { ISwapRouter } from "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
+import { IERC20Metadata } from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
+import { Math } from "@openzeppelin/contracts/utils/math/Math.sol";
+import { IPriceOracle } from "./interfaces/IPriceOracle.sol";
+import { IBridge } from "./interfaces/IBridge.sol";
+import { IRiskHub } from "./interfaces/IRiskHub.sol";
+import { IBangDEX } from "./interfaces/IBangDEX.sol";
 
 /**
  * @title RiskHub
@@ -25,7 +25,7 @@ contract RiskHub is AccessControl, IRiskHub {
   bytes32 public constant DEX_MESSENGER_ROLE = keccak256("DEX_MESSENGER_ROLE");
   uint256 public constant WAD = 1e18;
 
-  IERC20Metadata public immutable payToken;  // USDC or other token that will use to pay for the acquired tokens
+  IERC20Metadata public immutable payToken; // USDC or other token that will use to pay for the acquired tokens
   IBridge public bridge;
 
   struct DEX {
@@ -77,8 +77,13 @@ contract RiskHub is AccessControl, IRiskHub {
   /**
    * Called from a DEX when a trade happens
    */
-  function tradeFromDex(uint64 chainId, uint40 timestamp, IERC20Metadata tokenIn, uint256 amountIn, uint256 amountOut)
-  external onlyRole(DEX_MESSENGER_ROLE) {
+  function tradeFromDex(
+    uint64 chainId,
+    uint40 timestamp,
+    IERC20Metadata tokenIn,
+    uint256 amountIn,
+    uint256 amountOut
+  ) external onlyRole(DEX_MESSENGER_ROLE) {
     // TODO
   }
 }

@@ -9,7 +9,6 @@ const deployRiskHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
 
   const bridgeContract = (await ethers.getContract("MockBridge")) as MockBridge;
 
-
   // Replace with the actual addresses for your network
   // Address of the USDC token https://docs.arbitrum.io/arbitrum-bridge/usdc-arbitrum-one
   const payTokenAddress = "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8"; // USDC token address (IERC20Metadata)

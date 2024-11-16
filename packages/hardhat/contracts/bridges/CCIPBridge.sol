@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.0;
 
-import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
-import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import {IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
-import {Math} from "@openzeppelin/contracts/utils/math/Math.sol";
-import {IBridge} from "../interfaces/IBridge.sol";
-import {IRouterClient} from "@chainlink/contracts-ccip/src/v0.8/ccip/interfaces/IRouterClient.sol";
-import {Client} from "@chainlink/contracts-ccip/src/v0.8/ccip/libraries/Client.sol";
+import { AccessControl } from "@openzeppelin/contracts/access/AccessControl.sol";
+import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import { IERC20Metadata } from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
+import { Math } from "@openzeppelin/contracts/utils/math/Math.sol";
+import { IBridge } from "../interfaces/IBridge.sol";
+import { IRouterClient } from "@chainlink/contracts-ccip/src/v0.8/ccip/interfaces/IRouterClient.sol";
+import { Client } from "@chainlink/contracts-ccip/src/v0.8/ccip/libraries/Client.sol";
 
 interface IStaker {
   function stake(address beneficiary, uint256 amount) external;
@@ -51,10 +51,9 @@ contract CCIPBridge is AccessControl, IBridge {
     uint64 gasLimit;
   }
 
-  mapping (uint64 => ChainConfig) chains;
+  mapping(uint64 => ChainConfig) chains;
 
   error NotImplemented();
-
 
   constructor(IRouterClient ccipRouter_, IERC20Metadata linkToken_, address admin) {
     ccipRouter = ccipRouter_;
@@ -65,7 +64,7 @@ contract CCIPBridge is AccessControl, IBridge {
   function setTargetChain(uint64 chainId, address receiver, uint256 gasLimit_) external onlyRole(CHAIN_ADMIN_ROLE) {
     chains[chainId].receiver = receiver;
     require(gasLimit_ != 0, NoGasLimitOnDestinationChain(chainId));
-    chains[chainId].gasLimit = uint64(gasLimit_);  // TODO: safeCast
+    chains[chainId].gasLimit = uint64(gasLimit_); // TODO: safeCast
     // TODO emit event
   }
 
@@ -78,43 +77,31 @@ contract CCIPBridge is AccessControl, IBridge {
 
     // Create an EVM2AnyMessage struct in memory with necessary information for sending a cross-chain message
     // address(linkToken) means fees are paid in LINK
-    Client.EVMTokenAmount[]
-        memory tokenAmounts = new Client.EVMTokenAmount[](1);
-    tokenAmounts[0] = Client.EVMTokenAmount({
-        token: address(token),
-        amount: amount
-    });
+    Client.EVMTokenAmount[] memory tokenAmounts = new Client.EVMTokenAmount[](1);
+    tokenAmounts[0] = Client.EVMTokenAmount({ token: address(token), amount: amount });
     // Create an EVM2AnyMessage struct in memory with necessary information for sending a cross-chain message
     Client.EVM2AnyMessage memory evm2AnyMessage = Client.EVM2AnyMessage({
-        receiver: abi.encode(config.receiver), // ABI-encoded receiver address
-        data: abi.encodeWithSelector(
-            IStaker.stake.selector,
-            target,
-            amount
-        ), // Encode the function selector and the arguments of the stake function
-        tokenAmounts: tokenAmounts, // The amount and type of token being transferred
-        extraArgs: Client._argsToBytes(
-            // Additional arguments, setting gas limit and allowing out-of-order execution.
-            // Best Practice: For simplicity, the values are hardcoded. It is advisable to use a more dynamic approach
-            // where you set the extra arguments off-chain. This allows adaptation depending on the lanes, messages,
-            // and ensures compatibility with future CCIP upgrades. Read more about it here: https://docs.chain.link/ccip/best-practices#using-extraargs
-            Client.EVMExtraArgsV2({
-                gasLimit: config.gasLimit, // Gas limit for the callback on the destination chain
-                allowOutOfOrderExecution: true // Allows the message to be executed out of order relative to other messages from the same sender
-            })
-        ),
-        // Set the feeToken to a feeTokenAddress, indicating specific asset will be used for fees
-        feeToken: address(linkToken)
+      receiver: abi.encode(config.receiver), // ABI-encoded receiver address
+      data: abi.encodeWithSelector(IStaker.stake.selector, target, amount), // Encode the function selector and the arguments of the stake function
+      tokenAmounts: tokenAmounts, // The amount and type of token being transferred
+      extraArgs: Client._argsToBytes(
+        // Additional arguments, setting gas limit and allowing out-of-order execution.
+        // Best Practice: For simplicity, the values are hardcoded. It is advisable to use a more dynamic approach
+        // where you set the extra arguments off-chain. This allows adaptation depending on the lanes, messages,
+        // and ensures compatibility with future CCIP upgrades. Read more about it here: https://docs.chain.link/ccip/best-practices#using-extraargs
+        Client.EVMExtraArgsV2({
+          gasLimit: config.gasLimit, // Gas limit for the callback on the destination chain
+          allowOutOfOrderExecution: true // Allows the message to be executed out of order relative to other messages from the same sender
+        })
+      ),
+      // Set the feeToken to a feeTokenAddress, indicating specific asset will be used for fees
+      feeToken: address(linkToken)
     });
 
     // Get the fee required to send the CCIP message
-    uint256 fees = ccipRouter.getFee(
-        chainId,
-        evm2AnyMessage
-    );
+    uint256 fees = ccipRouter.getFee(chainId, evm2AnyMessage);
 
-    if (fees > linkToken.balanceOf(address(this)))
-        revert NotEnoughBalance(linkToken.balanceOf(address(this)), fees);
+    if (fees > linkToken.balanceOf(address(this))) revert NotEnoughBalance(linkToken.balanceOf(address(this)), fees);
 
     // approve the Router to transfer LINK tokens on contract's behalf. It will spend the fees in LINK
     linkToken.approve(address(ccipRouter), fees);
@@ -123,30 +110,17 @@ contract CCIPBridge is AccessControl, IBridge {
     token.approve(address(ccipRouter), amount);
 
     // Send the message through the router and store the returned message ID
-    bytes32 messageId = ccipRouter.ccipSend(
-        chainId,
-        evm2AnyMessage
-    );
+    bytes32 messageId = ccipRouter.ccipSend(chainId, evm2AnyMessage);
 
     // Emit an event with message details
-    emit MessageSent(
-        messageId,
-        chainId,
-        config.receiver,
-        target,
-        address(token),
-        amount,
-        address(linkToken),
-        fees
-    );
+    emit MessageSent(messageId, chainId, config.receiver, target, address(token), amount, address(linkToken), fees);
   }
 
-  function transferTokenAndData(IERC20Metadata, uint64, address, uint256, bytes calldata
-                                ) pure external {
+  function transferTokenAndData(IERC20Metadata, uint64, address, uint256, bytes calldata) external pure {
     revert NotImplemented();
   }
 
-  function callCrossChain(uint64, address, bytes calldata) pure external {
+  function callCrossChain(uint64, address, bytes calldata) external pure {
     revert NotImplemented();
   }
 }
