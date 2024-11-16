@@ -143,7 +143,7 @@ contract BangDEX is ISwapRouter, AccessControl, IBangDEX {
   /**
    * @inheritdoc ISwapRouter
    */
-  function exactOutputSingle(ExactOutputSingleParams calldata params) external payable returns (uint256 amountIn) {
+  function exactOutputSingle(ExactOutputSingleParams calldata) external payable returns (uint256 amountIn) {
     // TODO - Can be implemented, just need a bit more of math...
     revert NotImplemented();
   }

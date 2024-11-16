@@ -4,7 +4,6 @@ pragma solidity ^0.8.0;
 import { AccessControl } from "@openzeppelin/contracts/access/AccessControl.sol";
 import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import { IERC20Metadata } from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
-import { Math } from "@openzeppelin/contracts/utils/math/Math.sol";
 import { IBridge } from "../interfaces/IBridge.sol";
 import { IRouterClient } from "@chainlink/contracts-ccip/src/v0.8/ccip/interfaces/IRouterClient.sol";
 import { Client } from "@chainlink/contracts-ccip/src/v0.8/ccip/libraries/Client.sol";
@@ -24,11 +23,15 @@ contract CCIPBridge is AccessControl, IBridge {
 
   bytes32 public constant CHAIN_ADMIN_ROLE = keccak256("CHAIN_ADMIN_ROLE");
 
-  // Adapted following docs in https://docs.chain.link/ccip/tutorials/usdc
-  error NoReceiverOnDestinationChain(uint64 destinationChainSelector); // Used when the receiver address is 0 for a given destination chain.
+  // Code Adapted following docs in https://docs.chain.link/ccip/tutorials/usdc
+
+  // Used when the receiver address is 0 for a given destination chain.
+  error NoReceiverOnDestinationChain(uint64 destinationChainSelector);
+
   error NoGasLimitOnDestinationChain(uint64 destinationChainSelector); // Used when the gas limit is 0.
   error AmountIsZero(); // Used if the amount to transfer is 0.
-  error NotEnoughBalance(uint256 currentBalance, uint256 calculatedFees); // Used to make sure contract has enough balance to cover the fees.
+  // Used to make sure contract has enough balance to cover the fees.
+  error NotEnoughBalance(uint256 currentBalance, uint256 calculatedFees);
 
   // Event emitted when a message is sent to another chain.
   event MessageSent(
@@ -51,7 +54,7 @@ contract CCIPBridge is AccessControl, IBridge {
     uint64 gasLimit;
   }
 
-  mapping(uint64 => ChainConfig) chains;
+  mapping(uint64 => ChainConfig) public chains;
 
   error NotImplemented();
 
@@ -82,16 +85,19 @@ contract CCIPBridge is AccessControl, IBridge {
     // Create an EVM2AnyMessage struct in memory with necessary information for sending a cross-chain message
     Client.EVM2AnyMessage memory evm2AnyMessage = Client.EVM2AnyMessage({
       receiver: abi.encode(config.receiver), // ABI-encoded receiver address
-      data: abi.encodeWithSelector(IStaker.stake.selector, target, amount), // Encode the function selector and the arguments of the stake function
+      // Encode the function selector and the arguments of the stake function
+      data: abi.encodeWithSelector(IStaker.stake.selector, target, amount),
       tokenAmounts: tokenAmounts, // The amount and type of token being transferred
       extraArgs: Client._argsToBytes(
         // Additional arguments, setting gas limit and allowing out-of-order execution.
         // Best Practice: For simplicity, the values are hardcoded. It is advisable to use a more dynamic approach
         // where you set the extra arguments off-chain. This allows adaptation depending on the lanes, messages,
-        // and ensures compatibility with future CCIP upgrades. Read more about it here: https://docs.chain.link/ccip/best-practices#using-extraargs
+        // and ensures compatibility with future CCIP upgrades.
+        // Read more about it here: https://docs.chain.link/ccip/best-practices#using-extraargs
         Client.EVMExtraArgsV2({
           gasLimit: config.gasLimit, // Gas limit for the callback on the destination chain
-          allowOutOfOrderExecution: true // Allows the message to be executed out of order relative to other messages from the same sender
+          // Allows the message to be executed out of order relative to other messages from the same sender
+          allowOutOfOrderExecution: true
         })
       ),
       // Set the feeToken to a feeTokenAddress, indicating specific asset will be used for fees
