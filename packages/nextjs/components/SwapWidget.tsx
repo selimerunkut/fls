@@ -20,23 +20,24 @@ const SwapWidget: React.FC = () => {
     };
 
     useEffect(() => {
-        if(!selectedToken || !fromAmount) {
+        if(!selectedToken || fromAmount === 0) {
             setToAmount(0);
-        }
-        fetchPriceFromBang(selectedToken.id, '').then((bangPrice) => {
-            setToAmount(bangPrice * fromAmount);
-        });
-        fetchPriceFromPyth(selectedToken.id).then((pythPrice) => {
-            setRealToAmount(pythPrice * fromAmount);
-        });
-    }, [fromAmount, selectedToken]);
-
-    useEffect(() => {
-        if(!toAmount || !realToAmount || realToAmount === 0) {
+            setRealToAmount(0);
             setDiscountPercentage(0);
+            return;
         }
-        setDiscountPercentage(((toAmount / realToAmount) - 1)* 100);
-    }, [toAmount, realToAmount]);
+        const timer = setTimeout(() => {
+            Promise.all([
+                fetchPriceFromBang(selectedToken.id, ''),
+                fetchPriceFromPyth(selectedToken.id)]
+            ).then(([bangPrice, pythPrice]) => {
+                setToAmount(bangPrice * fromAmount);
+                setRealToAmount(pythPrice * fromAmount);
+                setDiscountPercentage(((((bangPrice * fromAmount) / (pythPrice * fromAmount))) - 1)* 100);
+            });
+        }, 500);
+        return () => clearTimeout(timer);
+    }, [fromAmount, selectedToken]);
 
     return (
         <div className="max-w-md mx-auto bg-gray-900 rounded-2xl shadow-lg p-6 text-white">
