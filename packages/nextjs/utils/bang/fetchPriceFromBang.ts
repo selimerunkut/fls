@@ -7,6 +7,7 @@ const TOKEN_TO_FEED: {[key: TokenId]: string} = {
 }
 
 export async function fetchPriceFromBang(tokenId: TokenId, network: string): Promise<number> {
+    useRead
     const url = `https://hermes.pyth.network/v2/updates/price/latest?ids%5B%5D=${TOKEN_TO_FEED[tokenId]}`;
     const priceResponse = await fetch(url);
     // TODO: Validate schema and response

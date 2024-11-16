@@ -6,6 +6,7 @@ import * as path from 'path';
 
 interface NetworkConfig {
   payToken: string;
+  interchainAccountRouter: string;
   pyth: {
     // https://docs.pyth.network/price-feeds/contract-addresses/evm
     address: string,

@@ -1,6 +1,6 @@
 import * as dotenv from "dotenv";
 import * as hre from "hardhat";
-import { CCIPBridge, PythPriceOracle, RiskHub, SwapLiquidator } from "../typechain-types";
+import {HLCCIPBridge, RiskHub, SwapLiquidator} from "../typechain-types";
 import { getNetworkConfig } from "../utils/networkConfig";
 dotenv.config();
 
@@ -20,7 +20,7 @@ async function main() {
   const config = getNetworkConfig(hre);
 
   const riskHub = (await hre.ethers.getContract("RiskHub")) as RiskHub;
-  const ccipBridge = (await hre.ethers.getContract("CCIPBridge")) as CCIPBridge;
+  const ccipBridge = (await hre.ethers.getContract("HLCCIPBridge")) as HLCCIPBridge;
   const swapLiquidator = (await hre.ethers.getContract("SwapLiquidator")) as SwapLiquidator;
 
   let tx;

@@ -13,7 +13,7 @@ const deployOmniChainBridge: DeployFunction = async function (hre: HardhatRuntim
     return;
   }
 
-  const bridge = await ethers.getContract("CCIPBridge");
+  const bridge = await ethers.getContract("HLCCIPBridge");
   const pythOracle = await ethers.getContract("PythPriceOracle");
 
   const deployment = await deploy("BangDEX", {

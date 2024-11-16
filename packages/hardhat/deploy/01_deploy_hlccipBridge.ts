@@ -7,16 +7,16 @@ const deployCCIPBridge: DeployFunction = async function (hre: HardhatRuntimeEnvi
   const { deploy } = hre.deployments;
   const config = getNetworkConfig(hre);
 
-  const deployment = await deploy("CCIPBridge", {
+  const deployment = await deploy("HLCCIPBridge", {
     from: deployer,
-    args: [config.ccip.router, config.ccip.link, deployer],
+    args: [config.ccip.router, config.ccip.link, deployer, config.interchainAccountRouter],
     log: true,
     autoMine: true,
   });
 
-  console.log("CCIP Bridge deployed to:", deployment.address);
+  console.log("HLCCIP Bridge deployed to:", deployment.address);
 };
 
 export default deployCCIPBridge;
 
-deployCCIPBridge.tags = ["CCIP Bridge"];
+deployCCIPBridge.tags = ["HLCCIP Bridge"];

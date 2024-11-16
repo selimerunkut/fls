@@ -6,7 +6,7 @@ import { TypeCasts } from "@hyperlane-xyz/core/contracts/libs/TypeCasts.sol";
 import { IRemoteCallBridge } from "../interfaces/IRemoteCallBridge.sol";
 
 interface IInterchainAccountRouter {
-  function callRemote(uint32 _destinationDomain, CallLib.Call[] calldata calls) external returns (bytes32);
+  function callRemote(uint32 _destinationDomain, CallLib.Call[] calldata calls) external payable returns (bytes32);
 
   function getRemoteInterchainAccount(uint32 _destination, address _owner) external view returns (address);
 }
@@ -24,12 +24,14 @@ contract HyperlaneRemoteCallBridge is IRemoteCallBridge {
 
   function callCrossChain(uint64 chainId, address target, bytes calldata data) external {
     // Create a dynamically-sized array with one element
-    CallLib.Call[] memory callArray;
+    CallLib.Call[] memory callArray = new CallLib.Call[](1);
     callArray[0] = CallLib.Call({ to: TypeCasts.addressToBytes32(address(target)), data: data, value: 0 });
 
-    interchainAccountRouter.callRemote(
+    interchainAccountRouter.callRemote{ value: 0.01 ether }(
       uint32(chainId), // TODO safecast
       callArray
     );
   }
+
+  receive() external payable {}
 }

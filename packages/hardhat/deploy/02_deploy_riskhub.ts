@@ -1,6 +1,5 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
-import { CCIPBridge, MockBridge } from "../typechain-types";
 import { ethers } from "hardhat";
 import { getNetworkConfig } from "../utils/networkConfig";
 
@@ -8,7 +7,7 @@ const deployRiskHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
-  const bridge = await ethers.getContract("CCIPBridge");
+  const bridge = await ethers.getContract("HLCCIPBridge");
 
   const config = getNetworkConfig(hre);
 

@@ -4,6 +4,7 @@
     "swapLiquidatorRouter": "",
     "_comment_payToken": "https://docs.arbitrum.io/arbitrum-bridge/usdc-arbitrum-one",
     "payToken": "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d",
+    "interchainAccountRouter": "0x20cC3a33C49fa13627303669edf2DcA7F1E76a50",
     "ccip": {
       "router": "0x2a9C5afB0d0e4BAb2BCdaE109EC4b0c4Be15a165",
       "link": "0xb1D4538B4571d411F07960EF2838Ce337FE1E80E"
@@ -39,6 +40,7 @@
     },
     "_comment_payToken": "https://docs.arbitrum.io/arbitrum-bridge/usdc-arbitrum-one",
     "payToken": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+    "interchainAccountRouter": "0xd876C01aB40e8cE42Db417fBC79c726d45504dE4",
     "ccip": {
       "router": "0xD3b06cEbF099CE7DA4AcCf578aaebFDBd6e88a93",
       "link": "0xE4aB69C077896252FAFBD49EFD26B5D171A32410"
