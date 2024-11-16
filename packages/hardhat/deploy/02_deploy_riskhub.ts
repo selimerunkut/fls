@@ -12,7 +12,7 @@ const deployRiskHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
 
   const config = getNetworkConfig(hre);
 
-  const payTokenAddress = config.payToken;; // USDC token address (IERC20Metadata)
+  const payTokenAddress = config.payToken; // USDC token address (IERC20Metadata)
   console.log("USDC address:", payTokenAddress);
 
   const adminAddress = deployer; // Admin address, defaulting to deployer
