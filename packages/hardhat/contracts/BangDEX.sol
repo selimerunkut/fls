@@ -90,8 +90,8 @@ contract BangDEX is ISwapRouter, AccessControl, IBangDEX {
   function getDiscount(MarketState storage market, uint256 amountToBuy) internal view returns (uint256 discount) {
     // Already fails if market doesn't exist (zero div), but a custom error would be better
     discount = market.minDiscount - market.discountDelta.mulDiv(
-      (market.usedCapacity + amountToBuy).mulDiv(WAD, market.maxCapacity)
-    , WAD);
+      (market.usedCapacity + amountToBuy).mulDiv(WAD, market.maxCapacity), WAD
+    );
   }
 
   /**
@@ -107,10 +107,13 @@ contract BangDEX is ISwapRouter, AccessControl, IBangDEX {
     require(IERC20Metadata(params.tokenOut) == payToken, "We can swap only against payToken");
     ILiquidator liquidator = liquidators[IERC20Metadata(params.tokenIn)];
     require(address(liquidator) != address(0), "The token is not supported");
+    MarketState storage market = _getMarket(IERC20Metadata(params.tokenIn));
+    require(market.usedCapacity + params.amountIn <= market.maxCapacity, "Capacity for this token exceeded");
 
     amountOut = computeAmountOut(IERC20Metadata(params.tokenIn), params.amountIn);
 
     require(amountOut >= params.amountOutMinimum, "The output amount is less minimum acceptable");
+    market.usedCapacity += params.amountIn;
 
     payToken.safeTransfer(params.recipient, amountOut);
     IERC20Metadata(params.tokenIn).safeTransferFrom(msg.sender, address(liquidator), params.amountIn);
