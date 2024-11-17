@@ -16,7 +16,7 @@ export async function fetchPriceFromBang(fromAmount: number, provider: any): Pro
     const contract = new ethers.Contract(contractAddress, contractABI, provider);
 
     // Define your token address and amount
-    const amountIn = Number(ethers.parseUnits(fromAmount.toString(), 6)); // Replace with the amount you want to test
-    const amountOut = Number(await contract.computeAmountOut(TokenAddress, amountIn));
-    return amountOut / amountIn;
+    const amountIn = ethers.parseUnits(fromAmount.toString(), 18); // Replace with the amount you want to test
+    const amountOut = await contract.computeAmountOut(TokenAddress, amountIn);
+    return ethers.formatUnits(amountOut, 6) / ethers.formatEther(amountIn);
 }

@@ -19,7 +19,7 @@ export async function bangSwap(amountIn: number, address: string, signer: any): 
         fee: 123, // Fee tier (typically 500, 3000, or 10000 for Uniswap V3)
         recipient: address, // Address that will receive the output token
         deadline: Math.floor(Date.now() / 1000) + 3600, // Deadline in Unix timestamp (1 hour from now)
-        amountIn: '100',
+        amountIn: ethers.parseUnits(amountIn.toString(), 18),
         amountOutMinimum: 0, // Minimum amount of tokenOut to receive (e.g., 0.5 tokenOut with 18 decimals)
         sqrtPriceLimitX96: 123 // Price limit (optional, set to 0 for no limit)
     };

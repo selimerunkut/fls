@@ -24,15 +24,17 @@ async function main() {
 
   let tx;
 
-  const swapAmount = "100"
+  const swapAmount = "1000000000000000000"
 
   console.log("Minting...")
-  tx = await token.mint(deployer, swapAmount * 3);
+  tx = await token.mint(deployer, swapAmount);
   await tx.wait(1);
 
   console.log("Approving...")
   tx = await token.approve(bangDex.target, hre.ethers.MaxUint256);
   await tx.wait(1);
+
+  console.log(await bangDex.computeAmountOut(token.target, swapAmount));
 
   console.log("Swapping...")
   tx = await bangDex.exactInputSingle({

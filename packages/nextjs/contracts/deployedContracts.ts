@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   84532: {
     BangDEX: {
-      address: "0x66D74478f77521caE315a8df60717503665FAb96",
+      address: "0x1E2C9a561F217a5f2AF9735711aaF18B710F6881",
       abi: [
         {
           inputs: [
@@ -1306,7 +1306,7 @@ const deployedContracts = {
       },
     },
     EOALiquidator: {
-      address: "0x3F493F294ca9153435C2a1C35b7A9563A8240FB9",
+      address: "0xcb2678b75a97474f867cB21a773922fC7f446633",
       abi: [
         {
           inputs: [
@@ -4425,7 +4425,7 @@ const deployedContracts = {
       },
     },
     PythPriceOracle: {
-      address: "0x039cc2c0117101a0BBEDd3a519BF22A97f9Fb786",
+      address: "0x29e7Ce948d68c5221Ff5cD728edD7A9edE2BAcA6",
       abi: [
         {
           inputs: [

@@ -1,2 +1,2 @@
 export * from "./fetchPriceFromBang";
-export const BangContractAddress = '0x66D74478f77521caE315a8df60717503665FAb96'
+export const BangContractAddress = '0x1E2C9a561F217a5f2AF9735711aaF18B710F6881'

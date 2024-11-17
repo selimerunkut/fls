@@ -20,5 +20,5 @@ export async function requestApproval(amount: string, walletAddress: string, sig
 
     // Perform the approval transaction
     // Send the transaction
-    const tx = await tokenContract.approve(spenderAddress, ethers.MaxUint256);
+    const tx = await tokenContract.approve(spenderAddress, ethers.parseUnits(amount, 18));
 }
