@@ -1,10 +1,9 @@
-# Bang
+# FLS
 
 Cross-chain atomic swaps for a fragmented liquidity environment. Buy tokens in atomic swaps and resell them asynchronously, using bridges and intents.
 
-![image](https://github.com/user-attachments/assets/347d6985-0208-4ee6-9829-0f2c5170a10e)
+![FLS](https://github.com/user-attachments/assets/b7fa631b-f483-4c85-8fa3-c0930a4195a8)
 
-¡BANG! ¡BANG!… Estás liquidado.
 
 ## Description
 
