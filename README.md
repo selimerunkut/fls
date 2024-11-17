@@ -11,7 +11,7 @@ Traditional atomic DEXes operate isolated, without any information but the on-ch
 
 Intents and cross-chain intents are great solutions for this problem. Still, the asynchronicity doesn't fit well for many use cases: liquidations, vaults, interoperability, fee collection, or just hurried-up users.
 
-In Bang, we tackle this problem by providing atomic one-side swaps based on Oracle prices for listed tokens. 
+In FLS, we tackle this problem by providing atomic one-side swaps based on Oracle prices for listed tokens. 
 
 The protocol efficiently manages shared cross-chain liquidity in USDC to acquire these tokens in low liquidity chains (secondary chains). Then the tokens are sold asynchronously using bridges, cross-chain intents, or different strategies. 
 

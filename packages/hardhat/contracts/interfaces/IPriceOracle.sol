@@ -6,7 +6,6 @@ import { IERC20Metadata } from "@openzeppelin/contracts/token/ERC20/extensions/I
 /**
  * @title IPriceOracle interface
  * @dev Interface that returns the price of tokens
- * @author Bang
  */
 interface IPriceOracle {
   /**
