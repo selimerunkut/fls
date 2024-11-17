@@ -81,6 +81,11 @@ const config: HardhatUserConfig = {
       url: "https://sepolia.base.org",
       accounts: [deployerPrivateKey],
     },
+    taikoHekla: {
+      url: process.env.TAIKO_TESTNET_RPC,
+      accounts: [process.env.TESTNET_PRIVATE_KEYS],
+      //gasPrice: 350000000000
+    },
   },
   // configuration for harhdat-verify plugin
   etherscan: {

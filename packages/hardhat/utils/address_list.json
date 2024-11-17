@@ -64,27 +64,64 @@
   },
 
 
-  "localhost": {
-    "pyth": {
-      "address": "0x4374e5a8b9C22271E9EB878A2AA31DE97DF15DAF",
-      "feeds": [
-        {
-          "age": 5,
-          "id": "0x15add95022ae13563a11992e727c91bdb6b55bc183d9d747436c80a483d8c864",
-          "token": "0x6Cb8Cc1e323357Af5da49d90FCb7160B7f09e6Cd"
-        }
-      ]
-    },
-    "swapLiquidatorRouter": "0xE592427A0AEce92De3Edee1F18E0157C05861564",
-    "payToken": "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d",
+"localhost": {
+    "_comment_swap": "https://docs.uniswap.org/contracts/v3/reference/deployments/arbitrum-deployments",
+    "swapLiquidatorRouter": "",
+    "_comment_payToken": "https://docs.arbitrum.io/arbitrum-bridge/usdc-arbitrum-one",
+    "payToken": "0x0011E559da84dde3f841e22dc33F3adbF184D84A",
+    "interchainAccountRouter": "0x20cC3a33C49fa13627303669edf2DcA7F1E76a50",
     "ccip": {
       "router": "0x2a9C5afB0d0e4BAb2BCdaE109EC4b0c4Be15a165",
       "link": "0xb1D4538B4571d411F07960EF2838Ce337FE1E80E"
     },
     "omni": {
-      "endpoint": "0x6EDCE65403992e310A62460808c4b910D972f10f"
+      "endpoint": "0x6EDCE65403992e310A62460808c4b910D972f10f",
+      "eids": {
+        "arbitrumSepolia": 40231,
+        "baseSepolia": 40245,
+        "taikoHekla": 40274
+      },
+      "PEPO": {
+        "arbitrumSepolia": "0x00000000000000000000000086404cf78ffcb82b4b47d98324c2fda77deaa777",
+        "baseSepolia": "0x0000000000000000000000002575ca591b299213f18d742e2e2cc8422fe2139a",
+        "taikoHekla": ""
+
+      }
     },
-    "hubId": 421614,
+    "hub": {
+      "id": 421614,
+      "address": "0xC24FF1A3821b1d1C6bC91ab20C3cdf58320A2191"
+    },
+    "isHub": true
+  },
+"taikoHekla": {
+    "_comment_swap": "https://docs.uniswap.org/contracts/v3/reference/deployments/arbitrum-deployments",
+    "swapLiquidatorRouter": "",
+    "_comment_payToken": "https://docs.arbitrum.io/arbitrum-bridge/usdc-arbitrum-one",
+    "payToken": "0x0011E559da84dde3f841e22dc33F3adbF184D84A",
+    "interchainAccountRouter": "0x90EeE71703246Ad01CA1138DEC7ee13687eFa67e",
+    "ccip": {
+      "router": "0x2a9C5afB0d0e4BAb2BCdaE109EC4b0c4Be15a165",
+      "link": "0xb1D4538B4571d411F07960EF2838Ce337FE1E80E"
+    },
+    "omni": {
+      "endpoint": "0x6EDCE65403992e310A62460808c4b910D972f10f",
+      "eids": {
+        "arbitrumSepolia": 40231,
+        "baseSepolia": 40245,
+        "taikoHekla": 40274
+      },
+      "PEPO": {
+        "arbitrumSepolia": "0x00000000000000000000000086404cf78ffcb82b4b47d98324c2fda77deaa777",
+        "baseSepolia": "0x0000000000000000000000002575ca591b299213f18d742e2e2cc8422fe2139a",
+        "taikoHekla": ""
+
+      }
+    },
+    "hub": {
+      "id": 421614,
+      "address": "0xC24FF1A3821b1d1C6bC91ab20C3cdf58320A2191"
+    },
     "isHub": true
   }
 }

@@ -4,17 +4,6 @@ import {BangDEX, MyOFT} from "../typechain-types";
 import { getNetworkConfig } from "../utils/networkConfig";
 dotenv.config();
 
-const DEXES = [
-  {
-    chain: 84532,
-    chainSelector: "10344971235874465080",
-    bangDex: "0x9A5589Bfa8758E96D2Cd2245094a489A5725DFDf",
-    slotSize: 60 * 60 * 24,
-    amount: "500000",
-    receiver: "0x814E735c5DD19240c85E2513DD926Bc3a39f7140",
-    gasLimit: "3000000",
-  },
-];
 async function main() {
   const { deployer } = await hre.getNamedAccounts();
   const config = getNetworkConfig(hre);

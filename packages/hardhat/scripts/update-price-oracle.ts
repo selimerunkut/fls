@@ -6,17 +6,6 @@ import {ethers} from "hardhat";
 import {HermesClient} from "@pythnetwork/hermes-client";
 dotenv.config();
 
-const DEXES = [
-  {
-    chain: 84532,
-    chainSelector: "10344971235874465080",
-    bangDex: "0x1E2C9a561F217a5f2AF9735711aaF18B710F6881",
-    slotSize: 60 * 60 * 24,
-    amount: "500000",
-    receiver: "0x814E735c5DD19240c85E2513DD926Bc3a39f7140",
-    gasLimit: "3000000",
-  },
-];
 async function main() {
   const { deployer } = await hre.getNamedAccounts();
   const config = getNetworkConfig(hre);
