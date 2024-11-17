@@ -9,6 +9,7 @@ import {useEthersSigner} from "~~/hooks/useEthersSigner";
 import {requestApproval} from "~~/utils/token/requestApproval";
 import {useAccount} from "wagmi";
 import {bangSwap} from "~~/utils/bang/bangSwap";
+import {hasApproval} from "~~/utils/token/hasApproval";
 
 const SwapWidget: React.FC = () => {
     const tokenList: Token[] = Object.values(Tokens);
@@ -19,6 +20,7 @@ const SwapWidget: React.FC = () => {
     const [discountPercentage, setDiscountPercentage] = useState<number>(0);
     const [selectedToken, setSelectedToken] = useState<Token>(tokenList[0]);
     const [showTokenList, setShowTokenList] = useState<boolean>(false);
+    const [allowance, setAllowance] = useState<number>(0);
     const provider = useEthersProvider();
     const signer = useEthersSigner();
     const {address} = useAccount();
@@ -27,6 +29,13 @@ const SwapWidget: React.FC = () => {
         setSelectedToken(token);
         setShowTokenList(false);
     };
+
+    useEffect(() => {
+        if(!address) return;
+        hasApproval(address, provider).then((_allowance) => {
+            setAllowance(_allowance);
+        });
+    }, [address]);
 
 
     useEffect(() => {
@@ -89,7 +98,7 @@ const SwapWidget: React.FC = () => {
                 )}
 
                 <input
-                    type="text"
+                    type="number"
                     value={fromAmount}
                     onChange={(e) => setFromAmount(Number(e.target.value))}
                     className="w-full bg-transparent text-3xl font-semibold outline-none"
@@ -113,7 +122,7 @@ const SwapWidget: React.FC = () => {
                     </div>
                 </div>
                 <input
-                    type="text"
+                    type="number"
                     value={toAmount}
                     disabled={true}
                     className="w-full bg-transparent text-3xl font-semibold outline-none"
@@ -129,9 +138,18 @@ const SwapWidget: React.FC = () => {
                 className={`w-full bg-purple-600 text-white
                  py-3 rounded-lg font-bold hover:bg-purple-700 
                  transition btn`}
-                onClick={() => requestApproval(fromAmount.toString(), address!, signer).then(() => bangSwap(fromAmount, address!, signer))}
-            >
-                {toAmount === 0 ? 'Input a number to get started' : 'Swap'}
+                onClick={() => {
+                    if(toAmount > allowance) {
+                        requestApproval(
+                            fromAmount.toString(),
+                            address!,
+                            signer
+                        ).then(() => bangSwap(fromAmount, address!, signer));
+                        return;
+                    }
+                    bangSwap(fromAmount, address!, signer)
+                }}>
+                    {toAmount === 0 ? 'Input a number to get started' : toAmount > allowance ? 'Approve tokens' : 'Swap'}
             </div>
         </div>
     );
