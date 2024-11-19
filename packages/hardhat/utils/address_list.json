@@ -26,7 +26,6 @@
     },
     "isHub": true
   },
-
   "baseSepolia": {
     "pyth": {
       "address": "0xA2aa501b19aff244D90cc15a4Cf739D2725B5729",
@@ -62,9 +61,17 @@
     },
     "isDex": true
   },
-
-
-"localhost": {
+  "localhost": {
+    "pyth": {
+      "address": "0xA2aa501b19aff244D90cc15a4Cf739D2725B5729",
+      "feeds": [
+        {
+          "age": 550000000,
+          "id": "0x15add95022ae13563a11992e727c91bdb6b55bc183d9d747436c80a483d8c864",
+          "token": "0x6Cb8Cc1e323357Af5da49d90FCb7160B7f09e6Cd"
+        }
+      ]
+    },
     "_comment_swap": "https://docs.uniswap.org/contracts/v3/reference/deployments/arbitrum-deployments",
     "swapLiquidatorRouter": "",
     "_comment_payToken": "https://docs.arbitrum.io/arbitrum-bridge/usdc-arbitrum-one",
@@ -85,16 +92,27 @@
         "arbitrumSepolia": "0x00000000000000000000000086404cf78ffcb82b4b47d98324c2fda77deaa777",
         "baseSepolia": "0x0000000000000000000000002575ca591b299213f18d742e2e2cc8422fe2139a",
         "taikoHekla": ""
-
       }
     },
     "hub": {
       "id": 421614,
       "address": "0xC24FF1A3821b1d1C6bC91ab20C3cdf58320A2191"
     },
-    "isHub": true
+    "isHub": true,
+    "isDex": true
+    
   },
-"taikoHekla": {
+  "taikoHekla": {
+    "pyth": {
+      "address": "0x2880aB155794e7179c9eE2e38200202908C17B43",
+      "feeds": [
+        {
+          "age": 550000000,
+          "id": "0x15add95022ae13563a11992e727c91bdb6b55bc183d9d747436c80a483d8c864",
+          "token": "0x6Cb8Cc1e323357Af5da49d90FCb7160B7f09e6Cd"
+        }
+      ]
+    },
     "_comment_swap": "https://docs.uniswap.org/contracts/v3/reference/deployments/arbitrum-deployments",
     "swapLiquidatorRouter": "",
     "_comment_payToken": "https://docs.arbitrum.io/arbitrum-bridge/usdc-arbitrum-one",
@@ -115,13 +133,12 @@
         "arbitrumSepolia": "0x00000000000000000000000086404cf78ffcb82b4b47d98324c2fda77deaa777",
         "baseSepolia": "0x0000000000000000000000002575ca591b299213f18d742e2e2cc8422fe2139a",
         "taikoHekla": ""
-
       }
     },
     "hub": {
-      "id": 421614,
-      "address": "0xC24FF1A3821b1d1C6bC91ab20C3cdf58320A2191"
+      "id": 167009,
+      "address": "0x9aA6E6f8FDb201ccdDeEF680b375f4d03dD06439"
     },
-    "isHub": true
+    "isDex": true
   }
 }

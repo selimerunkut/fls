@@ -1,4 +1,3 @@
-// Filename: deploy/00_deploy_ArbitrumLiquidator.ts
 
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
@@ -30,7 +29,6 @@ const deploySwapLiquidator: DeployFunction = async function (hre: HardhatRuntime
   // Fetch the deployed contract
   const swapLiquidator = await hre.ethers.getContract<SwapLiquidator>("SwapLiquidator", deployer);
 
-  console.log("Swap Liquidator deployed to:", swapLiquidator.target);
 };
 
 export default deploySwapLiquidator;

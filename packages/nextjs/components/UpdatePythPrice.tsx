@@ -23,12 +23,15 @@ const UpdatePythPrice: React.FC = () => {
                 className={`btn btn-secondary btn-sm font-light hover:border-transparent`}
                 onClick={async () => {
                     const connection = new HermesClient("https://hermes.pyth.network", {});
+                    // we use ape coin price APE/USD for our pepo token
                     const priceUpdates = await connection.getLatestPriceUpdates(['0x15add95022ae13563a11992e727c91bdb6b55bc183d9d747436c80a483d8c864']);
                     await writeYourContractAsync({
                         functionName: "updatePrice",
                         args: [
                             priceUpdates.binary.data,
+                            // Get Ape coin price => PEPO coin price, https://sepolia.arbiscan.io/address/0x6Cb8Cc1e323357Af5da49d90FCb7160B7f09e6Cd
                             '0x6Cb8Cc1e323357Af5da49d90FCb7160B7f09e6Cd',
+                            // Get USDC price, Arbscan: https://sepolia.arbiscan.io/address/0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d
                             '0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d'
                         ],
                         value: parseEther("0.1"),

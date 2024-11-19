@@ -14,7 +14,6 @@ const deployCCIPBridge: DeployFunction = async function (hre: HardhatRuntimeEnvi
     autoMine: true,
   });
 
-  console.log("HLCCIP Bridge deployed to:", deployment.address);
 };
 
 export default deployCCIPBridge;

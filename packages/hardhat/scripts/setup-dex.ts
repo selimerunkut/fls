@@ -1,3 +1,5 @@
+// dex contract needs to be setup on a chain with high liquidity
+
 import * as dotenv from "dotenv";
 import * as hre from "hardhat";
 import {

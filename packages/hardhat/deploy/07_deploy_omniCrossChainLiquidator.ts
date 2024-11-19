@@ -1,7 +1,6 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 import { getNetworkConfig } from "../utils/networkConfig";
-import { CCIPBridge, PythPriceOracle } from "../typechain-types";
 import { ethers } from "hardhat";
 
 const deployOmniCrossChainLiquidator: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
@@ -21,7 +20,6 @@ const deployOmniCrossChainLiquidator: DeployFunction = async function (hre: Hard
     autoMine: true,
   });
 
-  console.log("CrossChain Liquidator deployed to:", deployment.address);
 };
 
 export default deployOmniCrossChainLiquidator;

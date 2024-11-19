@@ -16,7 +16,6 @@ const deployOmniChainBridge: DeployFunction = async function (hre: HardhatRuntim
     autoMine: true,
   });
 
-  console.log("OmniChain Bridge deployed to:", deployment.address);
 };
 
 export default deployOmniChainBridge;

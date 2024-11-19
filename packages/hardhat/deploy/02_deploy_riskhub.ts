@@ -23,7 +23,6 @@ const deployRiskHub: DeployFunction = async function (hre: HardhatRuntimeEnviron
     autoMine: true,
   });
 
-  console.log("RiskHub deployed to:", deployment.address);
 };
 
 export default deployRiskHub;

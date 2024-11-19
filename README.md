@@ -84,8 +84,18 @@ To stabilize the returns of the protocol, in future versions, we might off-load 
 
 This contract also uses a CCIP Bridge and Hyperlane for the transfer of USDC and communication with the DEXes.
 
+## PEPO Token
+
+We use our own token for test purposes the price is based on the APE coin price
+https://sepolia.arbiscan.io/address/0x6Cb8Cc1e323357Af5da49d90FCb7160B7f09e6Cd
+
+## Pythe Oracle
+baseSepolia: `0xA2aa501b19aff244D90cc15a4Cf739D2725B5729`
+
+taikoHekla: `0x2880aB155794e7179c9eE2e38200202908C17B43`
 
 ## Developer instructions
+
 
 ### install
 1. install

@@ -1,6 +1,8 @@
 import {TokenId} from "~~/models/Token";
 
 const TOKEN_TO_FEED: {[key: TokenId]: string} = {
+    // https://www.pyth.network/developers/price-feed-ids
+    // we use ape coin price APE/USD for our pepo token
     'PEPO': '0x15add95022ae13563a11992e727c91bdb6b55bc183d9d747436c80a483d8c864',
 }
 

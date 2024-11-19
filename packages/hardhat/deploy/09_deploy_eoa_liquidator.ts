@@ -18,7 +18,6 @@ const deployEOALiquidator: DeployFunction = async function (hre: HardhatRuntimeE
     autoMine: true,
   });
 
-  console.log("EOA Liquidator:", deployment.address);
 };
 
 export default deployEOALiquidator;

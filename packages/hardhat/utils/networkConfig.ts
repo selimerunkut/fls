@@ -10,6 +10,7 @@ interface NetworkConfig {
   pyth: {
     // https://docs.pyth.network/price-feeds/contract-addresses/evm
     address: string,
+    // id: https://www.pyth.network/developers/price-feed-ids
     feeds: {age: number, id: string, token: string}[]
   };
   // Only available if it's a hub chain

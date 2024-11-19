@@ -1,10 +1,9 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 import { getNetworkConfig } from "../utils/networkConfig";
-import { CCIPBridge, PythPriceOracle } from "../typechain-types";
 import { ethers } from "hardhat";
 
-const deployOmniChainBridge: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+const deployBangDEX: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
   const config = getNetworkConfig(hre);
@@ -31,10 +30,9 @@ const deployOmniChainBridge: DeployFunction = async function (hre: HardhatRuntim
     autoMine: true,
   });
 
-  console.log("OmniChain Bridge deployed to:", deployment.address);
 };
 
-export default deployOmniChainBridge;
+export default deployBangDEX;
 
 // Tags are useful to selectively deploy contracts
-deployOmniChainBridge.tags = ["OmniChain Bridge"];
+deployBangDEX.tags = ["BangDEX"];
