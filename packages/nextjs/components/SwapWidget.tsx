@@ -1,15 +1,15 @@
 'use client';
-import {useEffect, useState} from 'react';
-import {AiOutlineArrowDown, AiOutlineDown} from 'react-icons/ai';
-import {Tokens, Token} from "~~/models/Token";
-import {fetchPriceFromPyth} from "~~/utils/pyth/fetchPriceFromPyth";
-import {fetchPriceFromBang} from "~~/utils/bang";
-import {useEthersProvider} from "~~/hooks/useEthersProvider";
-import {useEthersSigner} from "~~/hooks/useEthersSigner";
-import {requestApproval} from "~~/utils/token/requestApproval";
-import {useAccount} from "wagmi";
-import {bangSwap} from "~~/utils/bang/bangSwap";
-import {hasApproval} from "~~/utils/token/hasApproval";
+import { useEffect, useState } from 'react';
+import { AiOutlineArrowDown, AiOutlineDown } from 'react-icons/ai';
+import { Tokens, Token } from "~~/models/Token";
+import { fetchPriceFromPyth } from "~~/utils/pyth/fetchPriceFromPyth";
+import { fetchPriceFromBang } from "~~/utils/bang";
+import { useEthersProvider } from "~~/hooks/useEthersProvider";
+import { useEthersSigner } from "~~/hooks/useEthersSigner";
+import { requestApproval } from "~~/utils/token/requestApproval";
+import { useAccount } from "wagmi";
+import { bangSwap } from "~~/utils/bang/bangSwap";
+import { hasApproval } from "~~/utils/token/hasApproval";
 
 const SwapWidget: React.FC = () => {
     const tokenList: Token[] = Object.values(Tokens);
@@ -23,7 +23,7 @@ const SwapWidget: React.FC = () => {
     const [allowance, setAllowance] = useState<number>(0);
     const provider = useEthersProvider();
     const signer = useEthersSigner();
-    const {address} = useAccount();
+    const { address } = useAccount();
 
     const handleTokenSelect = (token: Token) => {
         setSelectedToken(token);
@@ -31,7 +31,7 @@ const SwapWidget: React.FC = () => {
     };
 
     useEffect(() => {
-        if(!address) return;
+        if (!address) return;
         hasApproval(address, provider).then((_allowance) => {
             setAllowance(_allowance);
         });
@@ -44,7 +44,7 @@ const SwapWidget: React.FC = () => {
                 fetchPriceFromBang(fromAmount, provider),
                 fetchPriceFromPyth(selectedToken.id)]
             ).then(([bangPrice, pythPrice]) => {
-                if(!selectedToken || fromAmount === 0) {
+                if (!selectedToken || fromAmount === 0) {
                     setToAmount(0);
                     setRealToAmount(0);
                     setDiscountPercentage(0);
@@ -53,16 +53,16 @@ const SwapWidget: React.FC = () => {
 
                 setToAmount(bangPrice * fromAmount);
                 setRealToAmount(pythPrice * fromAmount);
-                setDiscountPercentage(((((bangPrice * fromAmount) / (pythPrice * fromAmount))) - 1)* 100);
+                setDiscountPercentage(((((bangPrice * fromAmount) / (pythPrice * fromAmount))) - 1) * 100);
             });
         }, 200);
         return () => clearTimeout(timer);
-    }, [fromAmount, selectedToken]);
+    }, [fromAmount, selectedToken, address]);
 
     return (
         <div className="max-w-md mx-auto bg-gray-900 rounded-2xl shadow-lg p-6 text-white">
             <h2 className="text-3xl font-bold text-center mb-6">
-                Swap instantly, <br/> anywhere.
+                Swap instantly, <br /> anywhere.
             </h2>
 
             {/* From Token Section */}
@@ -139,7 +139,7 @@ const SwapWidget: React.FC = () => {
                  py-3 rounded-lg font-bold hover:bg-purple-700 
                  transition btn`}
                 onClick={() => {
-                    if(toAmount > allowance) {
+                    if (toAmount > allowance) {
                         requestApproval(
                             fromAmount.toString(),
                             address!,
@@ -149,7 +149,7 @@ const SwapWidget: React.FC = () => {
                     }
                     bangSwap(fromAmount, address!, signer)
                 }}>
-                    {toAmount === 0 ? 'Input a number to get started' : toAmount > allowance ? 'Approve tokens' : 'Swap'}
+                {toAmount === 0 ? 'Input a number to get started' : toAmount > allowance ? 'Approve tokens' : 'Swap'}
             </div>
         </div>
     );
