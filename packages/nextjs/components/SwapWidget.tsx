@@ -54,6 +54,8 @@ const SwapWidget: React.FC = () => {
                 setToAmount(bangPrice * fromAmount);
                 setRealToAmount(pythPrice * fromAmount);
                 setDiscountPercentage(((((bangPrice * fromAmount) / (pythPrice * fromAmount))) - 1) * 100);
+            }).catch(err => {
+                console.log('Fetch prices fail:', err)
             });
         }, 200);
         return () => clearTimeout(timer);
@@ -98,6 +100,7 @@ const SwapWidget: React.FC = () => {
                 )}
 
                 <input
+                    min={1}
                     type="number"
                     value={fromAmount}
                     onChange={(e) => setFromAmount(Number(e.target.value))}
